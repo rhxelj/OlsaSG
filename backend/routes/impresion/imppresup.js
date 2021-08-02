@@ -397,4 +397,3 @@ module.exports = router;
 // function verticalLine(x, y, height) {
 //     return { type: 'line', x1: x, y1: y, x2: x, y2: y + height };
 // }
-
