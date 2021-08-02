@@ -24,7 +24,7 @@ export default function FilaDetDesc() {
     return (
         <>
             <TextField
-                inputProps={{ maxLength: 12 }}
+                inputProps={{ maxLength: 15 }}
                 size="small"
                 variant="outlined"
                 id="DescripPresup"
@@ -38,7 +38,7 @@ export default function FilaDetDesc() {
             />
 
             <TextField
-                inputProps={{ maxLength: 25 }}
+                inputProps={{ maxLength: 100 }}
                 size="small"
                 variant="outlined"
                 id="DetallePresup"

@@ -57,7 +57,7 @@ router.get('/', (req, res, next) => {
               valorMOTmup = result[0].costoMOT * coefMOT / 60 / 60 * result[0].segsolpu
               valorMOTcorte = result[0].costoMOT * coefMOT / 60 / 60 * result[0].segpurecorte
 
-              if ((cantidad - Math.trunc(cantidad)) > 0) {
+              if ((cantidad * 1 - Math.trunc(cantidad)) > 0) {
                 // impunion = ((((Math.trunc(cantidad))) * largo + 0.75)) * valorMOTmup
                 impunion = ((((Math.trunc(cantidad))) * largo + (anchotela / 2))) * valorMOTmup
                 impcorte = (cantidad + 1) * valorMOTcorte
@@ -67,7 +67,6 @@ router.get('/', (req, res, next) => {
                 impcorte = cantidad * valorMOTcorte
               }
 
-
               importeMOTtotal = impunion + impcorte
             }
 
@@ -75,6 +74,7 @@ router.get('/', (req, res, next) => {
             else {
               importeMOTtotal = 0
             }
+
 
             q = ['Select',
               'StkRubroDesc, StkRubroAbr, ',
@@ -96,11 +96,17 @@ router.get('/', (req, res, next) => {
                   console.log(err)
                 }
                 else {
+                  // if (ivasn == 'CIVA') {
+                  //   result[0].ImpUnitario = result[0].ImpUnitario.toFixed(0) * 1
+                  // }
+                  // else {
+                  //   result[0].ImpUnitario = result[0].ImpUnitario.toFixed(0) / 1.21
+                  // }
                   if (ivasn == 'CIVA') {
-                    result[0].ImpUnitario = result[0].ImpUnitario.toFixed(0) * 1
+                    result[0].ImpUnitario = Math.ceil(result[0].ImpUnitario.toFixed(0) / 10) * 10
                   }
                   else {
-                    result[0].ImpUnitario = result[0].ImpUnitario.toFixed(0) / 1.21
+                    result[0].ImpUnitario = Math.ceil(result[0].ImpUnitario.toFixed(0) / 1.21 / 10) * 10
                   }
                   //   result[0].ImpUnitario = result[0].ImpUnitario.toFixed(0)
                   callargo = cantidad * result[0].Ancho

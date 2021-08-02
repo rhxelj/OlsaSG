@@ -7,7 +7,9 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import MuiDialogTitle from '@material-ui/core/DialogTitle'
 import Typography from '@material-ui/core/Typography';
-import IpServidor from '../../VariablesDeEntorno'
+
+
+// export default function PresupPreview(props) {
 export const PresupPreview = (props) => {
     function cierradialogo() {
         props.setOpen({ ppreview: false });
@@ -41,7 +43,7 @@ export const PresupPreview = (props) => {
                     cache='false'
                 >
                 </object>
-
+                {/* {alert('al final de presupPreview')} */}
             </Dialog>
         </div >
     );

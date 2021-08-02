@@ -8,7 +8,8 @@ export function clientesleerdescmayigual(props) {
   }
   return new Promise(function (resolve) {
 
-    const url = IpServidor + "/clientesleerdescmayigual/?clientenuevo=" + clientenuevo;
+    //  const url = IpServidor + "/clientesleerdescmayigual/?clientenuevo=" + clientenuevo;
+    const url = IpServidor + "/clientesleerdesc";
     request
       .get(url)
       .set("Content-Type", "application/json")

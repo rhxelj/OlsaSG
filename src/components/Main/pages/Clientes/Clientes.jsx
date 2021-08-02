@@ -4,13 +4,18 @@ import MaterialTable from "material-table";
 import { tableIcons } from "../../../lib/material-table/tableIcons";
 import { llenarColumns } from "./columns"
 import { leerClientes } from "./ClientesLeer";
-import { onRowAdd } from "./onRowAdd"
+import { clientestraeNuevos } from "./ClientesTraeNuevos";
+// import { clientesagregaFac } from "./ClientesAgregaFac";
 import { onRowUpdate } from "./onRowUpdate"
 import { onRowDelete } from "./onRowDelete"
-
 import { HeaderTitle } from '../../../lib/HeaderTitle'
 import { localization } from "../../../lib/material-table/localization";
 import Imprimir from "../Impresion/Imprimir/Imprimir";
+import {
+  teal,
+} from "@material-ui/core/colors";
+
+
 
 export default function Clientes() {
   HeaderTitle("Clientes")
@@ -34,6 +39,13 @@ export default function Clientes() {
     dataFetch();
   }
 
+  async function traenuevo() {
+    const result = await clientestraeNuevos();
+    // const result1 = await clientesagregaFac();
+    console.log('result de trae  ', result)
+    // console.log('result1 de trae  ', result1)
+
+  }
   useEffect(() => {
     initialFetch()
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -48,6 +60,14 @@ export default function Clientes() {
             isFreeAction: true,
             onClick: () => setImprimirTF({ imprimir: true }),
           },
+          {
+            icon: () => (
+              <tableIcons.GroupAdd style={{ color: teal[500] }} />
+            ),
+            tooltip: "Agrega Clientes",
+            isFreeAction: true,
+            onClick: () => traenuevo(),
+          },
         ]}
         title=""
         localization={localization}
@@ -61,12 +81,13 @@ export default function Clientes() {
           grouping: true,
           addRowPosition: "first",
           actionsColumnIndex: -1,
+          tableLayout: "fixed"
           // tableLayout: "fixed", //con esta opcion entran todas las columnas en la pantalla pero superpone informacion
         }}
 
         editable={{
-          onRowAdd: newData =>
-            onRowAdd(newData).then(() => dataFetch()),
+          // onRowAdd: newData =>
+          //   onRowAdd(newData).then(() => dataFetch()),
           onRowUpdate: (newData, oldData) =>
             onRowUpdate(newData, oldData).then(() => dataFetch()),
           onRowDelete: oldData =>

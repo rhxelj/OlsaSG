@@ -47,9 +47,10 @@ export default function FilaAnexo(props) {
         var i = 0;
         while (i < datosanexo.length) {
             importetotal = importetotal + datosanexo[i].importea;
-
-            // if (state.DatosPresupEleg.PresupConfTipoImprime == 'S') {
-            nombre = nombre + ' c/' + datosanexo[i].AnexoMedida + ' ' + datosanexo[i].PresupConfTipoDesc
+            //  if (state.DatosPresupEleg.PresupConfTipoImprime === 'S') {
+            if (datosanexo[i].PresupConfTipoImprime === 'S') {
+                nombre = nombre + ' c/' + datosanexo[i].AnexoMedida + ' ' + datosanexo[i].PresupConfTipoDesc
+            }
             i++;
         }
         setSumaAnexo(importetotal);
@@ -110,6 +111,7 @@ export default function FilaAnexo(props) {
                         icons={tableIcons}
                         columns={columns}
                         data={datosanexo}
+
                         options={{
                             search: false,
                             addRowPosition: "first",
@@ -137,8 +139,9 @@ export default function FilaAnexo(props) {
                                         );
 
                                         Promise.resolve(datosrenglon1).then((jsonResults) => {
-                                            // newData.importea = jsonResults[0].ImpUnitario * newData.AnexoMedida
-                                            newData.importea = jsonResults * newData.AnexoMedida
+                                            newData.importea = jsonResults[0] * newData.AnexoMedida
+                                            newData.PresupConfTipoImprime = jsonResults[1]
+                                            //   newData.importea = jsonResults * newData.AnexoMedida
                                             setDatosAnexo([...datosanexo, newData]);
                                         })
                                         resolve();
@@ -157,7 +160,9 @@ export default function FilaAnexo(props) {
                                         );
                                         Promise.resolve(datosrenglon1).then((jsonResults) => {
                                             //   newData.importea = jsonResults[0].ImpUnitario * newData.AnexoMedida
-                                            newData.importea = jsonResults * newData.AnexoMedida
+                                            // newData.importea = jsonResults * newData.AnexoMedida
+                                            newData.importea = jsonResults[0] * newData.AnexoMedida
+                                            newData.PresupConfTipoImprime = jsonResults[1]
                                             const index = oldData.tableData.id;
                                             dataUpdate[index] = newData;
 

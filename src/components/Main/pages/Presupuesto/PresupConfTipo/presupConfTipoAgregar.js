@@ -31,6 +31,8 @@ export function presupConfTipoAgregar(props) {
         .send({ PresupConfTipoRubro: PresupConfTipoRubro })
         .send({ PresupConfTipoImprime: PresupConfTipoImprime })
         .send({ PresupConfTipoMinMOT: PresupConfTipoMinMOT })
+        // .send({ '': PresupConfTipoBack })
+
         .set("X-API-Key", "foobar")
         // .then(function (res) {
         //     const respuesta = JSON.parse(res.text);

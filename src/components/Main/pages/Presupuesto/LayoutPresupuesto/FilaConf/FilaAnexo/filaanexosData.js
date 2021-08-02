@@ -9,7 +9,6 @@ export default function filaanexosData() {
             .set("Content-Type", "application/json")
             .then((res) => {
                 const filaanexosdata = JSON.parse(res.text);
-                console.log('filaanexosdata   ', filaanexosdata)
                 resolve(filaanexosdata);
             });
     });

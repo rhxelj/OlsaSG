@@ -1,18 +1,17 @@
 import IpServidor from '../VariablesDeEntorno'
 import request from "superagent";
-// import { resolveTypeReferenceDirective } from 'typescript';
 
-export function clientesleercod(props) {
-  var idcliente = props
+export function clientestraeNuevos() {
   return new Promise(function (resolve) {
-
-    const url = IpServidor + "/clientesleercod/?id=" + idcliente
+    console.log('estoy en clietnestraenuevos')
+    const url = IpServidor + "/clientestraenuevos";
     request
       .get(url)
       .set("Content-Type", "application/json")
       .then((res) => {
         const clientes = JSON.parse(res.text);
-        resolve(clientes)
+        resolve(clientes);
       });
+
   });
 }

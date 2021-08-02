@@ -68,6 +68,14 @@ router.get('/', (req, res, next) => {
                 result[0].ImpItem = result[0].ImpItem.toFixed(0) / 1.21
                 result[0].ImpUnitario = result[0].ImpUnitario.toFixed(0) / 1.21
               }
+              // if (ivasn == 'CIVA') {
+              //   result[0].ImpItem = result[0].ImpItem.toFixed(0)
+              //   result[0].ImpUnitario = result[0].ImpUnitario.toFixed(0)
+              // }
+              // else {
+              //   result[0].ImpItem = result[0].ImpItem.toFixed(0) / 1.21
+              //   result[0].ImpUnitario = result[0].ImpUnitario.toFixed(0) / 1.21
+              // }
               // result[0].ImpItem = result[0].ImpItem.toFixed(0)
               // result[0].ImpUnitario = result[0].ImpUnitario.toFixed(0)
               result[0].Detalle = ""

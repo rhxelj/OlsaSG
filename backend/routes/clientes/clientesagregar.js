@@ -35,6 +35,7 @@ router.post('/', function (req, res) {
         ClientesCUIT: req.body.cliencuit,
         ClientesTipo: req.body.clientipo,
     }
+    console.log('registro clientes  ', registro)
     conexion.query('INSERT INTO BasesGenerales.Clientes SET ?', registro,
         function (err, result) {
             if (err) {
@@ -42,7 +43,7 @@ router.post('/', function (req, res) {
                     return res.status(409).send({ message: "error clave duplicada" });
                 }
                 else {
-                    console.log(err.errno);
+                    console.log('error en alta cliente ', err.errno);
                 }
             }
             else {

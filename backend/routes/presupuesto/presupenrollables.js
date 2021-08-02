@@ -19,10 +19,7 @@ router.get('/', (req, res, next) => {
   var q, i = 0
   var coeficiente = 0, cantidad = 0, StkRubroAbrP = '', largo = 0.00, ancho = 0.00
   var enteropanios = 0, decimalpanios = 0.00, altovolado = 0.00
-  /* tamfaja: state.TamFaja,
-        tamcristal: state.TamCristal,
-        altovolado: state.AltoVolado,
-        sobrantemarco: state.SobranteMarco,*/
+
   q = ['select * from BasePresup.PresupParam'].join(' ')
 
   conexion.query(q,
@@ -123,18 +120,6 @@ router.get('/', (req, res, next) => {
           'and StkRubro.StkRubroTM = idStkMonedas '
         ].join('')
 
-        /*
-        result   [ RowDataPacket {
-            StkRubroDesc: 'COB. STD 840',
-            StkRubroAbr: 'ST840',
-            ImpUnitario: 29457.72494,
-            StkRubroCosto: 5.13,
-            StkMonedasCotizacion: 98,
-            Detalle: 'Lona enrollable de  : ',
-            Largo: '2.00',
-            Ancho: '5' } ]
-        
-        */
         if (detallep == '') {
           detalle = "Lona enrollable "
         }

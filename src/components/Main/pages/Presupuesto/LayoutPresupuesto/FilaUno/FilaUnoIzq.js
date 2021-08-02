@@ -5,6 +5,12 @@ import {
 
   TextField,
 } from "@material-ui/core";
+// import IconButton from '@material-ui/core/IconButton';
+// import AssignmentReturnedIcon from '@material-ui/icons/AssignmentReturned';
+// import {
+//   green,
+// } from "@material-ui/core/colors";
+
 
 import leePresupConfTipoLeerDesc from "../../leePresupConfTipoLeerDesc"
 import leePresupConfTipoLeeAnexo from "../../leePresupConfTipoLeeAnexo"
@@ -14,7 +20,7 @@ import { PresupPantContext } from "../../PresupPant";
 // import { stat } from "fs";
 
 export default function FilaUnoIzq() {
-  const [selectedValue, setSelectedValue] = React.useState("");
+  // const [selectedValue, setSelectedValue] = React.useState("");
   const { state, setState } = useContext(PresupPantContext);
   // this.state = {
   //   value: { DescripPresup: '' },
@@ -22,7 +28,7 @@ export default function FilaUnoIzq() {
 
   const handleChange = (event) => {
 
-    setSelectedValue(event.target.value);
+    // setSelectedValue(event.target.value);
     var descripcion = event.target.value
     setState({ ...state, PresupConfTipoDesc: event.target.value });
 
@@ -31,6 +37,7 @@ export default function FilaUnoIzq() {
 
   async function leerdesc(descripcion) {
     const result = await leePresupConfTipoLeerDesc(descripcion);
+    console.log('leerdesc result  ', result)
     setState({ ...state, DatosPresupEleg: result });
 
   }
@@ -38,9 +45,14 @@ export default function FilaUnoIzq() {
   async function conftipoleer(anexo) {
     setState({ ...state, DescripPresup: '' });
     const result = await leePresupConfTipoLeeAnexo(anexo);
+    console.log('conftipoleer result  ', result)
     setState({ ...state, tipopresup: result });
   }
 
+
+  // function limpia() {
+  //   setState()
+  // }
   useEffect(() => {
 
     setState({ ...state, DescripPresup: '' });
@@ -89,7 +101,9 @@ export default function FilaUnoIzq() {
             {data.mapeo}
           </TextField>
         ))}
-
+        {/* <IconButton onClick={() => limpia()} color="primary" >
+          <AssignmentReturnedIcon style={{ color: green[500] }} fontSize='large' titleAccess='Agregar' />
+        </IconButton> */}
       </Grid>
 
     </>

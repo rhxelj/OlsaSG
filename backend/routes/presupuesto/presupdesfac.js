@@ -91,12 +91,19 @@ router.get('/', (req, res, next) => {
               result[0].Largo = largo
               result[0].Ancho = anchoenv
               result[0].MDesc = 'S'
+
               if (ivasn == 'CIVA') {
-                result[0].ImpUnitario = result[0].ImpUnitario.toFixed(0)
+                result[0].ImpUnitario = Math.ceil(result[0].ImpUnitario.toFixed(0) / 10) * 10
               }
               else {
-                result[0].ImpUnitario = result[0].ImpUnitario.toFixed(0) / 1.21
+                result[0].ImpUnitario = Math.ceil(result[0].ImpUnitario.toFixed(0) / 1.21 / 10) * 10
               }
+              // if (ivasn == 'CIVA') {
+              //   result[0].ImpUnitario = result[0].ImpUnitario.toFixed(0)
+              // }
+              // else {
+              //   result[0].ImpUnitario = result[0].ImpUnitario.toFixed(0) / 1.21
+              // }
               datosenvio.push(result)
               i++
               if (i === totalreg) {

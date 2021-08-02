@@ -26,6 +26,7 @@ import AttachmentIcon from '@material-ui/icons/Attachment';
 import AssignmentReturnedIcon from '@material-ui/icons/AssignmentReturned';
 import AutorenewIcon from '@material-ui/icons/Autorenew';
 import LibraryAddCheckIcon from '@material-ui/icons/LibraryAddCheck';
+import GroupAddIcon from '@material-ui/icons/GroupAdd';
 
 export const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -55,4 +56,5 @@ export const tableIcons = {
   AssignmentReturned: forwardRef((props, ref) => <AssignmentReturnedIcon {...props} ref={ref} />),
   Autorenew: forwardRef((props, ref) => <AutorenewIcon {...props} ref={ref} />),
   LibraryAddCheck: forwardRef((props, ref) => <LibraryAddCheckIcon {...props} ref={ref} />),
+  GroupAdd: forwardRef((props, ref) => <GroupAddIcon {...props} ref={ref} />),
 };

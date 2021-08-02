@@ -99,11 +99,17 @@ router.get('/', (req, res, next) => {
                   console.log(err)
                 }
                 else {
+                  // if (ivasn == 'CIVA') {
+                  //   result[0].ImpUnitario = result[0].ImpUnitario.toFixed(0)
+                  // }
+                  // else {
+                  //   result[0].ImpUnitario = result[0].ImpUnitario.toFixed(0) / 1.21
+                  // }
                   if (ivasn == 'CIVA') {
-                    result[0].ImpUnitario = result[0].ImpUnitario.toFixed(0)
+                    result[0].ImpUnitario = Math.ceil(result[0].ImpUnitario.toFixed(0) / 10) * 10
                   }
                   else {
-                    result[0].ImpUnitario = result[0].ImpUnitario.toFixed(0) / 1.21
+                    result[0].ImpUnitario = Math.ceil(result[0].ImpUnitario.toFixed(0) / 1.21 / 10) * 10
                   }
                   // result[0].ImpUnitario = result[0].ImpUnitario.toFixed(0)
                   callargo = cantidad * result[0].Ancho
