@@ -17,6 +17,7 @@ import Collapse from "@material-ui/core/Collapse";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import { movimientos, tablas } from "./menues";
 import { format } from "fecha";
+import { clientestraeNuevos } from '../Main/pages/Clientes/ClientesTraeNuevos'
 // import InputBase from "@material-ui/core/InputBase";
 // import SearchIcon from "@material-ui/icons/Search";
 // import { TextField, InputAdornment } from "@material-ui/core";
@@ -116,6 +117,8 @@ function Header() {
   };
 
   const getToggleState = (stateToToggle) => {
+    //  const result1 = clientestraeNuevos();
+    clientestraeNuevos();
     setState((prevState) => ({
       ...state,
       [stateToToggle]: !prevState[stateToToggle],
@@ -143,6 +146,8 @@ function Header() {
           // onClick={toggleDrawer("left", false)}
           onKeyDown={toggleDrawer("left", false)}
         >
+
+
           <List
             color="blue"
             component="nav"
@@ -154,6 +159,7 @@ function Header() {
             }
           >
             <ListItem
+
               button
               onClick={() => getToggleState("abrir_movimientos")}
             >
@@ -163,6 +169,8 @@ function Header() {
 
             {/* <Collapse in={abrir_movimientos} Transition="20"> */}
             <Collapse in={abrir_movimientos} timeout="20">
+              {/* <Collapse in={abrir_movimientos} ForwardRef="20"> */}
+              {/* `ForwardRef(Collapse) */}
               <List component="div" disablePadding>
                 {movimientos.map(({ link, primary }) => (
                   <ListItem

@@ -14,10 +14,9 @@ conexion.connect(function (err) {
 var datosenvio = [];
 
 var router = express();
-router.get("/", (req, res, next) => {
+router.get("/", (req, res) => {
   var q,
-    i = 0;
-  q = ['select * from BasePresup.PresupParam'].join(' ')
+    q = ['select * from BasePresup.PresupParam'].join(' ')
   conexion.query(q,
     function (err, result) {
       if (err) {
@@ -30,185 +29,326 @@ router.get("/", (req, res, next) => {
         metroscuadtotal = 0.0,
         StkRubroAbrP = "",
         tipomedeleg = '',
+        MOTarmado = 0.0,
         MOTarmadoAd = 0.0,
         SegundosMOTAd = 0.0,
         anchopared = 0.0;
+      anchotela = 0.0;
       medida = 0;
       alto = 0.0;
       perimetro = 0.0;
       diametro = 0.0;
+      diametroI = 0.0;
+
+      segcortarpf = 0.0;
+      segunirpf = 0.0;
+      segcortarpp = 0.0;
+      segunirpp = 0.0;
+      segspisofondo = 0.0;
+      segcortefondo = 0.0;
+      seghacercortes = 0.0;
+      mcuadradosfaldon = 0.0;
+
+      calpaños = 0.0;
+      cantpaños = 0.0;
+      canttelapiso = 0.0;
+
+
+      soga = result[0].sogadobladillo;
+      cantsoga = 0;
+      criquet = result[0].criquettanque;
+      cantcriquet = 0;
 
 
       datosrec = JSON.parse(req.query.datoscalculo);
+
       totalreg = datosrec.length
+      detallep = datosrec[0].detallep
+      cantidad = datosrec[0].cantidad;
+      StkRubroAbrP = datosrec[0].StkRubroAbr;
+      ivasn = datosrec[0].ivasn;
+      tipomedeleg = datosrec[0].tipomedeleg;
+      termbordeeleg = datosrec[0].termbordeeleg;
+      medida = datosrec[0].medida * 1;
+      alto = datosrec[0].alto * 1;
+      anchopared = datosrec[0].anchopared * 1 / 100;
 
-
-      datosrec.map(datos => {
-        cantidad = datos.cantidad;
-        StkRubroAbrP = datos.StkRubroAbr;
-        ivasn = datos.ivasn;
-        tipomedeleg = datos.tipomedeleg;
-        termbordeeleg = datos.termbordeeleg;
-        medida = datos.medida * 1;
-        alto = datos.alto * 1;
-
-        anchopared = datos.anchopared * 1 / 100;
-
-        detalle = "Bolsón para tanque de "
-        if (tipomedeleg == 'CC') {
-          perimetro = medida * 3;
-          diametro = (perimetro / 3.1416) * 1.02
-          detalle = detalle + medida + ' chapas '
-        } else {
-          if (tipomedeleg == 'DI') {
-            diametro = medida + (anchopared * 2)
-            perimetro = diametro * 3.1416
-            detalle = detalle + medida + ' de diámetro interno '
+      buscaancho = ['Select StkRubroAncho  as AnchoTela  from BaseStock.StkRubro where StkRubro.StkRubroAbr = "', StkRubroAbrP, '" '].join('')
+      conexion.query(buscaancho,
+        function (err, rbuscaancho) {
+          if (err) {
+            console.log(err);
           }
-          else {
-            if (tipomedeleg == 'DE') {
-              diametro = medida
-              perimetro = diametro * 3.1416 + .05
+          anchotela = rbuscaancho[0].AnchoTela * 1
+          detalle = "Bolsón para tanque de "
+          switch (tipomedeleg) {
+            case "CC":
+              perimetro = medida * 3;
+              diametro = (perimetro / 3.1416) * 1.02
+              diametroI = diametro + .05
+              detalle = detalle + medida + ' chapas '
+              break;
+            case "DI":
+              diametro = medida + (anchopared * 2)
+              diametroI = medida * 1 + .05
+              perimetro = diametro * 3.1416
+              detalle = detalle + medida + ' de diámetro interno '
+              break;
+            case "DE":
+              diametro = medida * 1
+              diametroI = (medida - (anchopared * 2)) + .05
+              perimetro = diametro * 3.1416
               detalle = detalle + medida + ' de diámetro externo '
-            }
-            else {
+              break;
+            default:
               perimetro = medida * 1
               diametro = medida / 3.1416 + .05
-              detalle = detalle + medida + ' de perímetro externo '
-            }
+              diametroI = diametro
+              detalle = detalle + medida + ' de perímetro externo ';
           }
-        }
 
 
-        detalle = detalle + ' con pared de ' + anchopared + ' mts. y un alto de ' + alto + ' mts. en : '
-        alto = alto + anchopared + 0.3
-        if (alto <= 1.50) {
-          alto = 1.50
-        }
-        else {
-          if (alto > 1.50 && alto <= 2) {
-            alto = 2.00
+          detalle = detalle + ' con pared de ' + anchopared + ' mts. y un alto de ' + alto + ' mts. en : '
+          if (termbordeeleg === 'SF') {
+            alto = alto + anchopared + 0.3
+            if (alto <= 1.50) {
+              alto = 1.50
+            }
           }
           else {
-            if (alto > 2 && alto <= 3) {
-              alto = 3.00
+            alto = alto + anchopared
+          }
+
+          if (StkRubroAbrP === 'POL19') {
+            if (alto > 1.50 && alto <= 2) {
+              alto = 2.00
             }
             else {
-              alto = alto.toFixed(0) + 0.5
+              if (alto > 2 && alto <= 3) {
+                alto = 3.00
+              }
+              else {
+                if (alto > 3) {
+                  alto = alto.toFixed(0) + 0.5
+                }
+              }
             }
           }
-        }
+
+
+          metroscuaddiam = (diametro * diametro).toFixed(0)
+          metroscuadper = (alto * perimetro).toFixed(0)
+
+          metroscuadtotal = metroscuaddiam * 1 + metroscuadper * 1
+
+          if (StkRubroAbrP == 'POL19') {
+            SegundosMOT = perimetro * 600
+
+          }
+
+          //hasta acá excepto porque falta calcular el diametro interno en DE y en PE, todo está bien para pol19
+
+          else {
+            // calculo de los paños del piso
+            calpaños = (diametroI % anchotela)
+
+            if (calpaños < .50) {
+              cantpaños = Math.trunc(diametroI / anchotela) + .5
+            }
+            else {
+              cantpaños = Math.trunc(diametroI / anchotela) + 1
+            }
+
+
+            //cortar paños del fondo 120 seg. MOT 1 persona  por paño
+            //soldar paños del fondo 150 seg. MOT 1 persona  por metro de soldura
+
+            segcortarpf = (120 * cantpaños)
+            segunirpf = (150 * diametroI * (cantpaños - 1))
+            canttelapiso = cantpaños * diametroI * anchotela
+
+            //cortar paños del perímetro 120 seg. MOT 1 persona  por paño
+            //soldar paños del perímetro 150 seg. MOT 1 persona  por metro de soldura
+
+            if (alto > 1.50) {
+              calpaños = (perimetro % anchotela)
+              if (calpaños < .50) {
+                cantpaños = Math.trunc(perimetro / anchotela) + .5
+              }
+              else {
+                cantpaños = Math.trunc(perimetro / anchotela) + 1
+              }
+              segcortarpp = (120 * cantpaños)
+              segunirpp = (150 * alto * (cantpaños - 1))
+              metroscuadper = cantpaños * alto
+            }
+            else {
+              segcortarpp = segcortarpf
+              metroscuadper = perimetro * 1.50
+            }
 
 
 
-        metroscuaddiam = (diametro * diametro).toFixed(0)
-        metroscuadper = (alto * perimetro).toFixed(0)
-        metroscuadtotal = metroscuaddiam * 1 + metroscuadper * 1
+            metroscuadtotal = canttelapiso * 1 + metroscuadper * 1
+            // 240 segundos para soldar los paños del perímetro al fondo
 
+            segspisofondo = perimetro * 240
+            segcortefondo = perimetro * 120
 
+            SegundosMOT = segcortarpf + segunirpf + segcortarpp + segunirpp + segspisofondo + segcortefondo
 
-        if (StkRubroAbrP == 'POL19') {
-          SegundosMOT = perimetro * 300
+            switch (termbordeeleg) {
+              case "SF":
+                SegundosMOT = SegundosMOT
+              case "CF":
+              case "CFS":
+              case "CFC":
+                seghacercortes = perimetro / 0.50 * 380
+                calpaños = (perimetro % anchotela)
+                if (calpaños < .50) {
+                  cantpaños = Math.trunc(perimetro / anchotela) + .5
+                }
+                else {
+                  cantpaños = Math.trunc(perimetro / anchotela) + 1
+                }
+                mcuadradosfaldon = cantpaños * anchotela * .30
+                metroscuadtotal = metroscuadtotal + mcuadradosfaldon
+                segsoldarfaldon = (diametro * 3.1416 * 240)
+                SegundosMOT = SegundosMOT + seghacercortes + segsoldarfaldon
 
-        }
-        else {
-          SegundosMOT = perimetro * 420
+              default:
+                console.log('vino al default')
 
-        }
+            }
+            if (termbordeeleg == "CFS") {
+              cantcriquet = 0
+              cantsoga = perimetro * 1.3
+            }
+            if (termbordeeleg == "CFC") {
+              cantsoga = 0
+              cancriquet = (perimetro % 6)
+              if (cancriquet !== 0) {
+                cantcriquet = Math.trunc(perimetro / 6) + 1
+              }
+              else {
+                cantcriquet = Math.trunc(perimetro / 6)
+              }
 
+            }
+          }
 
-
-        if (termbordeeleg == 'CFS') {
-          SegundosMOT = perimetro * 510
-        }
-        if (termbordeeleg == 'CFC') {
-          SegundosMOT = perimetro * 640
-        }
-        if (termbordeeleg == 'CF') {
-          SegundosMOT = SegundosMOT + (perimetro * 1380)
-        }
-
-        if (datos.minmay == 'my') {
-          coeficiente = result[0].coeficientemay
-          coefMOT = result[0].coefMOTmay
-          ivasn = 'CIVA'
-        }
-        else {
-          coeficiente = result[0].coeficientemin
-          coefMOT = result[0].coefMOTmin
-        }
-
-
-
-        if (diametro > 12) {
-          if ((Math.floor(diametro)) === 12) {
-            SegundosMOTAd = 1800
+          if (datosrec[0].minmay == 'my') {
+            coeficiente = result[0].coeficientemay
+            coefMOT = result[0].coefMOTmay
+            ivasn = 'CIVA'
           }
           else {
-            SegundosMOTAd = ((Math.floor(diametro) - 12) * 1800)
+            coeficiente = result[0].coeficientemin
+            coefMOT = result[0].coefMOTmin
           }
 
 
-        }
-        valorMOTseg = result[0].costoMOT * coefMOT / 60 / 60 * 2
-        MOTarmado = valorMOTseg * SegundosMOT
-        MOTarmadoAd = valorMOTseg * SegundosMOTAd
 
-
-
-
-        valormcuad = ['Select ',
-          'StkRubroDesc, StkRubroAbr, ',
-          '((StkRubroCosto / StkRubroAncho * StkMonedasCotizacion * ', coeficiente,
-          ' * ', metroscuadtotal, ')',
-          ' + ', MOTarmado,
-          ' ) as ImpUnitario, ',
-          'StkRubroCosto, ',
-          'StkMonedasCotizacion ',
-          'from BaseStock.StkRubro JOIN  BaseStock.StkMonedas ',
-          'where StkRubro.StkRubroAbr = "', StkRubroAbrP, '" ',
-          'and StkRubro.StkRubroTM = idStkMonedas '
-        ].join('')
-
-
-
-
-
-        conexion.query(
-          valormcuad,
-          function (err, result) {
-            if (err) {
-              console.log('error en mysql')
-              console.log(err)
+          if (diametro > 12) {
+            if ((Math.floor(diametro)) === 12) {
+              SegundosMOTAd = 1800
             }
             else {
-              result[0].Detalle = detalle
-              result[0].Largo = 0.00
-              result[0].Ancho = 0.00
-
-              if (StkRubroAbrP == 'POL19') {
-                result[0].ImpUnitario = result[0].ImpUnitario.toFixed(0) * 1.15 + MOTarmadoAd
-              }
-              else {
-                result[0].ImpUnitario = result[0].ImpUnitario.toFixed(0) * 1 + MOTarmadoAd
-              }
-              if (ivasn == 'CIVA') {
-                result[0].ImpUnitario = result[0].ImpUnitario.toFixed(0)
-              }
-              else {
-                result[0].ImpUnitario = result[0].ImpUnitario.toFixed(0) / 1.21
-              }
-
-
-              datosenvio.push(result)
-              i++
-              if (i === totalreg) {
-                res.json(datosenvio)
-                datosenvio = []
-              }
+              SegundosMOTAd = ((Math.floor(diametro) - 12) * 1800)
             }
-          })
-      })
+
+
+          }
+          valorMOTseg = result[0].costoMOT * coefMOT / 60 / 60
+
+
+          MOTarmado = valorMOTseg * SegundosMOT
+          MOTarmadoAd = valorMOTseg * SegundosMOTAd
+
+          valorsogacriq = ['Select ',
+            '(StkRubroCosto * StkMonedasCotizacion * ', coeficiente,
+            ' ) as ValorAdicionales, ',
+            'StkRubroCosto, ',
+            'StkMonedasCotizacion ',
+            'from BaseStock.StkRubro JOIN  BaseStock.StkMonedas ',
+            'where (StkRubro.StkRubroAbr = "', soga, '" ',
+            'or StkRubro.StkRubroAbr = "', criquet, '") ',
+            'and StkRubro.StkRubroTM = idStkMonedas '
+          ].join('')
+
+          conexion.query(
+            valorsogacriq,
+            function (err, result) {
+              if (err) {
+                console.log('error en mysql')
+                console.log(err)
+              }
+              else {
+                importesogaper = result[0].ValorAdicionales * cantsoga
+                importecriquetper = result[1].ValorAdicionales * cantcriquet
+              }
+
+              valormcuad = ['Select ',
+                'StkRubroDesc, StkRubroAbr, ',
+                '((StkRubroCosto / StkRubroAncho * StkMonedasCotizacion * ', coeficiente,
+                ' * ', metroscuadtotal, ')',
+                ' + ', MOTarmado,
+                ' ) as ImpUnitario, ',
+                'StkRubroCosto, ',
+                'StkMonedasCotizacion ',
+                'from BaseStock.StkRubro JOIN  BaseStock.StkMonedas ',
+                'where StkRubro.StkRubroAbr = "', StkRubroAbrP, '" ',
+                'and StkRubro.StkRubroTM = idStkMonedas '
+              ].join('')
+
+
+              if (detallep !== '') {
+                detalle = detallep + ' '
+              }
+              conexion.query(
+                valormcuad,
+                function (err, result) {
+                  if (err) {
+                    console.log('error en mysql')
+                    console.log(err)
+                  }
+                  else {
+                    result[0].Detalle = detalle
+                    result[0].Largo = 0.00
+                    result[0].Ancho = 0.00
+
+                    if (StkRubroAbrP == 'POL19') {
+                      // console.log('parseInt(result[0].ImpUnitario * 1.15 + MOTarmadoAd + importesogaper + importecriquetper)')
+                      // console.log(parseInt(result[0].ImpUnitario * 1.15 + MOTarmadoAd + importesogaper + importecriquetper))
+                      // console.log('(result[0].ImpUnitario * 1.15 + MOTarmadoAd + importesogaper + importecriquetper)')
+                      // console.log((result[0].ImpUnitario * 1.15 + MOTarmadoAd + importesogaper + importecriquetper))
+                      // console.log(' Math.ceil(result[0].ImpUnitario * 1.15 + MOTarmadoAd + importesogaper + importecriquetper)')
+                      // console.log(Math.ceil((result[0].ImpUnitario * 1.15 + MOTarmadoAd + importesogaper + importecriquetper) / 10) * 10)
+                      //result[0].ImpUnitario = parseInt(result[0].ImpUnitario * 1.15 + MOTarmadoAd + importesogaper + importecriquetper)
+                      result[0].ImpUnitario = Math.ceil((result[0].ImpUnitario * 1.15 + MOTarmadoAd + importesogaper + importecriquetper) / 10) * 10
+                    }
+                    else {
+                      result[0].ImpUnitario = Math.ceil((result[0].ImpUnitario * 1 + MOTarmadoAd + importesogaper + importecriquetper) / 10) * 10
+                      // result[0].ImpUnitario = parseInt(result[0].ImpUnitario * 1 + MOTarmadoAd + importesogaper + importecriquetper)
+                    }
+                    if (ivasn == 'CIVA') {
+                      result[0].ImpUnitario = Math.ceil((result[0].ImpUnitario) / 10) * 10
+                      // result[0].ImpUnitario = parseInt(result[0].ImpUnitario)
+                    }
+                    else {
+                      result[0].ImpUnitario = Math.ceil((result[0].ImpUnitario / 1.21) / 10) * 10
+                      // result[0].ImpUnitario = parseInt(result[0].ImpUnitario / 1.21)
+                    }
+
+
+                    datosenvio.push(result)
+
+                    res.json(datosenvio)
+                    datosenvio = []
+                  }
+                })
+            })
+        })
     })
 });
 

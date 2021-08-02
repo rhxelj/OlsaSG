@@ -10,27 +10,27 @@ export default function FilaTanques() {
     //  const [selectedValue, setSelectedValue] = React.useState("PVC05");
     const { state, setState } = useContext(PresupPantContext);
     // const [setFaja] = React.useState('2P');
-    var labelMedida = ''
+
     // const [AnchoPared, setAnchoPared] = React.useState(0.20)
     // const [DetallePresup, setDetallePresup] = React.useState('')
 
 
 
     const handleChange = (event) => {
-        if (event.target.value === 'CC') {
-            labelMedida = 'Cantidad de Chapas'
+        // var labelMedida
+        // if (event.target.value === 'CC') {
+        //     labelMedida = 'Cantidad de Chapas'
 
-        }
+        // }
 
-        if (event.target.value === 'PE') {
-            labelMedida = 'Metros Perímetro'
-        }
+        // if (event.target.value === 'PE') {
+        //     labelMedida = 'Metros Perímetro'
+        // }
 
-        if (event.target.value === 'DI' || event.target.value === 'DE') {
-            labelMedida = 'Metros Diámetro'
-        }
+        // if (event.target.value === 'DI' || event.target.value === 'DE') {
+        //     labelMedida = 'Metros Diámetro'
+        // }
         const id = event.target.id;
-        console.log('labelMedida  ', labelMedida)
         setState({ ...state, [id]: event.target.value });
 
     };

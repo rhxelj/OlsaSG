@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import useStyles from "../styles";
 
@@ -30,10 +30,9 @@ export default function FilaDos() {
   const { state, setState } = useContext(PresupPantContext);
   // const [datosrenglon, setDatosRenglon] = useState([]);
   const { datosrenglon, setDatosRenglon } = useContext(PresupPantContext);
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
 
   // const [setOpen] = useState(false);
-  // const [DetallePresup, setDetallePresup] = React.useState('')
   // const [numPages, setNumPages] = useState(null);
   // const [pageNumber, setPageNumber] = useState(1);
 
@@ -67,6 +66,7 @@ export default function FilaDos() {
 
   async function stkrubroleerconf(cuallee) {
     const result = await stkrubroleeconf(cuallee);
+    console.log('stkrubroleerconf filados result  ', result)
     setState({ ...state, stkrubro: result });
   }
 
@@ -79,6 +79,7 @@ export default function FilaDos() {
   }, [presuptipo]);  // eslint-disable-line react-hooks/exhaustive-deps
 
   async function agregar() {
+
     var dcalculo = [
       {
         StkRubroAbr: state.StkRubroAbr,
@@ -99,11 +100,11 @@ export default function FilaDos() {
         termbordeeleg: state.TermBordeEleg,
         anchopared: state.AnchoPared,
         medida: state.Medida,
-        alto: state.Alto
+        alto: state.Alto,
+        tipopresup: presuptipo
       },
     ];
 
-    //var detalle = "";
     var StkRubroDesc = "";
     var PresupLargo = 0;
     var PresupAncho = 0;
@@ -111,12 +112,15 @@ export default function FilaDos() {
     var ImpItem = 0;
     var PresupCantidadM = state.PresupCantidad;
     var detalle = presuptipo;
+
+
     var datoscalculos = JSON.stringify(dcalculo);
     const datosrenglon1 = await presupcalculador(
       state.DatosPresupEleg[0],
       datoscalculos,
       presuptipo
     );
+    console.log('state.datosrengpresup filados ', state.datosrengpresup)
     //esto es porque va a ser un cálculo especial, tiene un backend para eso
 
     if (rubrosn === "S") {
@@ -129,12 +133,11 @@ export default function FilaDos() {
         datosrenglon1[0][0].Detalle +
         datosrenglon1[0][0].StkRubroDesc;
 
-
       if (datosrenglon1[0][0].MDesc === 'S') {
         StkRubroDesc = StkRubroDesc +
           " " + state.DescripPresup
-      }
 
+      }
       ImpUnitario = datosrenglon1[0][0].ImpUnitario;
       ImpItem = datosrenglon1[0][0].ImpUnitario * PresupCantidadM;
       PresupLargo = datosrenglon1[0][0].Largo;
@@ -158,15 +161,14 @@ export default function FilaDos() {
         StkRubroDesc = StkRubroDesc + state.renglonanexo.StkRubroDesc;
       }
     }
+
     else {
-
       StkRubroDesc = detalle;
-      //ImpUnitario = datosrenglon1[0].ImpUnitario;
-      ImpUnitario = datosrenglon1
-      //   ImpItem = datosrenglon1[0].ImpUnitario * PresupCantidadM;
-      ImpItem = datosrenglon1 * PresupCantidadM;
+      // ImpUnitario = datosrenglon1
+      ImpUnitario = datosrenglon1[0]
+      // ImpItem = datosrenglon1 * PresupCantidadM;
+      ImpItem = datosrenglon1[0] * PresupCantidadM;
     }
-
     var datospresup = [
       {
         PresupCantidad: state.PresupCantidad,
@@ -175,6 +177,7 @@ export default function FilaDos() {
         PresupAncho,
         ImpUnitario,
         ImpItem,
+        datoscalculos,
         //ImpItemCAnexos,
       },
     ];
@@ -185,11 +188,11 @@ export default function FilaDos() {
       setDatosRenglon([...datosrenglon, datospresup[0]]);
     }
 
-    handleClickOpen();
+    // handleClickOpen();
   }
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
 
   const classes = useStyles();
   const textdata = [
@@ -218,6 +221,7 @@ export default function FilaDos() {
           // <Grid key={index} item xs={1}>
           // <Grid key={index} item >
           <TextField
+            key={data.id}
             id={data.id}
             size="small"
             inputProps={{ maxLength: 3 }}
@@ -240,7 +244,7 @@ export default function FilaDos() {
           id="PresupCantidad"
           type="number"
           label="Cantidad"
-          defaultValue="1"
+          // defaultValue="1"
           fullWidth
           margin="dense"
           value={state.PresupCantidad}

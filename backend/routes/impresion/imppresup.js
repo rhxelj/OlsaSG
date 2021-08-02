@@ -2,20 +2,20 @@ var express = require("express");
 var router = express.Router();
 var path = require("path");
 var moment = require("moment");
-var conexion = require('../conexion');
+//var conexion = require('../conexion');
 var PdfPrinter = require('../../node_modules/pdfmake/src/printer');
 var pdfmake = require('../../node_modules/pdfmake')
 var dateFormat = require('dateformat');
 var url = require('url');
 // const { ControlPointDuplicate } = require("@material-ui/icons");
 
-conexion.connect(function (err) {
-    if (!err) {
-        console.log("base de datos conectada en imppresup");
-    } else {
-        console.log("no se conecto en imppresup");
-    }
-});
+// conexion.connect(function (err) {
+//     if (!err) {
+//         console.log("base de datos conectada en imppresup");
+//     } else {
+//         console.log("no se conecto en imppresup");
+//     }
+// });
 
 var router = express();
 
@@ -23,14 +23,16 @@ var TotalPresup = 0
 const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
-    minimumFractionDigits: 0
+    minimumFractionDigits: 2
 })
+
 
 
 router.post("/", function (req, res, next) {
 
     var datospresup = req.body.datospresup
-
+    console.log('datospresup ')
+    console.log(datospresup)
     var descrip = req.body.descrip
     var Presupuestonro = req.body.nroPresupuesto
     var d = new Date();
@@ -46,12 +48,18 @@ router.post("/", function (req, res, next) {
         i++
     }
     )
-    console.log('datos presupu en imppresup  ', datospresup)
 
     TotalPresup = req.body.suma
 
     var Cliente = req.body.nomCliente
+    var Telefono = req.body.telCliente
+    var largocli = Cliente.length
+    console.log('Cliente   ', Cliente)
+    while ((Cliente.substr(largocli, 1) == ' ' || Cliente.substr(largocli, 1) == '') && largocli >= 0) {
+        largocli--
+    }
 
+    Cliente = Cliente.substr(0, largocli + 1)
 
     var nombrepresup = 'Presupuesto nro ' + Presupuestonro + ' ' + Cliente + ' ' + Fecha + '.pdf'
     var rows = [];
@@ -74,6 +82,7 @@ router.post("/", function (req, res, next) {
                 var Largo = { text: reng.PresupLargo.toString(), style: 'tableDatosD' }
                 var Ancho = { text: reng.PresupAncho.toString(), style: 'tableDatosD' }
                 var ImpUnit = { text: formatter.format(reng.ImpUnitario).toString(), style: 'tableDatosD' }
+                //var ImpUnit = { text: (reng.ImpUnitario).toString(), style: 'tableDatosD' }
                 var ImpItem = { text: formatter.format(reng.ImpItem).toString(), style: 'tableDatosD' }
                 rows.push([Opcion, Cantidad, Descripcion, Largo, Ancho, ImpUnit, ImpItem])
                 i++
@@ -209,6 +218,11 @@ router.post("/", function (req, res, next) {
                 text: Cliente,
                 style: 'textoI',
             },
+            {
+                text: Telefono,
+                style: 'textoI',
+            },
+
             {
                 text: ' ',
                 style: 'textoD',
@@ -372,7 +386,7 @@ router.post("/", function (req, res, next) {
 
 });
 
-conexion.end;
+//conexion.end;
 module.exports = router;
 
 

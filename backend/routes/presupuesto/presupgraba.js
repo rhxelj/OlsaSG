@@ -3,6 +3,7 @@ var router = express.Router();
 var path = require("path");
 var moment = require("moment");
 var conexion = require('../conexion');
+const { Console } = require("console");
 
 var nrovta = 1;
 nropresup = 0;
@@ -62,7 +63,9 @@ router.all("/", async function (req, res) {
         PresupRenglonLargo: renglon.PresupLargo,
         PresupRenglonAncho: renglon.PresupAncho,
         PresupRenglonImpUnit: renglon.ImpUnitario,
-        PresupRenglonImpItem: renglon.ImpItem
+        PresupRenglonImpItem: renglon.ImpItem,
+        PresupRenglonParamInt: renglon.datoscalculos
+
       }
       conexion.query("INSERT INTO BasePresup.PresupRenglon SET ?", registro1,
         function (err, result) {

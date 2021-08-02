@@ -30,7 +30,9 @@ import ImprimeQR from "./pages/Impresion/ImprimeQR";
 // check out my fave extensions for vs code at https://shortcut.school/vs-code#extensions 😎
 
 const Main = () => (
-  <main>
+
+
+  < main >
     {/*
             Para poder usar la opción que si no encuentra la ruta especificada tire un error. tengo que usar swicth como wrapper
             de lo contrario el error se va a mostrar en todas las paginas
@@ -39,9 +41,10 @@ const Main = () => (
             uso esta ruta para cuando no coincide ninguna ruta (hay que hacer el componente Error)
         */}
 
-    <div className="container">
+    < div className="container" >
       {/* <Route exact path="/" component={LeerMonedas}/> */}
-      <Route path="/StkMonedas" component={StkMonedas} />
+      {/* <Route path="/StkMonedas" component={StkMonedas} /> */}
+      <Route path="/StkMonedas" component={props => <StkMonedas {...props} />} />
       <Route path="/Proveedores" component={Proveedores} />
       <Route path="/Clientes" component={Clientes} />
       <Route path="/StkUnMed" component={StkUnMed} />
@@ -55,7 +58,8 @@ const Main = () => (
       {/* <Route path="/Presupuestos" component={Presupuestos} /> */}
       {/* <Route path="/PresupPantVie" component={PresupPantVie} /> */}
       {/* <Route path="/PresupuestoUnid" component={PresupuestoUnid} /> */}
-      <Route path="/ImprimeQR" component={ImprimeQR} />
+      {/* <Route path="/ImprimeQR" component={ImprimeQR} /> */}
+      <Route path="/ImprimeQR" component={props => <ImprimeQR {...props} />} />
       <Route path="/StkRubro" component={StkRubro} />
       <Route path="/StkGrupo" component={StkGrupo} />
       <Route path="/StkItems" component={StkItems} />
@@ -69,8 +73,8 @@ const Main = () => (
       {/* <Route path="/ModificarMonedas" component={ModificarMonedas}/> */}
       {/* <Route path="/LeerMonedas" component={LeerMonedas}/> */}
       {/* <Route  component={About}/> para captar las rutas no definidas tengo que importar Switch */}
-    </div>
-  </main>
+    </div >
+  </main >
 );
 
 export default Main;

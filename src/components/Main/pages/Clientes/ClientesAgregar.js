@@ -42,7 +42,8 @@ export function ClientesAgregar(props) {
 
       .set("X-API-Key", "foobar")
       .then(function () { })
-      .catch((err) => CodigoError(err));
+      .catch((err) => CodigoError(err),
+    );
 
 
   });

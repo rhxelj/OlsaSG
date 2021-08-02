@@ -11,23 +11,29 @@ import {
 
 export default function ClienteNuevo(props) {
   // const [data, setData] = useState([]);
+  console.log('props  ', props)
   const campos = [
-    { key: 0, campo: "ClientesDesc", display: "Descripcion", grid: 12 },
-    { key: 1, campo: "ClientesCalle", display: "Calle", grid: 12 },
-    { key: 2, campo: "ClientesNroCalle", display: "Nro.", grid: 4 },
-    { key: 3, campo: "ClientesPiso", display: "Piso", grid: 4 },
-    { key: 4, campo: "ClientesDto", display: "Departamento", grid: 4 },
-    { key: 5, campo: "ClientesCodPos", display: "Código Postal", grid: 4 },
-    { key: 6, campo: "ClientesLoc", display: "Localidad", grid: 4 },
-    { key: 7, campo: "ClientesPcia", display: "Provincia", grid: 4 },
-    { key: 8, campo: "ClientesTel", display: "Teléfono", grid: 6 },
-    { key: 9, campo: "ClientesMail", display: "e-Mail", grid: 6 },
-    { key: 10, campo: "ClientesIVA", display: "IVA", grid: 6 },
-    { key: 11, campo: "ClientesCUIT", display: "CUIT", grid: 6 },
-    { key: 12, campo: "ClientesTipo", display: "Tipo", grid: 12 },
+    { key: 0, campo: "ClientesPresupDesc", display: "Descripcion", grid: 12 },
+    { key: 8, campo: "ClientesPresupTel", display: "Teléfono", grid: 6 },
+    { key: 9, campo: "ClientesPresupMail", display: "e-Mail", grid: 6 },
+
   ];
 
-
+  // const campos = [
+  //   { key: 0, campo: "ClientesDesc", display: "Descripcion", grid: 12 },
+  //   { key: 1, campo: "ClientesCalle", display: "Calle", grid: 12 },
+  //   { key: 2, campo: "ClientesNroCalle", display: "Nro.", grid: 4 },
+  //   { key: 3, campo: "ClientesPiso", display: "Piso", grid: 4 },
+  //   { key: 4, campo: "ClientesDto", display: "Departamento", grid: 4 },
+  //   { key: 5, campo: "ClientesCodPos", display: "Código Postal", grid: 4 },
+  //   { key: 6, campo: "ClientesLoc", display: "Localidad", grid: 4 },
+  //   { key: 7, campo: "ClientesPcia", display: "Provincia", grid: 4 },
+  //   { key: 8, campo: "ClientesTel", display: "Teléfono", grid: 6 },
+  //   { key: 9, campo: "ClientesMail", display: "e-Mail", grid: 6 },
+  //   { key: 10, campo: "ClientesIVA", display: "IVA", grid: 6 },
+  //   { key: 11, campo: "ClientesCUIT", display: "CUIT", grid: 6 },
+  //   { key: 12, campo: "ClientesTipo", display: "Tipo", grid: 1 },
+  // ];
   return (
     <>
       <Container fixed>

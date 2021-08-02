@@ -14,11 +14,14 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 
 export const globalContext = React.createContext();
 
+
 const App = () => {
   const [valor, setValor] = useState();
+
   return (
     // shorthand for <Fragment> is <>
     <>
+
       <CssBaseline />
       <Router>
         <div>

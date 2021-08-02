@@ -133,6 +133,7 @@ export default function F2C1() {
           <Grid item xs>
             <TextField
               id={data.id}
+              key={data.id}
               size="small"
               select
               label={data.label}

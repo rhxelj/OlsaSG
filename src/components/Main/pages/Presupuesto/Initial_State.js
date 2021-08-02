@@ -84,10 +84,9 @@ export const initial_state = {
   indexborrado: 1000,
   DetallePresup: '',
   //FilaTres
-
+  dcalculoppresup: [],
   //condiciones de pago
   condpagoeleg: [],
-
   columns: [
     {
       title: "Cant.",
@@ -99,7 +98,9 @@ export const initial_state = {
       title: "Descripción",
       field: "StkRubroDesc",
       width: 500,
-
+      // headerStyle: {
+      //   backgroundColor: '#039be5',
+      // }
 
     },
     {
@@ -126,12 +127,12 @@ export const initial_state = {
       type: "currency",
       width: 120,
     },
-    // {
-    //   title: "$ Item c/Anexos",
-    //   field: "ImpItemCAnexos",
-    //   // ToDo: mirar esto para dar estilo => cellStyle: { width: "4px", borderRadius: "50%", background: "red" },
-    //   type: "currency",
-    // },
+    {
+      title: "datospresup",
+      field: "datoscalculos",
+      hidden: true,
+    },
+
   ],
 
 
@@ -163,5 +164,6 @@ export const initial_state = {
 
   //FilaCuatro
   nomCliente: "",
+  telCliente: "",
   NroPresupuesto: 0
 };

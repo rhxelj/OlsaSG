@@ -24,6 +24,8 @@ var clientesmodificar = require("./routes/clientes/clientesmodificar");
 var clientesleercodmayor = require("./routes/clientes/clientesleercodmayor");
 var clientesleerdescmayigual = require("./routes/clientes/clientesleerdescmayigual");
 var clientesleerpresup = require("./routes/clientes/clientesleerpresup");
+var clientestraenuevos = require("./routes/clientes/clientestraenuevos");
+// var clientespresupagregar = require("./routes/clientes/clientespresupagregar");
 
 
 var stkmonedasleer = require("./routes/monedas/stkmonedasleer");
@@ -192,6 +194,9 @@ app.use("/clientesborrar", clientesborrar);
 app.use("/clientesleercodmayor", clientesleercodmayor);
 app.use("/clientesleerdescmayigual", clientesleerdescmayigual);
 app.use("/clientesleerpresup", clientesleerpresup);
+app.use("/clientestraenuevos", clientestraenuevos);
+// app.use("/clientespresupagregar", clientespresupagregar);
+
 
 
 
@@ -332,7 +337,9 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render("error ");
+  res.Error
+  //estaba puesta la linea de abajo la cambié por la de arriba por el error que daba aunque andaba
+  //res.render("error ");
 });
 
 module.exports = app;

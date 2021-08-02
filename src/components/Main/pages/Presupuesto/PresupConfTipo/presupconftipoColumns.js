@@ -7,6 +7,7 @@ export async function presupconftipoColumns() {
         return acc;
     }, {});
     return columnsFill(objstkrubro);
+
 }
 
 function columnsFill(objstkrubro) {
@@ -57,6 +58,17 @@ function columnsFill(objstkrubro) {
             {
                 title: "Min. MOT",
                 field: "PresupConfTipoMinMOT",
+                // },
+                // {
+                //     title: "Min. MOT",
+                //     field: "PresupConfTipoBack",
+                //     cellStyle: {
+                //         backgroundColor: '#039be5',
+                //         color: '#FFF'
+                //     },
+                //     headerStyle: {
+                //         backgroundColor: '#039be5',
+                //     }
             }
         ]);
     });

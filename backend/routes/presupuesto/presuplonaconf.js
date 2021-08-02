@@ -228,16 +228,19 @@ router.get("/", (req, res, next) => {
               }
               // datosenvio[0][0]['ImpItem'] = costooriginal
               if (ivasn == 'CIVA') {
-                costooriginal = costooriginal.toFixed(0)
+                costooriginal = Math.ceil(costooriginal.toFixed(0) / 10) * 10
+                // costooriginal = costooriginal.toFixed(0)
               }
               else {
-                costooriginal = costooriginal.toFixed(0) / 1.21
+                costooriginal = Math.ceil(costooriginal.toFixed(0) / 1.21 / 10) * 10
+                // costooriginal = costooriginal.toFixed(0) / 1.21
               }
               //   datosenvio[0][0]['ImpUnitario'] = costooriginal.toFixed(0)
               datosenvio[0][0]['ImpUnitario'] = costooriginal
               datosenvio[0][0]['Detalle'] = detalle
-              datosenvio[0][0]['Largo'] = largoreal
-              datosenvio[0][0]['Ancho'] = anchoreal
+              datosenvio[0][0]['Largo'] = (largoreal * 1).toFixed(2)
+              datosenvio[0][0]['Ancho'] = (anchoreal * 1).toFixed(2)
+
               //esto es para que imprima o no la descripción que se pide
               datosenvio[0][0]['MDesc'] = 'S'
               costooriginal = 0;

@@ -99,7 +99,7 @@ export default function FilaCuatro() {
         </Grid>
         <Grid item xs>
           <TextField
-            inputProps={{ maxlength: 50 }}
+            inputProps={{ maxLength: 50 }}
             size="small"
             variant="outlined"
             id="StkEnvaseObserv"

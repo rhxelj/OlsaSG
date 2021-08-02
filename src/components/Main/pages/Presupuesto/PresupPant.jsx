@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { initial_state } from "./Initial_State";
 import FilaUno from './LayoutPresupuesto/FilaUno'
 import FilaDos from './LayoutPresupuesto/FilaDos'
+// import TablaPresup from "./LayoutPresupuesto/TablaPresup/TablaPresup";
 
 import { HeaderTitle } from '../../../lib/HeaderTitle';
 import {
   Grid,
+
 } from "@material-ui/core";
 
 export const PresupPantContext = React.createContext();
@@ -16,7 +18,7 @@ var PresupPant = () => {
 
   const [state, setState] = useState(initial_state);
   const [datosrenglon, setDatosRenglon] = useState([]);
-
+ 
   return (
     <div>
 
@@ -36,6 +38,7 @@ var PresupPant = () => {
           {/* <Grid item></Grid>  {/* Para dejar espacio  */}
           <FilaUno />
           <FilaDos />
+          {/* <TablaPresup/> */}
 
         </PresupPantContext.Provider>
 

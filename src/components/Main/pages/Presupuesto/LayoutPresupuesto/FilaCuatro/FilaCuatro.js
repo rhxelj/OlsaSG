@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   TextField,
   Button,
@@ -16,77 +16,81 @@ import { PresupPantContext } from "../../PresupPant";
 
 import { clientesleerdescmayigual } from "../../../Clientes/ClientesLeerDesc";
 import { PresupGrabar } from "../../PresupGrabar";
-import ClienteNuevo from "./ClienteNuevo";
-import { ClientesAgregar } from "../../../Clientes/ClientesAgregar";
+// import PresupMostrar from "../../PresupMostrar";
+
 import { clientesleercod } from '../../../Clientes/ClientesLeerCod'
 import { PresupImprime } from "../PresupImprime"
 import PresupDetPieSelec from './PresupDetPieSelec'
+import { PresupPreview } from "../PresupPreview"
+// import { AddAlertTwoTone, Pause } from "@material-ui/icons";
 
 export default function FilaCuatro(props) {
   // Esto es para poder consumir los datos del CONTEXTAPI
   const { state, setState } = useContext(PresupPantContext);
 
+  //const { open, handleClose } = props;
+  // var { open } = props;
 
-  const { open, handleClose } = props;
-  const [marcacliente, setMarcaCliente] = React.useState(false);
-  const [idClienteEleg, setidClienteEleg] = React.useState(0);
-  const [nomClienteEleg, setnomClienteEleg] = React.useState('');
+  // const [marcacliente, setMarcaCliente] = React.useState(false);
+  // const [idClienteEleg, setidClienteEleg] = React.useState(0);
+  // const [nomClienteEleg, setnomClienteEleg] = React.useState('');
+  const [ppreview, setPPreview] = useState({ ppreview: false });
 
   const handleChange = (event) => {
     const id = event.target.id;
-    if (id !== 'nomClientes') {
-      setState({ ...state, [id]: event.target.value });
-      setnomClienteEleg(event.target.value)
-      setidClienteEleg(0)
-    }
-
+    setState({ ...state, [id]: event.target.value });
   };
 
   async function clientesleerdescrip() {
     const result = await clientesleerdescmayigual(state.ClientesDesc);
-    setidClienteEleg(result[0].idClientes)
-    setnomClienteEleg(result[0].ClientesDesc)
     setState({ ...state, clientes: result });
   }
 
   useEffect(() => {
     clientesleerdescrip();
-  }, [open, marcacliente]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  function nuevocliente() {
-    setMarcaCliente(true);
-  }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  // }, [open]); // eslint-disable-line react-hooks/exhaustive-deps
 
   async function grabarpresupuesto() {
+
     var idClienteElegE, nomClienteElegE;
     var descrip = state.DescripPresup
+    var telcliente = state.telCliente
     if (state.idClientes !== 0) {
+      // if (state.nomCliente === '') {
       idClienteElegE = state.idClientes
-      nomClienteElegE = state.nomCliente
-      nomClienteElegE = await clientesleercod(idClienteElegE);
+      const datoscliente = await clientesleercod(idClienteElegE);
+      nomClienteElegE = datoscliente[0].ClientesDesc
+      telcliente = datoscliente[0].ClientesTel
     }
     else {
-      idClienteElegE = idClienteEleg
-      nomClienteElegE = nomClienteEleg
+      idClienteElegE = 0
+      nomClienteElegE = state.nomCliente
     }
+    // const nroPresupuesto1 = 0
 
     const nroPresupuesto1 = await PresupGrabar(props, nomClienteElegE, idClienteElegE);
     setState({ ...state, NroPresupuesto: nroPresupuesto1 });
+    PresupImprime(props.datos, nomClienteElegE, telcliente, props.suma, nroPresupuesto1, descrip, state.condpagoeleg)
 
 
-    PresupImprime(props.datos, nomClienteElegE, props.suma, nroPresupuesto1, descrip, state.condpagoeleg)
-    cancelar();
+
+    //cancelar();
+    cierrafilacuatro();
   }
-  function grabarCliente() {
-    ClientesAgregar(state);
-    setMarcaCliente(false);
+
+
+  function cierrafilacuatro() {
+    props.setOpen({ filacuatro: false });
+    // open = false
   }
 
   function cancelar() {
-    setMarcaCliente(false); //todo : verificar si esto funciona luego borrar comentario
-
-    handleClose();
+    //   setMarcaCliente(false); //todo : verificar si esto funciona luego borrar comentario
+    // open = false
+    // props.setOpen({ ppreview: false });
   }
+
 
   const textdata = [
     {
@@ -94,7 +98,7 @@ export default function FilaCuatro(props) {
       value: state.idClientes,
       mapeo: (
         <>
-          {/* <option></option> */}
+          <option></option>
           {state.clientes.map((option) => (
             <option key={option.idClientes} value={option.idClientes}>
               {option.ClientesDesc}
@@ -111,18 +115,20 @@ export default function FilaCuatro(props) {
       <Dialog
         fullWidth={true}
         maxWidth="md"
-        open={open}
-        keepMounted
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-slide-title"
-        aria-describedby="alert-dialog-slide-description"
+        open={props.open}
+
+      //  keepMounted
+      // onClose={props.handleClose}
+      // onClose={handleClose}
+      // aria-labelledby="alert-dialog-slide-title"
+      // aria-describedby="alert-dialog-slide-description"
       >
         <PresupDetPieSelec></PresupDetPieSelec>
         {/* <DialogTitle id="simple-dialog-title">Cliente Presupuesto</DialogTitle> */}
         <h3>Cliente Presupuesto</h3>
 
         <TextField
-          inputProps={{ maxLength: 40 }}
+          inputProps={{ maxLength: 20 }}
           size="small"
           variant="outlined"
           id="nomCliente"
@@ -134,51 +140,50 @@ export default function FilaCuatro(props) {
           onChange={handleChange}
           className={classes.textField}
         />
+
+        <TextField
+          inputProps={{ maxLength: 20 }}
+          size="small"
+          variant="outlined"
+          id="telCliente"
+          type="text"
+          label="Teléfono Cliente Ocacional"
+          fullWidth
+          margin="dense"
+          value={state.telCliente}
+          onChange={handleChange}
+          className={classes.textField}
+        />
+
+
         <label>Cliente Existente</label>
 
-        {!marcacliente ? (
-          textdata.map((data) => (
-            <TextField
-              id={data.id}
-              key={data.id}
-              // size="small"
-              select
-              // label={data.label}
-              // label='Cliente existente'
-              fullWidth
-              value={data.value}
-              onChange={handleChange}
-              SelectProps={{ native: true }}
-              variant="outlined"
-            >
-              {data.mapeo}
-            </TextField>
-          ))
-        ) : (
-          <ClienteNuevo
-            handleChange={handleChange}
-            setMarcaCliente={setMarcaCliente}
-            marcacliente={marcacliente}
-            cancelar={cancelar}
-            grabarCliente={grabarCliente}
+        {textdata.map((data) => (
+          <TextField
+            inputProps={{ maxLength: 20 }}
+            id={data.id}
+            //está agregado este key para que no dé el famoso warning
+            key={data.id}
+            size="small"
+            select
+            fullWidth
+            value={data.value}
+            onChange={handleChange}
+            SelectProps={{ native: true }}
+            variant="outlined"
+          >
+            {data.mapeo}
+          </TextField>
+        ))}
 
-          />
-        )}
-
+        <PresupPreview open={ppreview.ppreview} setOpen={setPPreview}></PresupPreview>
 
         <DialogActions>
-          <Button
-            onClick={() => nuevocliente()}
-            color="primary"
-            style={{ marginRight: 20 }}
-          >
-            Cliente Nuevo
-          </Button>
-          <Button onClick={handleClose} color="secondary">
+          <Button onClick={cierrafilacuatro} color="secondary">
             Cancelar
           </Button>
           <Button onClick={grabarpresupuesto} color="primary" autoFocus>
-            Grabar
+            Graba Presupuesto
           </Button>
 
         </DialogActions>
