@@ -4,10 +4,6 @@ import Grid from "@material-ui/core/Grid";
 import { TextField } from "@material-ui/core";
 import { stkitemsleecodgrrbit } from "../../../../Items/StkItemsLeeCodGrRbIt";
 
-// import { makeStyles } from "@material-ui/core/styles";
-// import { stkgrupolee } from "../../../../Grupos/StkGrupoLee";
-// import { stkrubroleecodgrupo } from "../../../../Rubros/StkRubroLeeCodGrupo";
-// import { stkitemsleecodgryrb } from "../../../../Items/StkItemsLeeCodGryRb";
 
 // Context
 import { useContext } from "react";
@@ -15,12 +11,9 @@ import { StkMovSalidaContext } from "../StkMovSalida";
 
 export default function F2C2() {
   // Context
+  console.log("Está en F2C2   ");
   const { state, setState } = useContext(StkMovSalidaContext);
 
-  // const handleChange = (event) => {
-  //   const id = event.target.id;
-  //   setState({ ...state, [id]: event.target.value });
-  // };
 
   async function stkitemsleercodgrrbit(GrupoEleg, RubroEleg, ItemEleg) {
     const result = await stkitemsleecodgrrbit(GrupoEleg, RubroEleg, ItemEleg);

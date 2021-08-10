@@ -145,10 +145,10 @@ router.get('/', (req, res, next) => {
                 else { result[0].Detalle = detalle + " en : " }
               }
               if (ivasn == 'CIVA') {
-                result[0].ImpUnitario = result[0].ImpUnitario.toFixed(0)
+                result[0].ImpUnitario = Math.ceil(result[0].ImpUnitario.toFixed(0) / 10) * 10
               }
               else {
-                result[0].ImpUnitario = result[0].ImpUnitario.toFixed(0) / 1.21
+                result[0].ImpUnitario = Math.ceil(result[0].ImpUnitario.toFixed(0) / 1.21 / 10) * 10
               }
               result[0].Largo = (datos.largo * 1).toFixed(2)
               result[0].Ancho = (datos.ancho * 1).toFixed(2)

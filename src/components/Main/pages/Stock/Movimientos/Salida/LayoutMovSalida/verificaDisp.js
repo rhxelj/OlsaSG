@@ -23,6 +23,7 @@ export function verificaDisp(props) {
         //   this.setState({ marcaver: true });
         //   this.setState({ faltante: this.state.datostraid[0] });
         //   this.setState({ total: this.state.datostraid[1] });
+        console.log("res.text  en verificaDisp => ", res.text);
         console.log("faltantev en verificaDisp => ");
         console.log(faltantev);
         resolve(faltantev);

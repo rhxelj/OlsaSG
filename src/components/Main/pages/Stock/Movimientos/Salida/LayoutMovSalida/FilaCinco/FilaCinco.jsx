@@ -27,26 +27,21 @@ export default function Fila() {
       total: total,
       faltante: faltante
     }); // las hago global en el contexto de Movimiento de Salida
+   
   }
-
   useEffect(() => {
     // variablesAuxiliares()
     // estado()
-    console.log("state.faltante ", state.faltante)
-    console.log("state.total ", state.total)
+
     if (state.faltante > 0) {
       setState({ ...state, confOpen: true })//ToDo: pongo confOpen en true
       //   //ToDo: muestro las opciones verificado / cancelar
-      //   console.log("resultado es mayor que cero ");
-      //   setState({ ...state, confOpen: true });
     } else {
       descargaStock(state)
       // setState({ ...state, exito: true }) //ToDo: muestro cartel de Exito
-      console.log("dio de baja el item estoy en fila cinco....")
       setState(initial_state)
     }
   }, [state.total, state.faltante]); // eslint-disable-line react-hooks/exhaustive-deps
-
 
 
   // function afuera() {

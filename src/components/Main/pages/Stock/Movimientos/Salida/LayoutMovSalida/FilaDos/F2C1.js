@@ -12,6 +12,9 @@ import { stkitemsleecodgryrb } from "../../../../Items/StkItemsLeeCodGryRb";
 import { useContext } from "react";
 import { StkMovSalidaContext } from "../StkMovSalida";
 export default function F2C1() {
+
+  console.log("Está en F2C1   ");
+
   // Esto es para poder consumir los datos del CONTEXTAPI
   const { state, setState } = useContext(StkMovSalidaContext);
 
@@ -35,19 +38,6 @@ export default function F2C1() {
     const result = await stkitemsleecodgryrb(codigogrupo, codigorubro);
     setState({ ...state, stkitems: result });
   }
-  // function reducer(stater, action){
-  //   switch (action.type) {
-  //     case 'idStkGrupo':
-  //       stkrubroleercodgrupo(state.idStkGrupo)
-  //       return console.log ('idStkGrupo');
-  //     case 'idStkRubro':
-  //       stkitemsleercodgryrb(state.idStkGrupo, state.idStkRubro);
-  //       return console.log ('idStkRubro');
-
-  //     default:
-  //       return console.log ('estaria dando error');
-  //   }
-  // }
 
   useEffect(() => {
     if (state.idStkGrupo === "") {
@@ -55,10 +45,6 @@ export default function F2C1() {
     } else stkrubroleercodgrupo(state.idStkGrupo);
   }, [state.idStkGrupo]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // useEffect(() => {
-
-  //   stkrubroleercodgrupo(state.idStkGrupo); //leo rubros apartir del grupo seleccionado
-  // }, [state.idStkGrupo]);
 
   useEffect(() => {
     // setState({...state, idStkItems : ''})
@@ -72,8 +58,7 @@ export default function F2C1() {
       setState({ ...state, idStkItems: "" });
     }
 
-    console.log("Contenido de state =>  ");
-    console.log(state);
+
   }, [state.stkitems]); // eslint-disable-line react-hooks/exhaustive-deps
   // const classes = useStyles();
 

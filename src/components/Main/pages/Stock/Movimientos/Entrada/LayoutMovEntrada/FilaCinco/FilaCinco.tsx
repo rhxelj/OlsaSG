@@ -24,45 +24,15 @@ export default function Fila() {
   // const [open, setOpen] = React.useState(false);
   const [cantidaddisponible, setCantidaddisponible] = React.useState(false);
 
-  // const handleClickOpen = () => {
-  //   setOpen(true);
-  // };
-
-  // const handleClose = () => {
-  //   setOpen(false);
-  // };
-
-  //Control del Dialogo  FIN
-
-  // const imprimir_etiquetas = () => {
-  //   handleClose();
-  //   // llamo al componente a imprimir y le paso el dato de ubicacion fisica
-  //   console.log(
-  //     "Fila Cinco contenido de state.StkEnvaseUbG -> ",
-  //     state.StkEnvaseUbG
-  //   );
-  //   imprimirQr(state.StkEnvaseUbG);
-
-  //   setState(initial_state);
-  //   // setState(() => {
-  //   //   return initial_state;
-  //   // });
-
-  //   setState({ ...state, imp_etiquetas: true });
-  // };
-
+ 
   // const confirmar = async (state: object) => {
   const confirmar = async (state: Object) => {
     await stkitemsmodstock(state);
-    await stkitemsmodstock(state);
-    console.log('state en filacinco  ', state)
     await stkenvaseagregar(state);
     const cantidaddisponible = await stkitemsleedisp(state);
     setCantidaddisponible(cantidaddisponible);
-    // handleClickOpen();
     setState({ ...state, confOpen: true });
-    // imprimir_etiquetas();
-    // setState(initial_state);
+   
   };
 
   const actions = {
@@ -81,14 +51,12 @@ export default function Fila() {
           open={state.confOpen}
           title="Movimiento de Entrada"
           contentText={`Cambio efectuado cantidad disponible ${cantidaddisponible}`}
-        // handleClose={handleClose}
-        // imprimir={imprimir_etiquetas}
+    
         />
 
         <ImprimirEtiquetas
           open={state.imp_etiquetas} //inicialmente este componente no se muestra
-        // title="Impresion De Etiquetas"
-        // contentText="Imprimio correctamente ?"
+    
         />
       </Grid>
     </>

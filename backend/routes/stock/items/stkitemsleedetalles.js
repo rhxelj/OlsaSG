@@ -28,6 +28,7 @@ router.get("/", async function (req, res, next) {
     "(StkItems.StkItemsRubro = StkRubro.idStkRubro) and ",
     "(StkRubro.StkRubroCodGrp = StkGrupo.idStkGrupo)"
   ].join("");
+  console.log('q en stkitemsleedetalles  ', q)
   conexion.query(
     q,
     //'select idStkItems, StkItemsGrupo, StkItemsRubroAbr,  StkGrupo.StkGrupoDesc,StkItemsRubro, StkRubro.StkRubroDesc, StkItemsDesc, StkItemsCantidad, StkItemsCantDisp, date_format(StkItemsFAct, "%d-%m-%Y") as StkItemsFAct,  StkItemsMin, StkItemsMax  from StkItems, StkGrupo, StkRubro where (StkItems.StkItemsGrupo = StkGrupo.idStkGrupo) and (StkItems.StkItemsRubro = StkRubro.idStkRubro) and (StkRubro.StkRubroCodGrp = StkGrupo.idStkGrupo)',

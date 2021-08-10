@@ -89,10 +89,10 @@ router.get("/", function (req, res, next) {
                 ImpUnitario = parseInt((vlrMOT + vlrMAT) * coefgcia)
               }
               if (ivasn == 'CIVA') {
-                ImpUnitario = Math.ceil(ImpUnitario / 10) * 10
+                ImpUnitario = Math.ceil((ImpUnitario / 10) * 10)
               }
               else {
-                ImpUnitario = Math.ceil((ImpUnitario / 1.21) / 10) * 10
+                ImpUnitario = Math.ceil(((ImpUnitario / 1.21) / 10) * 10)
               }
               // if (ivasn == 'CIVA') {
               //   ImpUnitario

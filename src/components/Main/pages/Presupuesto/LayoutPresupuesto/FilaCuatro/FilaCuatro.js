@@ -85,11 +85,6 @@ export default function FilaCuatro(props) {
     // open = false
   }
 
-  function cancelar() {
-    //   setMarcaCliente(false); //todo : verificar si esto funciona luego borrar comentario
-    // open = false
-    // props.setOpen({ ppreview: false });
-  }
 
 
   const textdata = [
@@ -158,19 +153,23 @@ export default function FilaCuatro(props) {
 
         <label>Cliente Existente</label>
 
+
+
+
         {textdata.map((data) => (
           <TextField
-            inputProps={{ maxLength: 20 }}
+            key={data.id}
             id={data.id}
             //está agregado este key para que no dé el famoso warning
-            key={data.id}
             size="small"
+            inputProps={{ maxLength: 20 }}
             select
-            fullWidth
+            label={data.label}
             value={data.value}
             onChange={handleChange}
             SelectProps={{ native: true }}
             variant="outlined"
+            fullWidth
           >
             {data.mapeo}
           </TextField>

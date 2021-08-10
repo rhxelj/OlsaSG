@@ -30,8 +30,9 @@ router.get("/", (req, res, next) => {
         metroscuad = 0,
         StkRubroAbrP = "",
         largo = 0,
-        minutospmc = 0,
+        minutospmc = 5,
         ancho = 0.0;
+      minutosdren = 0.0;
       // var enteroancho = 0,
       //   decimancho = 0.0;
       datosrec = JSON.parse(req.query.datoscalculo);
@@ -83,7 +84,8 @@ router.get("/", (req, res, next) => {
               else {
                 detalle = detallep + ''
               }
-              minutospmc = 9
+              minutosdren = largo / 1.50 * 4
+              /* 4 minutos por drenaje*/
             } else {
               if (detallep == '') {
                 detalle = "Lona enrollable para pileta, con fajas en las puntas"
@@ -91,7 +93,7 @@ router.get("/", (req, res, next) => {
               else {
                 detalle = detallep + ''
               }
-              minutospmc = 5
+              minutosdren = 0
             }
 
 
@@ -115,7 +117,7 @@ router.get("/", (req, res, next) => {
             }
 
             cantidadojales = datos.largo * 2
-            valorMOT = result[0].costoMOT * coefMOT / 60 * metroscuad * minutospmc
+            valorMOT = result[0].costoMOT * coefMOT / 60 * ((metroscuad * minutospmc) + minutosdren)
 
 
             mcuadcob = ['Select ',

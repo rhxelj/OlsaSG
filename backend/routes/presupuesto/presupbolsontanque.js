@@ -273,7 +273,7 @@ router.get("/", (req, res) => {
             'from BaseStock.StkRubro JOIN  BaseStock.StkMonedas ',
             'where (StkRubro.StkRubroAbr = "', soga, '" ',
             'or StkRubro.StkRubroAbr = "', criquet, '") ',
-            'and StkRubro.StkRubroTM = idStkMonedas '
+            'and StkRubro.StkRubroTM = idStkMonedas order by StkRubro.StkRubroAbr'
           ].join('')
 
           conexion.query(
@@ -284,8 +284,8 @@ router.get("/", (req, res) => {
                 console.log(err)
               }
               else {
-                importesogaper = result[0].ValorAdicionales * cantsoga
-                importecriquetper = result[1].ValorAdicionales * cantcriquet
+                importesogaper = result[0].ValorAdicionales * cantcriquet
+                importecriquetper = result[1].ValorAdicionales * cantsoga
               }
 
               valormcuad = ['Select ',
