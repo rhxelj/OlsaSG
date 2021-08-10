@@ -84,14 +84,13 @@ export default function ListaPrecios() {
     setLista({ ...lista, data: result });
   }
 
-  // useEffect(() => {
-  //   leerlistaprecios();
-  // }, []);
+
   useEffect(() => {
     leerlistaprecios();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const openApp = (event, StkRubroCodGrp, idStkRubro) => {
+    //  console.log('event  ', event)
     setParamItems({ paramitems, idGrupo: StkRubroCodGrp, idRubro: idStkRubro });
     handleClickOpen();
   };
@@ -100,6 +99,7 @@ export default function ListaPrecios() {
   };
 
   const handleClose = () => {
+    setParamItems({ paramitems, idGrupo: 0, idRubro: 0 });
     setOpen(false);
   };
 

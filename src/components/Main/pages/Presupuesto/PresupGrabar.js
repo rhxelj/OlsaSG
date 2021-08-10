@@ -26,7 +26,7 @@ export const PresupGrabar = (props, nomCliente, idClientes) => {
 
     .catch((err) =>
       console.log('codigo de error presupgrabar que no es error', err)
-      //  CodigoError(err)
+      // CodigoError(err)
 
     );
 

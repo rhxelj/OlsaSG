@@ -6,7 +6,7 @@ var conexion = require('../conexion');
 
 
 
-conexion.connect(function(err) {
+conexion.connect(function (err) {
     if (!err) {
         console.log("base de datos conectada en proveedoresleer");
     } else {
@@ -19,9 +19,9 @@ conexion.connect(function(err) {
 
 var router = express();
 
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
     //as StkTipoProveedDesc
-// en el mysql tuve que cambiar la clave foránea porque no me permitía cambiar el tipodeproveedor en la tabla proveedores
+    // en el mysql tuve que cambiar la clave foránea porque no me permitía cambiar el tipodeproveedor en la tabla proveedores
     const q = [
         'SELECT',
         'idProveedores, ProveedoresDesc, ',
@@ -35,33 +35,17 @@ router.get('/', function(req, res, next) {
         ' JOIN BasesGenerales.SubRubros ',
         ' where BasesGenerales.Proveedores.ProveedoresTipo = BasesGenerales.SubRubros.idSubRubro ',
         ' order by ProveedoresDesc',
-        
-    ].join(' ');      
-conexion.query(
-    q
-          //'SELECT idProveedores, ProveedoresDesc, StkTipoProveed.StkTipoProveedDesc, ProveedoresTipo, ProveedoresCUIT, ProveedoresCalle, ProveedoresNroCalle, ProveedoresPiso, ProveedoresDto, ProveedoresCodPos, ProveedoresLoc, ProveedoresPcia, ProveedoresTel, ProveedoresContacto, ProveedoresMail, ProveedoresWeb, ProveedoresCodMon FROM BasesGenerales.Proveedores JOIN StkTipoProveed where BasesGenerales.Proveedores.ProveedoresTipo = StkTipoProveed.idStkTipoProveed ',
-         
-        //   'SELECT 
-        //   idProveedores, ProveedoresDesc, 
-        //   SubRubros.SubRubroDetalle , ProveedoresTipo, 
-        //   ProveedoresCUIT, ProveedoresCalle, ProveedoresNroCalle, 
-        //   ProveedoresPiso, ProveedoresDto, ProveedoresCodPos, 
-        //   ProveedoresLoc, ProveedoresPcia, ProveedoresTel, 
-        //   ProveedoresContacto, ProveedoresMail, ProveedoresWeb,
-        //    ProveedoresCodMon
-        //     FROM BasesGenerales.Proveedores 
-        //    JOIN BasesGenerales.SubRubros 
-        //    where BasesGenerales.Proveedores.ProveedoresTipo = BasesGenerales.SubRubros.idSubRubro 
-        //    order by ProveedoresDesc',,
-        ,
-        function(err, result) {
+
+    ].join(' ');
+    conexion.query(q,
+        function (err, result) {
             if (err) {
-                console.log(err);
+                console.log(err.errno);
             } else {
                 res.json(result);
             }
         });
-       
+
 });
 conexion.end;
 

@@ -32,7 +32,7 @@ export default function AlertDialog(props) {
     // confirmText: "CONFIRMAR", //Texto en caso de afirmativo
     // cancelText: "CANCELAR", //Texto en caso de No afirmativo
   };
-
+  console.log('estoy en confirmacion actions  ', actions)
   return (
     <div>
       <Dialog

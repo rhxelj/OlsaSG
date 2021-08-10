@@ -53,15 +53,15 @@ export default function TablaPresup(props) {
   }
 
 
-  function graba() {
-    handleClickOpen();
-  }
+  // function graba() {
+  //   handleClickOpen();
+  // }
 
 
 
-  const handleClickOpen = () => {
-    setFilacuatro({ filacuatro: true })
-  };
+  // const handleClickOpen = () => {
+  //   setFilacuatro({ filacuatro: true })
+  // };
 
   const handleClose = () => {
     setFilacuatro(false);
