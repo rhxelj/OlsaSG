@@ -29,7 +29,6 @@ router.get('/', function (req, res, next) {
     const q = [
         'load data  infile ' + '"' + '/var/lib/mysql-files/clientes.csv' + '"  into table BasesGenerales.Clientes  FIELDS TERMINATED BY ' + '";"' + '',
     ].join(' ');
-    console.log('q en trae  ', q)
     conexion.query(
         q,
         function (err, result) {

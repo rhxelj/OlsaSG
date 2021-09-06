@@ -23,3 +23,13 @@ export const tablas = [
   { primary: "Presupuesto Tipo", link: "/PresupConfTipo" },
   { primary: "Pie de Presupuesto", link: "/PresupDetPie" },
 ];
+/*  { primary: "Proveedores", link: "/Proveedores" },
+  { primary: "Clientes", link: "/Clientes" },
+  { primary: "Monedas", link: "/StkMonedas" },
+  { primary: "Grupos", link: "/StkGrupo" },
+  { primary: "Rubros", link: "/StkRubro" },
+  { primary: "Items", link: "/StkItems" },
+  { primary: "Unidad de Medidas", link: "/StkUnMed" },
+  { primary: "Ubicación Física", link: "StkUbFisica" },
+  { primary: "Presupuesto Tipo", link: "/PresupConfTipo" },
+  { primary: "Pie de Presupuesto", link: "/PresupDetPie" },*/

@@ -66,7 +66,6 @@ export default function FilaDos() {
 
   async function stkrubroleerconf(cuallee) {
     const result = await stkrubroleeconf(cuallee);
-    console.log('stkrubroleerconf filados result  ', result)
     setState({ ...state, stkrubro: result });
   }
 
@@ -109,6 +108,7 @@ export default function FilaDos() {
     var PresupLargo = 0;
     var PresupAncho = 0;
     var ImpUnitario = 0;
+    var importeanexo = 0;
     var ImpItem = 0;
     var PresupCantidadM = state.PresupCantidad;
     var detalle = presuptipo;
@@ -120,7 +120,6 @@ export default function FilaDos() {
       datoscalculos,
       presuptipo
     );
-    console.log('state.datosrengpresup filados ', state.datosrengpresup)
     //esto es porque va a ser un cálculo especial, tiene un backend para eso
 
     if (rubrosn === "S") {
@@ -143,24 +142,51 @@ export default function FilaDos() {
       PresupLargo = datosrenglon1[0][0].Largo;
       PresupAncho = datosrenglon1[0][0].Ancho;
 
+      console.log('state.renglonanexo.length   ', state.renglonanexo.length)
+      importeanexo = state.renglonanexo.ImpItemAnexo
+      if (state.renglonanexo.length !== 0) {
+        //ImpItemCAnexos = ImpItem + state.renglonanexo.ImpItemAnexo * state.PresupCantidad;
+        ImpUnitario = ImpUnitario * 1 + importeanexo * 1
+        ImpItem = ImpItem + importeanexo * state.PresupCantidad;
+        StkRubroDesc = StkRubroDesc + state.renglonanexo.StkRubroDesc;
+      }
+      //acá veo si es paño unido o no porque sino tiene ancho o largo en 0, no es confección
 
       if (PresupLargo === 0 || PresupAncho === 0) {
-        ImpItem = datosrenglon1[0][0].ImpUnitario;
+        //   ImpItem = datosrenglon1[0][0].ImpUnitario;
+        ImpItem = ImpUnitario;
 
       }
 
       if (PresupLargo === 0 && PresupAncho === 0) {
         ImpItem = datosrenglon1[0][0].ImpUnitario * PresupCantidadM;
+
       }
 
 
-      if (state.renglonanexo.length !== 0) {
-        //ImpItemCAnexos = ImpItem + state.renglonanexo.ImpItemAnexo * state.PresupCantidad;
-        ImpUnitario = ImpUnitario * 1 + state.renglonanexo.ImpItemAnexo * 1
-        ImpItem = ImpItem + state.renglonanexo.ImpItemAnexo * state.PresupCantidad;
-        StkRubroDesc = StkRubroDesc + state.renglonanexo.StkRubroDesc;
-      }
+
+      // if (PresupLargo === 0 || PresupAncho === 0) {
+      //   ImpItem = datosrenglon1[0][0].ImpUnitario;
+
+      // }
+
+      // if (PresupLargo === 0 && PresupAncho === 0) {
+      //   ImpItem = datosrenglon1[0][0].ImpUnitario * PresupCantidadM;
+      // }
+
+      // if (state.renglonanexo.length !== 0) {
+      //   //ImpItemCAnexos = ImpItem + state.renglonanexo.ImpItemAnexo * state.PresupCantidad;
+      //   ImpUnitario = ImpUnitario * 1 + state.renglonanexo.ImpItemAnexo * 1
+      //   ImpItem = ImpItem + state.renglonanexo.ImpItemAnexo * state.PresupCantidad;
+      //   StkRubroDesc = StkRubroDesc + state.renglonanexo.StkRubroDesc;
+      // }
+
+
+
     }
+
+
+
 
     else {
       StkRubroDesc = detalle;

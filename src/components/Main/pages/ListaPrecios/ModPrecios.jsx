@@ -274,14 +274,11 @@ class ModPrecios extends Component {
   render() {
     return (
       <div>
-        {/* {Mensajes("FUNCIONO!!")} */}
-
         {this.state.toggle.mensaje && (
           <Mensajes
             msg={this.state.msg_respuesta}
             toggle={() => this.toggle("mensaje")}
           >
-            {/* <h1>DIALOGO</h1> */}
           </Mensajes>
         )}
 
@@ -292,24 +289,12 @@ class ModPrecios extends Component {
             <Grid item xs={4} sm={4} lg={4}></Grid>
           </Grid>
 
-          {/* <h1>ModPrecio</h1>
-        <br></br>
-        <br></br>
-        <h2>Estos son los datos que tienen que estar en este componente</h2>
-        <br></br>
-        <br></br> */}
-          <Grid container spacing={24}>
-            {/* <p>[Codigo de Proveedores | 0 ]</p> */}
-
-            {/* {this.state.proveedores.map(proveedor => {
-           return(<p>{proveedor.ProveedoresDesc}</p>)
-          })
-          } */}
-            <Grid item xs={1} sm={1} lg={1}></Grid>
-
+        
+          {/* <Grid container spacing={12}> */}
+           
+          <Grid container >
+            <Grid item xs={3} sm={3} lg={3}>
             <FormControl component="fieldset">
-              {/* <FormLabel component="legend">Elija una opcion</FormLabel> */}
-              {/* <RadioGroup aria-label="gender" name="pgr" value={this.state.value} onChange={this.handleC}> */}
               <RadioGroup
                 aria-label="gender"
                 name="pgr"
@@ -338,12 +323,10 @@ class ModPrecios extends Component {
                   onClick={() => this.toggleTipo("rubro")}
                 />
               </RadioGroup>
-              {/* <FormHelperText>labelPlacement start</FormHelperText> */}
-            </FormControl>
+              </FormControl>
+              </Grid>
 
             <Grid item xs={3} sm={3} lg={3}>
-              <br></br>
-              <br></br>
               {this.state.toggle.proveedor && (
                 <TextField
                   id="idProveedores"
@@ -358,15 +341,11 @@ class ModPrecios extends Component {
                       key={proveedor.idProveedor}
                       value={proveedor.idProveedores}
                     >
-                      {/* {proveedor.idProveedores}  */}
                       {proveedor.ProveedoresDesc}
                     </option>
                   ))}
                 </TextField>
               )}
-              {/* </Grid> */}
-              {/* <p>[ Codigo de Grupo | 0 ]</p> */}
-              {/* <Grid item  xs={3} sm={3} lg={3}> */}
               {this.state.toggle.grupo && (
                 <TextField
                   id="idStkGrupo"
@@ -378,17 +357,14 @@ class ModPrecios extends Component {
                   <option value="0"></option>
                   {this.state.grupos.map(grupo => (
                     <option
-                      // key={grupo.idStkGrupo}
                       value={grupo.idStkGrupo}
                     >
-                      {/* {grupo.idStkGrupo}  */}
                       {grupo.StkGrupoDesc}
                     </option>
                   ))}
                 </TextField>
               )}
-              {/* </Grid> */}
-
+           
               {this.state.toggle.rubro && (
                 <TextField
                   id="idStkRubro"
@@ -400,21 +376,17 @@ class ModPrecios extends Component {
                   <option value="0"></option>
                   {this.state.rubros.map(rubro => (
                     <option
-                      // key={grupo.idStkGrupo}
                       value={rubro.StkRubroAbr}
                     >
-                      {/* {grupo.idStkGrupo}  */}
                       {rubro.StkRubroDesc}
                     </option>
                   ))}
                 </TextField>
               )}
             </Grid>
-
-            {/* <p>[ Importe = 0 || Importe != 0 ]</p> */}
+            <Grid item xs={3} sm={3} lg={3}>
 
             <FormControl component="fieldset">
-              {/* <FormLabel component="legend">Elija una opcion</FormLabel> */}
               <RadioGroup
                 aria-label="ip"
                 name="ip"
@@ -436,9 +408,8 @@ class ModPrecios extends Component {
                   onClick={() => this.toggleTipo("porcentaje")}
                 />
               </RadioGroup>
-              {/* <FormHelperText>labelPlacement start</FormHelperText> */}
             </FormControl>
-
+            </Grid>
             <Grid item xs={1} sm={1} lg={1}>
               {this.state.toggle.importe && (
                 <TextField
@@ -450,13 +421,8 @@ class ModPrecios extends Component {
                   placeholder="Importe"
                   value={this.state.Importe}
                   onChange={this.handleChange("Importe")}
-                // onKeyPress={(event) => {if (event.key === 'Enter') document.getElementById('button--submit').focus();}}
                 />
               )}
-              {/* </Grid> */}
-              {/* <p>[ % | 0 ]</p> */}
-
-              {/* <Grid item  xs={2} sm={2} lg={2}> */}
               {this.state.toggle.porcentaje && (
                 <TextField
                   margin="dense"
@@ -467,17 +433,14 @@ class ModPrecios extends Component {
                   placeholder="Porcentaje"
                   value={this.state.Porcentaje}
                   onChange={this.handleChange("Porcentaje")}
-                // onKeyPress={(event) => {if (event.key === 'Enter') document.getElementById('button--submit').focus();}}
                 />
               )}
             </Grid>
             <Grid item xs={1} sm={1} lg={1}></Grid>
-            {/* Nota para Rogelio falta llamar al backend que hizo sandra y mandar los cuatro datos que recabo de aca.         */}
 
             <Button
               color="primary"
               onClick={() => this.submitModPrecio()}
-            // onClick={()=>this.ModPrecio()}
             >
               Enviar
             </Button>

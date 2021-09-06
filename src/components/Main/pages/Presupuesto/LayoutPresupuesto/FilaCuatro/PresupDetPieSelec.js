@@ -53,6 +53,7 @@ export default function PresupDetPieSelect() {
         icons={tableIcons}
         localization={localization}
         options={{
+          sorting: true,
           selection: true,
           addRowPosition: "first",
           showTextRowsSelected: true,
