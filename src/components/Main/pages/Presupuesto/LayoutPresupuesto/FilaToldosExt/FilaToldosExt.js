@@ -1,44 +1,62 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { Grid, TextField } from "@material-ui/core";
 import useStyles from "../styles";
-
+import { stkrubroleetbr } from "../../../Stock/Rubros/StkRubroLeeTBR";
 // Context
 import { useContext } from "react";
 import { PresupPantContext } from "../../PresupPant";
 
 export default function FilaToldosExt(props) {
-  // const [selectedValue, setSelectedValue] = React.useState("PVC05");
   const { state, setState } = useContext(PresupPantContext);
-  const [faja, setFaja] = React.useState('2P');
-  const [cristal, setCristal] = React.useState("PVC05");
-  // const [AltoVolado, setAltoVolado] = React.useState(0.20)
-  // const [DetallePresup, setDetallePresup] = React.useState('')
-
+  const [mecanismo, setMecanismo] = React.useState("Manual");
 
 
   const handleChange = (event) => {
     const id = event.target.id;
     setState({ ...state, [id]: event.target.value });
-    // setSelectedValue(event.target.value);
-    // setState({ ...state, PresupCsSs: event.target.value });
   };
 
-  const tamcristal = (event) => {
-    setCristal(event.target.value);
-    setState({ ...state, TamCristal: event.target.value });
+  const tipomecanismo = (event) => {
+    setMecanismo(event.target.value);
+    setState({ ...state, TipoMecanismo: event.target.value });
   };
 
-  const tamfaja = (event) => {
-    setFaja(event.target.value);
-    setState({ ...state, TamFaja: event.target.value });
-  };
+  async function stkrubroleertbr() {
+    const result = await stkrubroleetbr();
+    setState({ ...state, stkrubrotbr: result });
+  }
 
-  const classes = useStyles();
+  useEffect(() => {
+    if (state.stkrubrotbr.length === 0) {
+      stkrubroleertbr();
+    }
+  }, [state.stkrubrotbr]);  // eslint-disable-line react-hooks/exhaustive-deps
+
 
   //stkrubroleecodgrupored leer los rubros de los accesorios de toldo  grupo 6
+  const tamtoldo = [
+    {
+      id: "StkRubroAbrTBR",
+      label: "Tamaño Toldo",
+      value: state.StkRubroAbrTBR,
+      mapeo: (
+        <>
+          <option></option>
+          {state.stkrubrotbr.map((option) => (
+            <option key={option.StkRubroAbrTBR} value={option.StkRubroAbrTBR}>
+              {option.StkRubroDescTBR}
+            </option>
+          ))}
+
+        </>
+      ),
+    },
+  ];
+
+  const classes = useStyles();
 
   return (
     <>
@@ -50,73 +68,60 @@ export default function FilaToldosExt(props) {
         <RadioGroup
           row
           size="small"
-          name="CristalSN"
-          label="Cristal"
-          value={cristal}
-          onChange={tamcristal}
+          name="Mecanismo"
+          label="Movido por :"
+          value={mecanismo}
+          onChange={tipomecanismo}
           margin="dense"
         >
 
           <FormControlLabel
             size="small"
-            value="PVC05"
+            value="Manual"
             control={<Radio />}
-            label="Cristal 1.35"
+            label="Manual"
             labelPlacement="top"
             disabled={props.disable}
             margin="dense"
           />
           <FormControlLabel
             size="small"
-            value="PVC06"
+            value="MotorCT"
             control={<Radio />}
-            label="Cristal 1.80"
+            label="Motor c/Tecla"
             labelPlacement="top"
             disabled={props.disable}
             margin="dense"
           />
           <FormControlLabel
             size="small"
-            value="NOPVC"
+            value="MotorCC"
             control={<Radio />}
-            label="s/Cristal"
+            label="Motor c/control"
             labelPlacement="top"
             disabled={props.disable}
             margin="dense"
           />
         </RadioGroup>
       </Grid>
-      <Grid item xs={2}>
-        <RadioGroup
-          row
+      {tamtoldo.map((data) => (
+        <TextField
+          id={data.id}
+          key={data.id}
           size="small"
-          name="Faja"
-          value={faja}
-          onChange={tamfaja}
+          select
+          label={data.label}
           margin="dense"
+          value={data.value}
+          onChange={handleChange}
+          SelectProps={{ native: true }}
+          variant="outlined"
+          helperText='Medida Toldo'
         >
+          {data.mapeo}
+        </TextField>
+      ))}
 
-          <FormControlLabel
-            size="small"
-            value="2P"
-            control={<Radio />}
-            label="2''"
-            labelPlacement="top"
-            disabled={props.disable}
-            margin="dense"
-          />
-          <FormControlLabel
-            size="small"
-            value="25P"
-            control={<Radio />}
-            label="2''y 1/2"
-            labelPlacement="top"
-            disabled={props.disable}
-            margin="dense"
-          />
-
-        </RadioGroup>
-      </Grid>
 
       <Grid item xs={1} >
         <TextField
@@ -133,21 +138,7 @@ export default function FilaToldosExt(props) {
           className={classes.textField}
         />
       </Grid>
-      <Grid item xs={1} >
-        <TextField
-          inputProps={{ maxLength: 3 }}
-          size="small"
-          variant="outlined"
-          id="SobranteMarco"
-          type="number"
-          margin="dense"
-          label="Marco en cm : "
-          fullWidth
-          value={state.SobranteMarco}
-          onChange={handleChange}
-          className={classes.textField}
-        />
-      </Grid>
+
 
 
     </>

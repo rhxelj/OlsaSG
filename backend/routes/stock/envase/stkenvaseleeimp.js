@@ -24,7 +24,6 @@ var router = express();
 router.get("/", function (req, res, next) {
   // StkEnvaseUbG = req.query.stkenvaseubg;
   StkEnvaseUbG = req.query.id;
-  console.log("contenido de StkEnvaseUbG ", StkEnvaseUbG);
   var datos, info;
   var q = [
     "SELECT idStkEnvase,",
@@ -53,7 +52,7 @@ router.get("/", function (req, res, next) {
     'and StkEnvaseImprimio = "N"',
     "and StkEnvaseUbG = '" + StkEnvaseUbG + "'",
   ].join(" ");
-  console.log(q)
+
   conexion.query(q, function (err, result, fields) {
     if (err) {
       console.log(err);
@@ -63,7 +62,7 @@ router.get("/", function (req, res, next) {
     a = 0;
 
     while (a < result.length) {
-      console.log(' result[a].StkEnvaseUbG + ', result[a].StkEnvaseUbG)
+
       info = "";
       info =
         //"_0D_40"  //para que en el código QR tome un <enter>
@@ -134,27 +133,27 @@ router.get("/", function (req, res, next) {
           }
         });
       }
-    //   exec("cat ./codigoqr", (err, stdout, stderr) => {
+      //   exec("cat ./codigoqr", (err, stdout, stderr) => {
 
       console.log("a  ", a);
       a++;
 
-       if (a >= result.length) {
+      if (a >= result.length) {
         // exec("lpr ./codigoqr", (err, stdout, stderr) => {
-            exec("cd /home/sandra/SIOLSA/Stock", (err, stdout, stderr) => {
-           if (err) {
-             console.error(`exec error: ${err}`);
-             return;
-           }
-         });
-          exec("lpr -P Zebra codigoqr", (err, stdout, stderr) => {
-           if (err) {
-             console.error(`exec error: ${err}`);
-             return;
-           }
-         });
-       }
-   }
+        exec("cd /home/sandra/SIOLSA/Stock", (err, stdout, stderr) => {
+          if (err) {
+            console.error(`exec error: ${err}`);
+            return;
+          }
+        });
+        exec("lpr -P Zebra codigoqr", (err, stdout, stderr) => {
+          if (err) {
+            console.error(`exec error: ${err}`);
+            return;
+          }
+        });
+      }
+    }
 
 
   });

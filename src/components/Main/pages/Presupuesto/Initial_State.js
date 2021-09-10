@@ -17,6 +17,10 @@ export const initial_state = {
   AltoVolado: 20,
   SobranteMarco: 20,
 
+  //Brazos extensibles
+  TipoMecanismo: 'Manual',
+  TamToldoEleg: '',
+
   //FilaTanques
   TipoMedidaEleg: 'CC',
   // ParedSN: 'SP',
@@ -69,11 +73,13 @@ export const initial_state = {
   renglonanexo: [],
   DetalleAnexo: "",
   stkrubro: [],
+  stkrubrotbr: [],
   clientes: [],
   PresupLargo: 0.0,
   PresupAncho: 0.0,
   AnexoLargo: 0.0,
   StkRubroAbr: "",
+  StkRubroAbrTBR: "",
   idClientes: 0,
   PresupConfTipoDesc: "",
   LabelMed: "",
