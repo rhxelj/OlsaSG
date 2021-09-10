@@ -36,7 +36,8 @@ export default function ImprimirEtiquetas(props) {
     const { open, handleClose } = props;
 
     const imprimir_etiquetas = () => {
-        imprimirQr(state.StkEnvaseUbG);
+        //esta sentencia la saqué el 8-9-2021 para empezar a cargar la mercadería sin imprimir etiquetas
+        // imprimirQr(state.StkEnvaseUbG);
         setState({ ...state, impOk: true });
     };
 
@@ -48,7 +49,6 @@ export default function ImprimirEtiquetas(props) {
             .post(url)
             .set("Content-Type", "application/json")
             .then(() => {
-                // const envasecambiaimp = JSON.parse(res.text)
             });
         setState(initial_state)
     };

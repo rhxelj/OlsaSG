@@ -30,7 +30,7 @@ router.all("/", async function (req, res) {
   else {
     cliente = req.body.nomCliente
   }
-
+  console.log('req.body.DatosPresup   ', req.body.DatosPresup.datoscalculos)
   var registro = {
     PresupEncabFecha: finalDate,
     PresupEncabCliente: cliente,

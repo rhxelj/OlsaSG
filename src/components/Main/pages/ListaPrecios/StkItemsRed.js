@@ -13,37 +13,7 @@ export const stkitemsred = (CodGrupo, CodRubro) => {
         resolve(stkitems);
 
       })
-    //}
 
-
-
-    //   return (
-
-    //   <div > 
-    //       <Grid container>
-    //         <Grid item xs={4} sm={4} lg={4}>
-    //            <Table >
-    //              <TableHead>
-    //                <CustomTableCell>Detalle</CustomTableCell>
-    //                <CustomTableCell>Cant.Disponible</CustomTableCell>
-    //                <CustomTableCell>Cant.Stock</CustomTableCell>
-    //              </TableHead>
-    //              <TableBody>
-    //              {stkitems.map((stkitem) => {
-    //                return(
-    //                  <TableRow key={stkitem.StkItemsDesc}>
-    //                   <CustomTableCell >{stkitem.StkItemsDesc}</CustomTableCell>
-    //                   <CustomTableCell numeric>{stkitem.StkItemsCantDisp}</CustomTableCell>
-    //                   <CustomTableCell numeric>{stkitem.StkItemsCantidad}</CustomTableCell>
-    //                   </TableRow>
-    //              )
-    //                })}
-    //              </TableBody>
-    //            </Table>
-    //         </Grid>
-    //       </Grid>       
-    // </div>      
-    //   )
 
   })
 }

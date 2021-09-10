@@ -2,77 +2,14 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import { fade, makeStyles } from "@material-ui/core/styles";
-// import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
-import Collapse from "@material-ui/core/Collapse";
-import ListSubheader from "@material-ui/core/ListSubheader";
-import { movimientos, tablas } from "./menues";
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import { makeStyles } from '@material-ui/core/styles';
 import { format } from "fecha";
-import { clientestraeNuevos } from '../Main/pages/Clientes/ClientesTraeNuevos'
-// import InputBase from "@material-ui/core/InputBase";
-// import SearchIcon from "@material-ui/icons/Search";
-// import { TextField, InputAdornment } from "@material-ui/core";
 
-import { useContext } from "react";
-import { globalContext } from "../App";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-  search: {
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(3),
-      width: "auto",
-    },
-  },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  inputRoot: {
-    color: "inherit",
-  },
-  inputInput: {
-    padding: theme.spacing(1, 8, 1, 1),
-
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-  },
-}));
 
 const initial_state = {
   open: false,
@@ -84,158 +21,192 @@ const initial_state = {
   bottom: false,
   right: false,
   setSelectedIndex: 0,
-  showComponent: false,
+  showComponent: false
 };
+
+
+const useStyles = makeStyles((theme) => ({
+  botonmenu: {
+    background: 'linear-gradient(50deg, #00bfa5 20%, #0d47a1 70%)',
+    border: 3,
+    borderRadius: 3,
+    boxShadow: '#004d40',
+    color: 'white',
+    height: 25,
+    padding: '10 50px',
+    marginRight: theme.spacing(2),
+
+  },
+  barra: {
+    background: '#c5cae9',
+    border: 0,
+    borderRadius: 3,
+    boxShadow: '0 3px 5px 2px rgba(30, 106, 57, .3)',
+    boxShadow: '#004d40',
+    color: 'white',
+    height: 40,
+    padding: '0 30px',
+  },
+  barraherr: {
+    background: '#c5cae9',
+    color: 'blue',
+    flexGrow: 1,
+    minHeight: 40,
+    padding: '0 30px',
+  },
+  root: {
+    flexGrow: 1,
+  },
+
+  title: {
+    flexGrow: 1,
+    marginRight: theme.spacing(15),
+    color: 'blue',
+    marginLeft: theme.spacing(60),
+
+  },
+}));
+
+
 function Header() {
-  const { valor } = useContext(globalContext);
-  // const { valor, setValor } = useContext(globalContext);
 
-  // const valor = "Variable interna";
-  // console.log("Contenido de value en HEADER ", valor);
-  // setValor("prueba");
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
 
-  const [state, setState] = useState(initial_state);
-  const classes = useStyles();
-  // const [buscar, setbuscar] = useState("");
-  const { abrir_movimientos, abrir_tablas } = state;
 
-  const toggleDrawer = (side, open) => (event) => {
-    if (
-      event &&
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-
-    setState({
-      ...state,
-      [side]: open,
-      abrir_movimientos: false, //activo esto si quiero cerrar los menúes cuando hago una selección.
-      abrir_tablas: false, //activo esto si quiero cerrar los menúes cuando hago una selección.
-    });
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
-  const getToggleState = (stateToToggle) => {
-    //  const result1 = clientestraeNuevos();
-    clientestraeNuevos();
-    setState((prevState) => ({
-      ...state,
-      [stateToToggle]: !prevState[stateToToggle],
-    }));
-  };
-  // const handleChange = (event) => {
-  //   setbuscar({ buscar: event.target.value });
-  // };
+  const [anchorEl1, setAnchorEl1] = React.useState(null);
+  const open1 = Boolean(anchorEl1);
 
-  // const handleClose = (prop) => (event) => {
-  //   setState({ ...state, [prop]: null });
-  // };
+  const handleClick1 = (event) => {
+    setAnchorEl1(event.currentTarget);
+  };
+  const handleClose1 = () => {
+    setAnchorEl1(null);
+  };
+
+
+  const [anchorEl2, setAnchorEl2] = React.useState(null);
+  const open2 = Boolean(anchorEl2);
+
+  const handleClick2 = (event) => {
+    setAnchorEl2(event.currentTarget);
+  };
+  const handleClose2 = () => {
+    setAnchorEl2(null);
+  };
+
   const diafecha = format(new Date(), "DD-MM-YYYY");
 
-  function newMethod(abrir_movimientos, abrir_tablas) {
-    return (
-      <SwipeableDrawer
-        open={state.left}
-        onClose={toggleDrawer("left", false)}
-        onOpen={toggleDrawer("left", true)}
-      >
-        <div
-          id="division"
-          role="presentation"
-          // onClick={toggleDrawer("left", false)}
-          onKeyDown={toggleDrawer("left", false)}
-        >
+  const [state, setState] = useState(initial_state);
 
 
-          <List
-            color="blue"
-            component="nav"
-            aria-labelledby="nested-list-subheader"
-            subheader={
-              <ListSubheader component="div" id="nested-list-subheader">
-                OlsaSG
-              </ListSubheader>
-            }
-          >
-            <ListItem
-
-              button
-              onClick={() => getToggleState("abrir_movimientos")}
-            >
-              <ListItemText primary="Movimientos" />
-              {abrir_movimientos ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-
-            {/* <Collapse in={abrir_movimientos} Transition="20"> */}
-            <Collapse in={abrir_movimientos} timeout="20">
-              {/* <Collapse in={abrir_movimientos} ForwardRef="20"> */}
-              {/* `ForwardRef(Collapse) */}
-              <List component="div" disablePadding>
-                {movimientos.map(({ link, primary }) => (
-                  <ListItem
-                    onClick={toggleDrawer("left", false)}
-                    key={primary}
-                    button
-                    component={Link}
-                    to={link}
-                  >
-                    <ListItemText primary={primary} />
-                  </ListItem>
-                ))}
-              </List>
-            </Collapse>
-
-            <ListItem button onClick={() => getToggleState("abrir_tablas")}>
-              <ListItemText primary="Tablas" />
-              {abrir_tablas ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-
-            <Collapse in={abrir_tablas} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                {tablas.map(({ link, primary }) => (
-                  <ListItem
-                    onClick={toggleDrawer("left", false)}
-                    key={primary}
-                    button
-                    component={Link}
-                    to={link}
-                  >
-                    <ListItemText primary={primary} />
-                  </ListItem>
-                ))}
-              </List>
-            </Collapse>
-          </List>
-        </div>
-      </SwipeableDrawer>
-    );
-  }
-
+  const classes = useStyles();
   return (
     <div>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={toggleDrawer("left", true)}
+      <AppBar position="static"
+        // className={classes.root}>
+        className={classes.barra}>
+        <Toolbar className={classes.barraherr}>
+          <Button
+            // color="inherit"
+            className={classes.botonmenu}
+            id="basic-button"
+            aria-controls="basic-menu"
+            aria-haspopup="true"
+            aria-expanded={open ? 'true' : undefined}
+            onClick={handleClick}
           >
-            {/* <MenuIcon onClick={toggleDrawer("left", true)}></MenuIcon> */}
+            Precios-Presup
+          </Button>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}
+          >
 
-            <MenuIcon ></MenuIcon>
-          </IconButton>
-          {/* </Toolbar>   */}
-          <Typography variant="h6" className={classes.title} noWrap>
+            <MenuItem component={Link} to="/PresupPant" onClick={handleClose}>Presupuesto</MenuItem>
+            <MenuItem component={Link} to="/ListaPrecios" onClick={handleClose}>Lista de Precios</MenuItem>
+            <MenuItem component={Link} to="/PresupMuestra" onClick={handleClose}>Muestra Presupuesto</MenuItem>
+            <MenuItem component={Link} to="/ModPrecios" onClick={handleClose}>Modifica Precios</MenuItem>
+          </Menu>
+
+          <Button
+            // color="inherit"
+            className={classes.botonmenu}
+            id="basic-button"
+            aria-controls="basic-menu"
+            aria-haspopup="true"
+            aria-expanded={open1 ? 'true' : undefined}
+            onClick={handleClick1}
+          >
+            Mercadería
+          </Button>
+
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl1}
+            open={open1}
+            onClose={handleClose1}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}
+          >
+            <MenuItem component={Link} to="/StkMovEntrada" onClick={handleClose}>Entrada Mercadería</MenuItem>
+            <MenuItem component={Link} to="/StkMovSalida" onClick={handleClose}>Salida de Disponible</MenuItem>
+            <MenuItem component={Link} to="/StkMovSalidaFinal" onClick={handleClose}>Salida Final</MenuItem>
+
+          </Menu>
+          <Button
+            variant="contained" color="secondary"
+            id="basic-button"
+            variant='button'
+            className={classes.botonmenu}
+            // color="inherit"
+            size="large"
+            // aria-controls="basic-menu"
+            // aria-haspopup="open1"
+            aria-expanded={open2 ? 'true' : undefined}
+            onClick={handleClick2}
+          >
+            Tablas
+          </Button>
+          <Menu
+
+            id="basic-menu"
+            anchorEl={anchorEl2}
+            open={open2}
+            onClose={handleClose2}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}
+          >
+            <MenuItem component={Link} to="/Proveedores" onClick={handleClose}>Proveedores</MenuItem>
+            <MenuItem component={Link} to="/Clientes" onClick={handleClose}>Clientes</MenuItem>
+            <MenuItem component={Link} to="/StkMonedas" onClick={handleClose}>Monedas</MenuItem>
+            <MenuItem component={Link} to="/StkGrupo" onClick={handleClose}>Grupos</MenuItem>
+            <MenuItem component={Link} to="/StkRubro" onClick={handleClose}>Rubros</MenuItem>
+            <MenuItem component={Link} to="/StkItems" onClick={handleClose}>Items</MenuItem>
+            <MenuItem component={Link} to="/StkUnMed" onClick={handleClose}>Unidad de Medidas</MenuItem>
+            <MenuItem component={Link} to="/StkUbFisica" onClick={handleClose}>Ubicación Física</MenuItem>
+            <MenuItem component={Link} to="/PresupConfTipo" onClick={handleClose}>Presupuesto Tipo</MenuItem>
+            <MenuItem component={Link} to="/PresupDetPie" onClick={handleClose}>Pie de Presupuesto</MenuItem>
+
+          </Menu>
+
+          <Typography variant="h6" className={classes.title}>
             OlsaSG
           </Typography>
-          <Typography variant="h6" className={classes.title} noWrap>
-            {valor}
-          </Typography>
-
-          {newMethod(abrir_movimientos, abrir_tablas)}
-
           <Typography variant="h6">{diafecha}</Typography>
         </Toolbar>
       </AppBar>

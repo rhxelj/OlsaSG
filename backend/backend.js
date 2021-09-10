@@ -75,6 +75,7 @@ var stkrubroleecodgrupored = require("./routes/stock/rubros/stkrubroleecodgrupor
 var stkrubroleeproveedor = require("./routes/stock/rubros/stkrubroleeproveedor");
 var stkrubroleerdesc = require("./routes/stock/rubros/stkrubroleerdesc");
 var stkrubroleerconf = require("./routes/stock/rubros/stkrubroleerconf");
+var stkrubroleerTBR = require("./routes/stock/rubros/stkrubroleerTBR");
 
 
 var stkitemsleer = require("./routes/stock/items/stkitemsleer");
@@ -124,6 +125,7 @@ var presupdesfac = require("./routes/presupuesto/presupdesfac");
 var presupenrollables = require("./routes/presupuesto/presupenrollables");
 var presupbolsontanque = require("./routes/presupuesto/presupbolsontanque");
 var presuppiletaenr = require("./routes/presupuesto/presuppiletaenr");
+var presupbrazosextens = require("./routes/presupuesto/presupbrazosextens");
 
 
 var presupencableer = require("./routes/presupuesto/presupencableer");
@@ -253,6 +255,7 @@ app.use("/stkrubroleecodgrupored", stkrubroleecodgrupored);
 app.use("/stkrubroleeproveedor", stkrubroleeproveedor);
 app.use("/stkrubroleerdesc", stkrubroleerdesc);
 app.use("/stkrubroleerconf", stkrubroleerconf);
+app.use("/stkrubroleerTBR", stkrubroleerTBR);
 
 
 app.use("/stkitemsleer", stkitemsleer);
@@ -299,6 +302,7 @@ app.use("/presupdesfac", presupdesfac);
 app.use("/presupenrollables", presupenrollables);
 app.use("/presupbolsontanque", presupbolsontanque);
 app.use("/presuppiletaenr", presuppiletaenr);
+app.use("/presupbrazosextens", presupbrazosextens);
 
 app.use("/presupencableer", presupencableer);
 app.use("/presuprenglonleer", presuprenglonleer);

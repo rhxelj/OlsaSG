@@ -11,7 +11,6 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
 import MaterialTable from "material-table";
 import { stkitemsred } from "./StkItemsRed";
-import AutorenewIcon from '@material-ui/icons/Autorenew';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -20,7 +19,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function TablaMuestraStock(props) {
 
   const { open, handleClose, Grupo, Rubro } = props;
-  console.log('esta en el I ', open)
   const [stock, setStock] = useState({
     columns: [
       {
@@ -43,9 +41,7 @@ export default function TablaMuestraStock(props) {
   });
 
   async function stkitemsreduc(Grupo, Rubro) {
-    console.log('esta en el II ', Grupo)
     const result = await stkitemsred(Grupo, Rubro);
-    console.log('esta en el III result ', result)
     setStock({ ...stock, datastock: result });
   }
 
@@ -73,13 +69,7 @@ export default function TablaMuestraStock(props) {
             title="Stock"
             columns={stock.columns}
             data={stock.datastock}
-          // actions={[
-          //   {
-          //     icon: () => <AutorenewIcon />,
-          //     tooltip: "Refrescar",
-          //     isFreeAction: true,
-          //     onClick: () => stkitemsreduc(),
-          //   }]}
+
           ></MaterialTable>
         </DialogContentText>
       </DialogContent>

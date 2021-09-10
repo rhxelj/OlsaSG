@@ -14,29 +14,11 @@ import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
-// import FormHelperText from '@material-ui/core/FormHelperText';
-// import FormLabel from '@material-ui/core/FormLabel';
-
-// import CreateIcon from '@material-ui/icons/Create';
-// import IconButton from '@material-ui/core/IconButton';
-
-// import Dialog from "@material-ui/core/Dialog";
-// import DialogContent from "@material-ui/core/DialogContent";
-// import DialogActions from "@material-ui/core/DialogActions";
-
-// import MenuItem from "@material-ui/core/MenuItem";
-// import DialogContentText from '@material-ui/core/DialogContentText';
-// import Select from '@material-ui/core/Select';
-// import AgregarMonedas from './StkMonedasAgregar'
-// import { makeStyles } from '@material-ui/core/styles';
 
 class ModPrecios extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // StkGrupoDesc: this.props.StkGrupoDesc,
-      // StkGrupoAbr: this.props.StkGrupoAbr,
-      // StkGrupoContRubro:this.props.StkGrupoContRubro,
       stkgrupo: [],
       codigo_grupo: "Valor Inicial",
       idStkTipoProveed: 0,
@@ -44,11 +26,6 @@ class ModPrecios extends Component {
       proveedores: [],
       grupos: [],
       rubros: [],
-      // idStkMonedas: "",
-      // StkMonedasDescripcion: "",
-      // StkMonedasCotizacion: 0,
-      // stkmonedas: [],
-      // unmed:[],
       nuevocodigo: 0,
       open: true,
       Importe: 0, // borrar
@@ -114,40 +91,8 @@ class ModPrecios extends Component {
 
   submitModPrecio() {
     this.ModPrecio();
-    // .then(
-    //   this.setState(()=>({
-    //     idProveedores: 0,
-    //     idStkGrupo: 0,
-    //     StkRubroAbr: "",
-    //     Importe: 0,
-    //     Porcentaje: 0,
-    //   }))
-    //   )
+
   }
-  //     var idProveedores = parseInt(state.idProveedores , 10)
-  //     var idStkGrupo = parseInt(state.idStkGrupo , 10)
-
-  //     var Importe = parseInt (state.Importe , 10)
-  //     var Porcentaje = parseInt (state.Porcentaje , 10)
-
-  //     if(( idProveedores && !idStkGrupo ) || ( !idProveedores && idStkGrupo )){
-  //       if( ( Importe && !Porcentaje ) || ( !Importe && Porcentaje ) ) {
-  //         // alert(`Correcto Importe = ${Importe} Porcentaje = ${Porcentaje}`)
-  //         // this.toggle("modprecio")
-  //         this.ModPrecio()
-  //       }else
-  //         alert(`InCorrecto Importe = ${Importe} Porcentaje = ${Porcentaje}`)
-  //     }else
-
-  //       alert("Icorrecto Solo un valor puede ser 0 id grupo o id proveedor")
-  //     }
-
-  // updateField(field) {
-  //   this.setState({
-  //     [field.target.id]: field.target.value
-  //   });
-  //   console.log("ESTADO :" + field.target.id + " Valor :" + field.target.value);
-  // }
 
   toggle = arg => {
     this.setState(prevState => ({
@@ -251,19 +196,7 @@ class ModPrecios extends Component {
         this.setState({ rubros: rubros });
       });
   };
-  // submitGrupo= (e) => {
-  //   e.preventDefault();
-  //   this.modificaGrupo();
-  //   this.props.read()
-  //   this.props.toggleModificar();
-  // }
-
-  // componentWillMount(){
-  //   // this.proveedoresleer()
-  //   // this.leestkgrupo()
-  //   this.unmedleer()
-  //   this.leetmon()
-  // }
+ 
 
   componentDidMount() {
     this.proveedoresleer();
@@ -274,14 +207,11 @@ class ModPrecios extends Component {
   render() {
     return (
       <div>
-        {/* {Mensajes("FUNCIONO!!")} */}
-
         {this.state.toggle.mensaje && (
           <Mensajes
             msg={this.state.msg_respuesta}
             toggle={() => this.toggle("mensaje")}
           >
-            {/* <h1>DIALOGO</h1> */}
           </Mensajes>
         )}
 
@@ -292,24 +222,12 @@ class ModPrecios extends Component {
             <Grid item xs={4} sm={4} lg={4}></Grid>
           </Grid>
 
-          {/* <h1>ModPrecio</h1>
-        <br></br>
-        <br></br>
-        <h2>Estos son los datos que tienen que estar en este componente</h2>
-        <br></br>
-        <br></br> */}
-          <Grid container spacing={24}>
-            {/* <p>[Codigo de Proveedores | 0 ]</p> */}
-
-            {/* {this.state.proveedores.map(proveedor => {
-           return(<p>{proveedor.ProveedoresDesc}</p>)
-          })
-          } */}
-            <Grid item xs={1} sm={1} lg={1}></Grid>
-
+        
+          {/* <Grid container spacing={12}> */}
+           
+          <Grid container >
+            <Grid item xs={3} sm={3} lg={3}>
             <FormControl component="fieldset">
-              {/* <FormLabel component="legend">Elija una opcion</FormLabel> */}
-              {/* <RadioGroup aria-label="gender" name="pgr" value={this.state.value} onChange={this.handleC}> */}
               <RadioGroup
                 aria-label="gender"
                 name="pgr"
@@ -338,12 +256,10 @@ class ModPrecios extends Component {
                   onClick={() => this.toggleTipo("rubro")}
                 />
               </RadioGroup>
-              {/* <FormHelperText>labelPlacement start</FormHelperText> */}
-            </FormControl>
+              </FormControl>
+              </Grid>
 
             <Grid item xs={3} sm={3} lg={3}>
-              <br></br>
-              <br></br>
               {this.state.toggle.proveedor && (
                 <TextField
                   id="idProveedores"
@@ -358,15 +274,11 @@ class ModPrecios extends Component {
                       key={proveedor.idProveedor}
                       value={proveedor.idProveedores}
                     >
-                      {/* {proveedor.idProveedores}  */}
                       {proveedor.ProveedoresDesc}
                     </option>
                   ))}
                 </TextField>
               )}
-              {/* </Grid> */}
-              {/* <p>[ Codigo de Grupo | 0 ]</p> */}
-              {/* <Grid item  xs={3} sm={3} lg={3}> */}
               {this.state.toggle.grupo && (
                 <TextField
                   id="idStkGrupo"
@@ -378,17 +290,14 @@ class ModPrecios extends Component {
                   <option value="0"></option>
                   {this.state.grupos.map(grupo => (
                     <option
-                      // key={grupo.idStkGrupo}
                       value={grupo.idStkGrupo}
                     >
-                      {/* {grupo.idStkGrupo}  */}
                       {grupo.StkGrupoDesc}
                     </option>
                   ))}
                 </TextField>
               )}
-              {/* </Grid> */}
-
+           
               {this.state.toggle.rubro && (
                 <TextField
                   id="idStkRubro"
@@ -400,21 +309,17 @@ class ModPrecios extends Component {
                   <option value="0"></option>
                   {this.state.rubros.map(rubro => (
                     <option
-                      // key={grupo.idStkGrupo}
                       value={rubro.StkRubroAbr}
                     >
-                      {/* {grupo.idStkGrupo}  */}
                       {rubro.StkRubroDesc}
                     </option>
                   ))}
                 </TextField>
               )}
             </Grid>
-
-            {/* <p>[ Importe = 0 || Importe != 0 ]</p> */}
+            <Grid item xs={3} sm={3} lg={3}>
 
             <FormControl component="fieldset">
-              {/* <FormLabel component="legend">Elija una opcion</FormLabel> */}
               <RadioGroup
                 aria-label="ip"
                 name="ip"
@@ -436,9 +341,8 @@ class ModPrecios extends Component {
                   onClick={() => this.toggleTipo("porcentaje")}
                 />
               </RadioGroup>
-              {/* <FormHelperText>labelPlacement start</FormHelperText> */}
             </FormControl>
-
+            </Grid>
             <Grid item xs={1} sm={1} lg={1}>
               {this.state.toggle.importe && (
                 <TextField
@@ -450,13 +354,8 @@ class ModPrecios extends Component {
                   placeholder="Importe"
                   value={this.state.Importe}
                   onChange={this.handleChange("Importe")}
-                // onKeyPress={(event) => {if (event.key === 'Enter') document.getElementById('button--submit').focus();}}
                 />
               )}
-              {/* </Grid> */}
-              {/* <p>[ % | 0 ]</p> */}
-
-              {/* <Grid item  xs={2} sm={2} lg={2}> */}
               {this.state.toggle.porcentaje && (
                 <TextField
                   margin="dense"
@@ -467,17 +366,14 @@ class ModPrecios extends Component {
                   placeholder="Porcentaje"
                   value={this.state.Porcentaje}
                   onChange={this.handleChange("Porcentaje")}
-                // onKeyPress={(event) => {if (event.key === 'Enter') document.getElementById('button--submit').focus();}}
                 />
               )}
             </Grid>
             <Grid item xs={1} sm={1} lg={1}></Grid>
-            {/* Nota para Rogelio falta llamar al backend que hizo sandra y mandar los cuatro datos que recabo de aca.         */}
 
             <Button
               color="primary"
               onClick={() => this.submitModPrecio()}
-            // onClick={()=>this.ModPrecio()}
             >
               Enviar
             </Button>

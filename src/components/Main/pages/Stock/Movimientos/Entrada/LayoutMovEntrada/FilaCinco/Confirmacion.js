@@ -52,16 +52,13 @@ export default function AlertDialog(props) {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
+        {console.log('esta en Confirmación')}
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             {contentText}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          {/* <Button onClick={imprimirEtiquetas} color="primary" autoFocus> */}
-          {/* <Button onClick={imprimir_etiquetas} color="primary" autoFocus>
-            Imprimir
-          </Button> */}
           <Button onClick={handleClose} color="primary" autoFocus>
             Aceptar
           </Button>

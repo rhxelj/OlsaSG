@@ -45,7 +45,6 @@ export default function FilaUnoIzq() {
   async function conftipoleer(anexo) {
     setState({ ...state, DescripPresup: '' });
     const result = await leePresupConfTipoLeeAnexo(anexo);
-    console.log('conftipoleer result  ', result)
     setState({ ...state, tipopresup: result });
   }
 

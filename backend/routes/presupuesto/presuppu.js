@@ -114,6 +114,7 @@ router.get('/', (req, res, next) => {
                   result[0].Detalle = "Paños Unidos ( " + callargo.toFixed(2) + ' x ' + anchoreal + " ) en : "
                   result[0].Largo = largo
                   result[0].Ancho = 0
+
                   datosenvio.push(result)
                   i++
                   if (i === totalreg) {
