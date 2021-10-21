@@ -40,14 +40,12 @@ export default function FilaAnexo(props) {
             ivasn: state.PresupIVA,
         },
     ];
-    // console.log('state.PresupMnMy  filaanexo  ', state.PresupMnMy)
     function sumar() {
         var nombre = ''
         var importetotal = 0.00
         var i = 0;
         while (i < datosanexo.length) {
             importetotal = importetotal + datosanexo[i].importea;
-            //  if (state.DatosPresupEleg.PresupConfTipoImprime === 'S') {
             if (datosanexo[i].PresupConfTipoImprime === 'S') {
                 nombre = nombre + ' c/' + datosanexo[i].AnexoMedida + ' ' + datosanexo[i].PresupConfTipoDesc
             }

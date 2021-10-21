@@ -152,10 +152,6 @@ export default function FilaCuatro(props) {
 
 
         <label>Cliente Existente</label>
-
-
-
-
         {textdata.map((data) => (
           <TextField
             key={data.id}

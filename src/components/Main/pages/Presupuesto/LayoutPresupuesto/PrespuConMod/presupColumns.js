@@ -15,7 +15,6 @@ export async function presupColumns() {
 }
 function columnsFill(objcliente) {
     return new Promise(function (resolve) {
-        //    console.log('objcliente  ', objcliente(1))
         resolve([
             {
                 title: "Presupuesto Nro",

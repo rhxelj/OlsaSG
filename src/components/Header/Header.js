@@ -73,7 +73,6 @@ function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
-
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -137,6 +136,7 @@ function Header() {
 
             <MenuItem component={Link} to="/PresupPant" onClick={handleClose}>Presupuesto</MenuItem>
             <MenuItem component={Link} to="/ListaPrecios" onClick={handleClose}>Lista de Precios</MenuItem>
+            <MenuItem component={Link} to="/OrdenTrabajoPant" onClick={handleClose}>Orden de Trabajo</MenuItem>
             <MenuItem component={Link} to="/PresupMuestra" onClick={handleClose}>Muestra Presupuesto</MenuItem>
             <MenuItem component={Link} to="/ModPrecios" onClick={handleClose}>Modifica Precios</MenuItem>
           </Menu>

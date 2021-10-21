@@ -14,11 +14,11 @@ import { presuprenglonleer } from "./PresupRenglonLeer";
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
-/*, `PresupRenglonLargo`, `PresupRenglonAncho`, `PresupRenglonImpUnit`, `PresupRenglonImpItem`*/
 export default function TablaMuestraRenglon(props) {
     const { open, handleClose, Presup } = props;
-    // const [maxWidth, setMaxWidth] = React.useState('sm');
+
     const [renglon, setRenglon] = useState({
+
         columns: [
             {
                 title: "Cantidad",
@@ -48,6 +48,11 @@ export default function TablaMuestraRenglon(props) {
                 field: "PresupRenglonImpItem",
                 type: "currency",
             },
+            {
+                title: "desc",
+                field: "PresupRenglonParamInt",
+                // type: "currency",
+            },
         ],
 
         datarenglon: [],
@@ -56,6 +61,7 @@ export default function TablaMuestraRenglon(props) {
     async function leerenglones(Presup) {
         const result = await presuprenglonleer(Presup);
         setRenglon({ ...renglon, datarenglon: result });
+
     }
 
     useEffect(() => {
@@ -90,7 +96,7 @@ export default function TablaMuestraRenglon(props) {
             <DialogActions>
                 <Button onClick={handleClose} color="secondary">
                     Cerrar
-        </Button>
+                </Button>
             </DialogActions>
         </Dialog>
     );

@@ -75,14 +75,6 @@ export default function PresupMuestra() {
                 ]}
                 columns={columns}
                 data={data}
-                // editable={{
-                //     onRowAdd: newData =>
-                //         onRowAdd(newData).then(() => dataFetch()),
-                //     onRowUpdate: (newData, oldData) =>
-                //         onRowUpdate(newData, oldData).then(() => dataFetch()),
-                //     onRowDelete: oldData =>
-                //         onRowDelete(oldData).then(() => dataFetch()),
-                // }}
                 icons={tableIcons}
                 localization={localization}
                 options={{
