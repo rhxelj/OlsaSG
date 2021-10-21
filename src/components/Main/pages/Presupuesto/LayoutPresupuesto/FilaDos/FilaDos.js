@@ -24,6 +24,7 @@ import FilaTanques from "../FilaTanques/FilaTanques"
 import FilaPiletasEnr from "../FilaPiletas/FilaPiletasEnr"
 import FilaToldosExt from "../FilaToldosExt/FilaToldosExt";
 import FilaDetDesc from "./FilaDetDesc"
+import { isAssertionExpression } from "typescript";
 
 
 export default function FilaDos() {
@@ -145,46 +146,32 @@ export default function FilaDos() {
       PresupLargo = datosrenglon1[0][0].Largo;
       PresupAncho = datosrenglon1[0][0].Ancho;
 
-      importeanexo = state.renglonanexo.ImpItemAnexo
+      importeanexo = 0
+
+
       if (state.renglonanexo.length !== 0) {
-        //ImpItemCAnexos = ImpItem + state.renglonanexo.ImpItemAnexo * state.PresupCantidad;
-        ImpUnitario = ImpUnitario * 1 + importeanexo * 1
+        importeanexo = state.renglonanexo.ImpItemAnexo
+        // ImpUnitario = ImpUnitario * 1 + importeanexo * 1
+        ImpUnitario = ImpUnitario * 1 + importeanexo
         ImpItem = ImpItem + importeanexo * state.PresupCantidad;
         StkRubroDesc = StkRubroDesc + state.renglonanexo.StkRubroDesc;
       }
       //acá veo si es paño unido o no porque sino tiene ancho o largo en 0, no es confección
 
       if (PresupLargo === 0 || PresupAncho === 0) {
-        //   ImpItem = datosrenglon1[0][0].ImpUnitario;
-        ImpItem = ImpUnitario;
+        ImpItem = ImpUnitario * 1;
+        // console.log('esta aca I')
+        // ImpItem = ImpUnitario * 1 + importeanexo
 
       }
+
 
       if (PresupLargo === 0 && PresupAncho === 0) {
         ImpItem = datosrenglon1[0][0].ImpUnitario * PresupCantidadM;
+        // console.log('esta aca II')
+        // ImpItem = (datosrenglon1[0][0].ImpUnitario * 1 + importeanexo) * PresupCantidadM;
 
       }
-
-
-
-      // if (PresupLargo === 0 || PresupAncho === 0) {
-      //   ImpItem = datosrenglon1[0][0].ImpUnitario;
-
-      // }
-
-      // if (PresupLargo === 0 && PresupAncho === 0) {
-      //   ImpItem = datosrenglon1[0][0].ImpUnitario * PresupCantidadM;
-      // }
-
-      // if (state.renglonanexo.length !== 0) {
-      //   //ImpItemCAnexos = ImpItem + state.renglonanexo.ImpItemAnexo * state.PresupCantidad;
-      //   ImpUnitario = ImpUnitario * 1 + state.renglonanexo.ImpItemAnexo * 1
-      //   ImpItem = ImpItem + state.renglonanexo.ImpItemAnexo * state.PresupCantidad;
-      //   StkRubroDesc = StkRubroDesc + state.renglonanexo.StkRubroDesc;
-      // }
-
-
-
     }
 
 
@@ -192,9 +179,7 @@ export default function FilaDos() {
 
     else {
       StkRubroDesc = detalle;
-      // ImpUnitario = datosrenglon1
       ImpUnitario = datosrenglon1[0]
-      // ImpItem = datosrenglon1 * PresupCantidadM;
       ImpItem = datosrenglon1[0] * PresupCantidadM;
     }
     var datospresup = [
@@ -206,9 +191,9 @@ export default function FilaDos() {
         ImpUnitario,
         ImpItem,
         datoscalculos,
-        //ImpItemCAnexos,
       },
     ];
+
     if (state.renglonanexo.length !== 0) {
       setDatosRenglon([...datosrenglon, state.renglonanexo]);
       setDatosRenglon([...datosrenglon, datospresup[0]]);
@@ -216,11 +201,7 @@ export default function FilaDos() {
       setDatosRenglon([...datosrenglon, datospresup[0]]);
     }
 
-    // handleClickOpen();
   }
-  // const handleClickOpen = () => {
-  //   setOpen(true);
-  // };
 
   const classes = useStyles();
   const textdata = [
@@ -248,8 +229,6 @@ export default function FilaDos() {
         state.stkrubro.length > 0 &&
 
         textdata.map((data) => (
-          // <Grid key={index} item xs={1}>
-          // <Grid key={index} item >
           <TextField
             key={data.id}
             id={data.id}
@@ -274,7 +253,6 @@ export default function FilaDos() {
           id="PresupCantidad"
           type="number"
           label="Cantidad"
-          // defaultValue="1"
           fullWidth
           margin="dense"
           value={state.PresupCantidad}

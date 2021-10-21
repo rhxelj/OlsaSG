@@ -6,7 +6,7 @@ import { localization } from "../../../../../lib/material-table/localization";
 import FilaCuatro from "../FilaCuatro/FilaCuatro";
 import CurrencyTextField from "@unicef/material-ui-currency-textfield";
 import { PresupPreview } from "../PresupPreview"
-
+// import MuiAlert from '@material-ui/lab/Alert';
 
 //npm install pdf-viewer-reactjs
 import {
@@ -26,20 +26,15 @@ export default function TablaPresup(props) {
 
 
   // Esto es para poder consumir los datos del CONTEXTAPI
-  // const { state, setState } = useContext(PresupPantContext);
   const { state } = useContext(PresupPantContext);
   const { datosrenglon, setDatosRenglon } = useContext(PresupPantContext);
-  // const [setImprimirTF] = useState({ imprimir: false });
   const [anexos, setAnexos] = useState({ anexos: false });
   const [ppreview, setPPreview] = useState({ ppreview: false });
   const [filacuatro, setFilacuatro] = useState({ filacuatro: false });
 
-
-
   const columns = state.columns;
 
   const [suma, setSuma] = useState(0);
-  console.log('datosrengpresup  tablapresup  ', state.datosrengpresup)
 
   function sumar() {
     var totalpresup = 0,
@@ -52,16 +47,6 @@ export default function TablaPresup(props) {
     setSuma(totalpresup);
   }
 
-
-  // function graba() {
-  //   handleClickOpen();
-  // }
-
-
-
-  // const handleClickOpen = () => {
-  //   setFilacuatro({ filacuatro: true })
-  // };
 
   const handleClose = () => {
     setFilacuatro(false);
@@ -84,21 +69,10 @@ export default function TablaPresup(props) {
             localization={localization}
 
             options={{
-              // headerStyle: {
-              //   backgroundColor: '#01579b',
-              //   color: '#FFF',
-              // },
-              // toolbar: true,
-              // toolbarButtonAlignment: 'right',
               search: false,
               exportAllData: true,
               exportButton: true,
-              // showTextRowsSelected: false,
-              // showSelectAllCheckbox: true,
-              // selection: true,
-              // selectionProps: ({
 
-              // }),
             }}
             editable={{
               onRowDelete: (oldData) =>
@@ -127,7 +101,6 @@ export default function TablaPresup(props) {
                 icon: () => <tableIcons.Save style={{ color: blue[500] }} />,
                 tooltip: "Graba",
                 isFreeAction: true,
-                // onClick: () => graba(),
                 onClick: () => setFilacuatro({ filacuatro: true })
               },
               {
@@ -149,15 +122,19 @@ export default function TablaPresup(props) {
               Toolbar: (props) => (
                 <div>
                   <MTableToolbar {...props} />
-
-                  <CurrencyTextField
-                    id="Suma"
-                    label="Total presupuesto : "
-                    value={suma}
-                  />
-
+                  <Grid container>
+                    <Grid xs={4}>
+                      <CurrencyTextField
+                        id="Suma"
+                        label="Total presupuesto : "
+                        value={suma}
+                      />
+                    </Grid>
+                    <Grid xs={4}>
+                      {state.renglonanexo.length !== 0 && <h3>Tiene Anexos</h3>}
+                    </Grid>
+                  </Grid>
                 </div>
-
               ),
             }}
           />

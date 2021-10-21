@@ -66,11 +66,12 @@ router.get('/', (req, res, next) => {
         }
 
         if (altovolado === 0) {
-          MOTarmado = MOTarmado - 15
+          //   MOTarmado = MOTarmado - 15
           largo = largo + 0.5
         }
         else {
-          largo = largo + 0.5 + (altovolado / 100)
+          largo = largo + 0.70 + (altovolado / 100) //agrego .5 del toldo + .2 del volado para doblar
+          MOTarmado = MOTarmado + (17 * ancho)
         }
 
         valorMOTmin = result[0].costoMOT * coefMOT / 60
@@ -172,10 +173,10 @@ router.get('/', (req, res, next) => {
 
             q = ['Select ',
               'StkRubroDesc, StkRubroAbr, ',
-              '((StkRubroCosto * StkMonedasCotizacion * ', coeficiente,
+              '(StkRubroCosto * StkMonedasCotizacion * ', coeficiente,
               ' * ', panios,
               ' * ', largo, ')',
-              '+ ', MOTarmado, ')',
+              // '+ ', MOTarmado, ')',
               ' as ImpUnitario, ',
               'StkRubroCosto, ',
               'StkMonedasCotizacion ',
@@ -183,6 +184,8 @@ router.get('/', (req, res, next) => {
               'where StkRubro.StkRubroAbr = "', StkRubroAbrP, '" ',
               'and StkRubro.StkRubroTM = idStkMonedas '
             ].join('')
+
+
 
             if (detallep == '') {
               detalle = "Toldo Barracuadra "
@@ -201,7 +204,15 @@ router.get('/', (req, res, next) => {
 
 
                   result[0].ImpUnitario = result[0].ImpUnitario + importetbr
+                  console.log('result[0].ImpUnitario q  ', result[0].ImpUnitario)
                   result[0].ImpUnitario = result[0].ImpUnitario + (valorMOTmin * MOTarmado)
+
+                  console.log('result[0].ImpUnitario q  ', result[0].ImpUnitario)
+                  console.log(' (valorMOTmin * MOTarmado)  ', valorMOTmin)
+                  console.log(' (valorMOTmin * MOTarmado) ', MOTarmado)
+                  console.log(' (valorMOTmin * MOTarmado) ', (valorMOTmin * MOTarmado))
+
+
                   if (tipomecanismo != 'Manual') {
                     result[0].Detalle = detalle + " con Motor  " + detallemotor + "  y volado de " + altovolado + " cm. en : "
                     result[0].ImpUnitario = result[0].ImpUnitario + importemecanismo

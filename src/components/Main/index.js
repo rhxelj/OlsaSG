@@ -19,6 +19,7 @@ import StkItems from "./pages/Stock/Items/StkItems";
 
 import PresupPant from "./pages/Presupuesto/PresupPant.jsx";
 import PresupMuestra from "./pages/Presupuesto/LayoutPresupuesto/PrespuConMod/PresupMuestra.jsx"
+import OrdenTrabajoPant from "./pages/OrdenTrabajo/OrdenTrabajoPant.jsx";
 // import Presupuestos from './pages/Presupuestos/Presupuestos'
 import PresupConfTipo from "./pages/Presupuesto/PresupConfTipo/PresupConfTipo";
 import PresupDetPie from "./pages/Presupuesto/PresupDetPie/PresupDetPie";
@@ -54,6 +55,7 @@ const Main = () => (
       <Route path="/ListaPrecios" component={ListaPrecios} />
       <Route path="/PresupPant" component={PresupPant} />
       <Route path="/PresupMuestra" component={PresupMuestra} />
+      <Route path="/OrdenTrabajoPant" component={OrdenTrabajoPant} />
 
       {/* <Route path="/Presupuestos" component={Presupuestos} /> */}
       {/* <Route path="/PresupPantVie" component={PresupPantVie} /> */}
