@@ -5,6 +5,7 @@ import CodigoError from "../../../../lib/CodigoError";
 import Mensaje from "../../../../lib/Mensaje";
 
 export function stkGrupoAgregar(props) {
+  // console.log('props en grupoagregar  ', props)
   const {
     StkGrupoAbr,
     StkGrupoDesc,

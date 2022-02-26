@@ -2,21 +2,12 @@ var express = require("express");
 var router = express.Router();
 var path = require("path");
 var moment = require("moment");
+var variables = require('../../public/variables')
+
 //var conexion = require('../conexion');
-var PdfPrinter = require('../../node_modules/pdfmake/src/printer');
-var pdfmake = require('../../node_modules/pdfmake')
+var PdfPrinter = require('pdfmake');
 var dateFormat = require('dateformat');
 var url = require('url');
-// const { ControlPointDuplicate } = require("@material-ui/icons");
-
-// conexion.connect(function (err) {
-//     if (!err) {
-//         console.log("base de datos conectada en imppresup");
-//     } else {
-//         console.log("no se conecto en imppresup");
-//     }
-// });
-
 var router = express();
 
 var TotalPresup = 0
@@ -26,24 +17,37 @@ const formatter = new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 2
 })
 
+// /SistOLSA/OlsaSG/backend/node_modules/pdfmake/examples
 
+var fonts = {
+    Roboto: {
+        normal: '/home/sandra/SistOLSA/OlsaSG/backend/node_modules/pdfmake/examples/fonts/Roboto-Regular.ttf',
+        bold: '/home/sandra/SistOLSA/OlsaSG//backend/node_modules/pdfmake/examples/fonts/Roboto-Medium.ttf',
+        italics: '/home/sandra/SistOLSA/OlsaSG/backend/node_modules/pdfmake/examples/fonts/Roboto-Italic.ttf',
+        bolditalics: '/home/sandra/SistOLSA/OlsaSG/backend/node_modules/pdfmake/examples/fonts/Roboto-MediumItalic.ttf'
+    }
+};
 
 router.post("/", function (req, res, next) {
-
+    console.log('dirpresupdocumento  ', variables.dirpresupdocumento)
     var datospresup = req.body.datospresup
-    console.log('datospresup ')
-    console.log(datospresup)
     var descrip = req.body.descrip
     var Presupuestonro = req.body.nroPresupuesto
     var d = new Date();
     var Fecha = dateFormat(d, "dd-mm-yyyy ");
     var condicionpago1 = []
     var tipoleygral = 0
+    var operador = ''
     var i = 0
     req.body.condpagoeleg.map(() => {
         if (req.body.condpagoeleg[i].tableData.checked == true) {
-            condicionpago1.push(req.body.condpagoeleg[i].PresupDetPieLeyenda)
-            tipoleygral = tipoleygral + req.body.condpagoeleg[i].PresupDetPieLeyenda.search('seña')
+            if (req.body.condpagoeleg[i].PresupDetPieLeyenda.search('Operador') === 0) {
+                operador = req.body.condpagoeleg[i].PresupDetPieLeyenda
+            }
+            else {
+                condicionpago1.push(req.body.condpagoeleg[i].PresupDetPieLeyenda)
+                tipoleygral = tipoleygral + req.body.condpagoeleg[i].PresupDetPieLeyenda.search('seña')
+            }
         }
         i++
     }
@@ -146,7 +150,6 @@ router.post("/", function (req, res, next) {
     if (condicionpago1.length > 0) {
         condpag.push([{ text: 'Condiciones de presupuesto', style: 'resaltado' }])
         condpag.push(condicionpago1)
-
         if (tipoleygral < 0) {
             condpaggral.push([{ text: 'El precio acordado, se mantiene, hasta 5 días posteriores a la fecha de entrega establecida.', style: 'resaltado' }])
             condpaggral.push([{ text: 'Pasados los 5 días SE ACTUALIZARÁ A LA FECHA DE RETIRO', style: 'resaltado' }])
@@ -158,27 +161,14 @@ router.post("/", function (req, res, next) {
             condpaggral.push([{ text: 'Si la mercadería no se retira dentro de los 60 días posteriores a la fecha establecida para la entrega, se considerará abandonada y nuestra empresa dispondrá de ella, incluso para su destrucción, tomando la seña como indemnización del trabajo realizado', style: 'resaltado' }])
         }
     }
-    pdfmake.addFonts
-    var chartLines = [];
-    var chartText = [];
-    var chart = [{ stack: chartText }, { canvas: chartLines }];
-    var height = 130;
-    var yAxisWidth = 30;
-    var xAxisHeight = 30;
-    var tickSize = 5;
-    var left = 10;
-    var width = 480;
-    var top = 30;
-    var fonts = {
-        Roboto: {
-            normal: '../backend/node_modules/pdfmake/fonts/Roboto/Roboto-Regular.ttf',
-            bold: '../backend/node_modules/pdfmake/fonts/Roboto/Roboto-Medium.ttf',
-            italics: '../backend/node_modules/pdfmake/fonts/Roboto/Roboto-Italic.ttf',
-            bolditalics: '../backend/node_modules/pdfmake/fonts/Roboto/Roboto-MediumItalic.ttf'
-        }
-    };
+
+
+
     var printer = new PdfPrinter(fonts);
     var fs = require('fs');
+    var chartLines = [];
+    var chartText = [];
+
     var docDefinition = {
         pageMargins: [40, 130, 40, 40],
         header: {
@@ -287,6 +277,10 @@ router.post("/", function (req, res, next) {
                     ]
                 }
             },
+            {
+                text: operador,
+                style: 'textoOperador',
+            },
         ],
 
         styles: {
@@ -370,30 +364,28 @@ router.post("/", function (req, res, next) {
                 alignment: 'left',
                 fillColor: '#ffff38',
             },
+            textoOperador: {
+                fontSize: 8,
+                margin: [0, 0, 30, 0],
+                bold: false,
+                color: 'black',
+                //  markerColor: 'red',
+                alignment: 'right',
+                //fillColor: '#ffff38',
+            },
 
         }
 
     };
-    //esto funciona
+
     var pdfDoc = printer.createPdfKitDocument(docDefinition);
-    //  require('../../../src/docspdf')
-    // require('../../../build/static/media')
     pdfDoc.pipe(fs.createWriteStream('/home/sandra/SistOLSA/OlsaSG/src/components/Main/pages/Presupuesto/static/media/basics.pdf'));
-    //  pdfDoc.pipe(fs.createWriteStream('/home/sandra/SistOLSA/OlsaSG/src/PresupBase/basics.pdf'));
-    // pdfDoc.pipe(fs.createWriteStream('../src/docspdf/basics.pdf'));
-    pdfDoc.pipe(fs.createWriteStream(('/home/sandra/Documentos/OLSAFrecuentes/PresupSistema/' + nombrepresup)));
+    // pdfDoc.pipe(fs.createWriteStream(('/home/sandra/Documentos/OLSAFrecuentes/PresupSistema/' + nombrepresup)));
+    pdfDoc.pipe(fs.createWriteStream((variables.dirpresupdocumento + nombrepresup)));
+
     pdfDoc.end();
+
 
 });
 
-//conexion.end;
 module.exports = router;
-
-
-// function horizontalLine(x, y, length) {
-//     return { type: 'line', x1: x, y1: y, x2: x + length, y2: y };
-// }
-
-// function verticalLine(x, y, height) {
-//     return { type: 'line', x1: x, y1: y, x2: x, y2: y + height };
-// }

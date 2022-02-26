@@ -20,6 +20,7 @@ function columnsFill(objtipoanexo) {
                 field: "PresupConfTipoDesc",
                 lookup: objtipoanexo,
             },
+
             {
                 title: "Cantidad",
                 field: "AnexoMedida",

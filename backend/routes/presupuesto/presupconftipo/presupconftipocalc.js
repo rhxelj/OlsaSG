@@ -25,9 +25,12 @@ router.get("/", function (req, res, next) {
     minmay = datos.minmay
     ivasn = datos.ivasn
   })
+
   //para sacar el costo de MOT
   //SELECT (PresupConfMinMOT * costoMOT / 60) as CostoMotCon FROM BasePresup.PresupConfTipo, BasePresup.PresupParam where PresupConfTipoDesc ='MORRAL' and PresupConfMinMOT <> 0;
   q2 = ['select * from BasePresup.PresupParam'].join(' ')
+
+
   conexion.query(q2,
     function (err, result2) {
       if (err) {
@@ -55,7 +58,9 @@ router.get("/", function (req, res, next) {
           if (result1 == '') {
             vlrMOT = 0
           }
-          else { vlrMOT = result1[0].CostoMotCon }
+          else {
+            vlrMOT = result1[0].CostoMotCon
+          }
         }
 
         var q2 = ['SELECT PresupConfTipoImprime as PresupConfTipoImprime FROM BasePresup.PresupConfTipo where PresupConfTipoDesc = "' + tipo + '"'].join("");
@@ -73,6 +78,7 @@ router.get("/", function (req, res, next) {
             'where  PresupConfTipoRubro = BaseStock.StkRubro.StkRubroAbr and ' +
             'BaseStock.StkRubro.StkRubroTM = BaseStock.StkMonedas.idStkMonedas and ' +
             'PresupConfTipoDesc = "' + tipo + '"'].join("");
+
           conexion.query(q, function (err, result) {
             if (err) {
               console.log(err);
@@ -88,12 +94,14 @@ router.get("/", function (req, res, next) {
                 //     ImpUnitario = ((vlrMOT + vlrMAT) * coefgcia).toFixed(0)
                 ImpUnitario = parseInt((vlrMOT + vlrMAT) * coefgcia)
               }
+
               if (ivasn == 'CIVA') {
                 ImpUnitario = Math.ceil((ImpUnitario / 10) * 10)
               }
               else {
                 ImpUnitario = Math.ceil(((ImpUnitario / 1.21) / 10) * 10)
               }
+
               // if (ivasn == 'CIVA') {
               //   ImpUnitario
               // }

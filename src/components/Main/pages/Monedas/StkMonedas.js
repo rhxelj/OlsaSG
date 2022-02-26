@@ -31,7 +31,7 @@ import { localization } from "../../../lib/material-table/localization";
 // import { globalContext } from "../../../App";
 
 function Monedas() {
-  HeaderTitle("Monedas");
+  // HeaderTitle("Monedas");
   const [data, setData] = useState(initial_state);
   const [imprimirTF, setImprimirTF] = useState(initial_open);
   // const { valor, setValor } = useContext(globalContext);
@@ -86,7 +86,7 @@ function Monedas() {
       <MaterialTable
         icons={tableIcons}
         localization={localization}
-        title=""
+        title="MONEDAS"
         columns={columns}
         data={data}
         actions={[

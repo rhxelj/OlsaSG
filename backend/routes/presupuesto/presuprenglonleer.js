@@ -1,4 +1,5 @@
 var express = require("express");
+const { isEmpty } = require("lodash");
 var router = express.Router();
 var path = require("path");
 var conexion = require("../conexion");
@@ -24,5 +25,5 @@ router.get("/", function (req, res, next) {
     }
   });
 });
-conexion.end;
+// conexion.end;
 module.exports = router;

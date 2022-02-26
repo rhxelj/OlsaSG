@@ -27,6 +27,7 @@ router.post("/", function (req, res, next) {
     PresupConfTipoImprime: req.body.PresupConfTipoImprime.toUpperCase(),
     PresupConfTipoMinMOT: req.body.PresupConfTipoMinMOT,
     PresupConfTipoBack: '',
+    PresupConfTipoPElab: 'S'
   };
   conexion.query("INSERT INTO BasePresup.PresupConfTipo SET ?", registro, function (err, result) {
     if (err) {

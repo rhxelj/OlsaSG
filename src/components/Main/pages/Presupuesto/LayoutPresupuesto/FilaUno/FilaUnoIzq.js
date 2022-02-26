@@ -1,15 +1,9 @@
 import React, { useEffect } from "react";
 import {
-
   Grid,
-
   TextField,
 } from "@material-ui/core";
-// import IconButton from '@material-ui/core/IconButton';
-// import AssignmentReturnedIcon from '@material-ui/icons/AssignmentReturned';
-// import {
-//   green,
-// } from "@material-ui/core/colors";
+
 
 
 import leePresupConfTipoLeerDesc from "../../leePresupConfTipoLeerDesc"
@@ -17,49 +11,42 @@ import leePresupConfTipoLeeAnexo from "../../leePresupConfTipoLeeAnexo"
 // Context
 import { useContext } from "react";
 import { PresupPantContext } from "../../PresupPant";
-// import { stat } from "fs";
 
 export default function FilaUnoIzq() {
-  // const [selectedValue, setSelectedValue] = React.useState("");
   const { state, setState } = useContext(PresupPantContext);
-  // this.state = {
-  //   value: { DescripPresup: '' },
-  // };
-
+  var anexo = 'N'
   const handleChange = (event) => {
-
-    // setSelectedValue(event.target.value);
     var descripcion = event.target.value
     setState({ ...state, PresupConfTipoDesc: event.target.value });
-
     leerdesc(descripcion)
   };
 
   async function leerdesc(descripcion) {
     const result = await leePresupConfTipoLeerDesc(descripcion);
-    console.log('leerdesc result  ', result)
     setState({ ...state, DatosPresupEleg: result });
 
   }
 
-  async function conftipoleer(anexo) {
+  async function conftipoleer(anexo, prodelab) {
+
     setState({ ...state, DescripPresup: '' });
-    const result = await leePresupConfTipoLeeAnexo(anexo);
+    const result = await leePresupConfTipoLeeAnexo(anexo, prodelab);
     setState({ ...state, tipopresup: result });
   }
 
 
-  // function limpia() {
-  //   setState()
-  // }
-  useEffect(() => {
 
+  useEffect(() => {
     setState({ ...state, DescripPresup: '' });
     if (state.tipopresup.length === 0) {
-      var anexo = 'N'
-      conftipoleer(anexo)
+      conftipoleer(anexo, state.PresupProducto)
     }
   }, [state.tipopresup]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    conftipoleer(anexo, state.PresupProducto)
+  }, [state.PresupProducto]);//  eslint-disable-line react-hooks/exhaustive-deps
+
 
 
   const textdata = [
@@ -82,7 +69,6 @@ export default function FilaUnoIzq() {
 
   return (
     <>
-
       <Grid item >
         {textdata.map(data => (
           <TextField

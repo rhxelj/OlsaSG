@@ -8,12 +8,14 @@ export const movimientos = [
   // { link: "/StkGenImpQR", primary: "ImprimeQR" },
   { link: "/StkMovEntrada", primary: "Entrada Mercadería" },
   { link: "/StkMovSalida", primary: "Salida de Disponible" },
+  { link: "/ImprimeDisponible", primary: "Impresión Mercadería Disponible" },
   { link: "/StkMovSalidaFinal", primary: "Salida Final" },
 ];
 
 export const tablas = [
   { primary: "Proveedores", link: "/Proveedores" },
   { primary: "Clientes", link: "/Clientes" },
+  { primary: "Transporte", link: "/Transporte" },
   { primary: "Monedas", link: "/StkMonedas" },
   { primary: "Grupos", link: "/StkGrupo" },
   { primary: "Rubros", link: "/StkRubro" },

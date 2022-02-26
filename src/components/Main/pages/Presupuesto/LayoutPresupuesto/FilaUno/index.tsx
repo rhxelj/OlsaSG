@@ -4,6 +4,7 @@ import React from "react";
 import FilaUnoIzq from "./FilaUnoIzq";
 import TipoCliente from "./TipoCliente";
 import TipoIVA from "./TipoIVA";
+import TipoProducto from "./TipoProducto"
 
 export default function Fila() {
   return (
@@ -19,7 +20,9 @@ export default function Fila() {
       > */}
       <TipoCliente />
       <TipoIVA />
+      <TipoProducto/>
       <FilaUnoIzq />
+    
 
       {/* </Grid> */}
     </>

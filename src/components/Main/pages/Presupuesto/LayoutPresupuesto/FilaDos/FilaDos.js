@@ -11,6 +11,7 @@ import { presupcalculador } from "../../PresupCalculador";
 import AssignmentReturnedIcon from '@material-ui/icons/AssignmentReturned';
 import {
   red,
+
 } from "@material-ui/core/colors";
 // import { presupgrabar } from "../../PresupGrabar";
 
@@ -24,7 +25,8 @@ import FilaTanques from "../FilaTanques/FilaTanques"
 import FilaPiletasEnr from "../FilaPiletas/FilaPiletasEnr"
 import FilaToldosExt from "../FilaToldosExt/FilaToldosExt";
 import FilaDetDesc from "./FilaDetDesc"
-import { isAssertionExpression } from "typescript";
+import FilaCargaDesc from "./FilaCargaDesc";
+import FilaAbolinada from "../FilaAbolinada/FilaAbolinada"
 
 
 export default function FilaDos() {
@@ -32,11 +34,6 @@ export default function FilaDos() {
   const { state, setState } = useContext(PresupPantContext);
   // const [datosrenglon, setDatosRenglon] = useState([]);
   const { datosrenglon, setDatosRenglon } = useContext(PresupPantContext);
-  // const [open, setOpen] = useState(false);
-
-  // const [setOpen] = useState(false);
-  // const [numPages, setNumPages] = useState(null);
-  // const [pageNumber, setPageNumber] = useState(1);
 
   // según el presupuesto elegido, lee la tabla y se decide que pide
   if (state.DatosPresupEleg.length !== 0) {
@@ -52,11 +49,16 @@ export default function FilaDos() {
     } else {
       rubrosn = "N";
     }
-    if (presuptipo === "LONAS ENROLLABLES" || presuptipo === "BRAZOS EXTENSIBLESs") {
+    if (presuptipo === "LONAS ENROLLABLES" || presuptipo === "TOLDO BARRACUADRA") {
       labellargo = 'Alto'
     }
     else {
-      labellargo = 'Largo'
+      if (presuptipo === "CARGA DESCRIPCION") {
+        labellargo = 'Importe'
+      }
+      else {
+        labellargo = 'Largo'
+      }
     }
 
   }
@@ -93,9 +95,11 @@ export default function FilaDos() {
         tipoojale: state.PresupOB,
         drenajesn: state.PresupDrenaje,
         detallep: state.DetallePresup,
+        detaller: state.DetalleRenglon,
         tamfaja: state.TamFaja,
         tamcristal: state.TamCristal,
         altovolado: state.AltoVolado,
+        presupojalesc: state.PresupOjalesC,
         sobrantemarco: state.SobranteMarco,
         tipomedeleg: state.TipoMedidaEleg,
         termbordeeleg: state.TermBordeEleg,
@@ -119,13 +123,13 @@ export default function FilaDos() {
 
 
     var datoscalculos = JSON.stringify(dcalculo);
+
     const datosrenglon1 = await presupcalculador(
       state.DatosPresupEleg[0],
       datoscalculos,
       presuptipo
     );
     //esto es porque va a ser un cálculo especial, tiene un backend para eso
-
     if (rubrosn === "S") {
       var unidmed = ''
       if (datosrenglon1[0][0].StkRubroUM) {
@@ -134,12 +138,14 @@ export default function FilaDos() {
       StkRubroDesc =
         unidmed +
         datosrenglon1[0][0].Detalle +
+        //" " + state.DetalleRenglon +
         datosrenglon1[0][0].StkRubroDesc;
 
       if (datosrenglon1[0][0].MDesc === 'S') {
         StkRubroDesc = StkRubroDesc +
-          " " + state.DescripPresup
 
+          " " + state.DescripPresup +
+          " " + state.DetalleRenglon
       }
       ImpUnitario = datosrenglon1[0][0].ImpUnitario;
       ImpItem = datosrenglon1[0][0].ImpUnitario * PresupCantidadM;
@@ -148,8 +154,9 @@ export default function FilaDos() {
 
       importeanexo = 0
 
-
+      console.log('state.renglonanexo.length  ', state.renglonanexo.length)
       if (state.renglonanexo.length !== 0) {
+
         importeanexo = state.renglonanexo.ImpItemAnexo
         // ImpUnitario = ImpUnitario * 1 + importeanexo * 1
         ImpUnitario = ImpUnitario * 1 + importeanexo
@@ -160,17 +167,11 @@ export default function FilaDos() {
 
       if (PresupLargo === 0 || PresupAncho === 0) {
         ImpItem = ImpUnitario * 1;
-        // console.log('esta aca I')
-        // ImpItem = ImpUnitario * 1 + importeanexo
-
       }
 
 
       if (PresupLargo === 0 && PresupAncho === 0) {
         ImpItem = datosrenglon1[0][0].ImpUnitario * PresupCantidadM;
-        // console.log('esta aca II')
-        // ImpItem = (datosrenglon1[0][0].ImpUnitario * 1 + importeanexo) * PresupCantidadM;
-
       }
     }
 
@@ -190,7 +191,8 @@ export default function FilaDos() {
         PresupAncho,
         ImpUnitario,
         ImpItem,
-        datoscalculos,
+        // datoscalculos,
+        dcalculo,
       },
     ];
 
@@ -305,12 +307,17 @@ export default function FilaDos() {
         {presuptipo === "CONFECCIONADA" && <FilaConf></FilaConf>}
         {presuptipo === "LONAS ENROLLABLES" && <FilaEnrollables></FilaEnrollables>}
         {presuptipo === "BOLSON PARA TANQUE" && <FilaTanques></FilaTanques>}
-        {presuptipo === "ENROLLABLE P/PILETA" && <FilaPiletasEnr></FilaPiletasEnr>}
+        {presuptipo === "PILETA ENROLLABLE" && <FilaPiletasEnr></FilaPiletasEnr>}
         {presuptipo === "TOLDO BARRACUADRA" && <FilaToldosExt></FilaToldosExt>}
-        {(presuptipo !== "UNIDAD" && rubrosn === "S") ? <FilaDetDesc></FilaDetDesc> : <></>}
-        <IconButton onClick={() => agregar()} color="primary" >
+        {presuptipo === "ABOLINADA" && <FilaAbolinada></FilaAbolinada>}
+        {(presuptipo !== "UNIDAD" && rubrosn === "S" && presuptipo !== "CARGA DESCRIPCION") ? <FilaDetDesc></FilaDetDesc> : <></>}
+        {(presuptipo === "CARGA DESCRIPCION") ? <FilaCargaDesc></FilaCargaDesc> : <></>}
+        <IconButton
+          onClick={() => agregar()}
+          color="primary" >
           <AssignmentReturnedIcon style={{ color: red[500] }} fontSize='large' titleAccess='Agregar' />
         </IconButton>
+
       </Grid>
       <TablaPresup
         data={datosrenglon}

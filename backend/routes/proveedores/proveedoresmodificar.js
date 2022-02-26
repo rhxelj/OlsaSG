@@ -1,11 +1,10 @@
 var express = require("express");
 var router = express.Router();
-var path = require("path");
 var conexion = require("../conexion");
 //var mysql = require('mysql');
 
 //var router = express();
-conexion.connect(function(err) {
+conexion.connect(function (err) {
   if (!err) {
     console.log("base de datos conectada en proveedoresmodificar");
   } else {
@@ -14,7 +13,7 @@ conexion.connect(function(err) {
 });
 var router = express();
 
-router.post("/?:id", function(req, res) {
+router.post("/?:id", function (req, res) {
   //indice = req.params.id;
   indice = req.params.id;
 
@@ -87,7 +86,7 @@ router.post("/?:id", function(req, res) {
     indice
   ].join("");
 
-  conexion.query(q, function(err, result) {
+  conexion.query(q, function (err, result) {
     if (err) {
       if (err.errno == 1062) {
         return res.status(409).send({ message: "error clave duplicada" });

@@ -4,7 +4,11 @@ export const initial_state = {
   //FilaUno
   PresupMnMy: "mn",
   PresupIVA: "CIVA",
+  PresupProducto: "PAE",
   // PresupTipo: "UNIDAD",
+
+  //FilaAbolinada
+  PresupOjalesC: 20,
 
   //FilaConf
   PresupCsSs: "cs",
@@ -89,6 +93,8 @@ export const initial_state = {
   tipopresup: [],
   indexborrado: 1000,
   DetallePresup: '',
+  DetalleRenglon: '',
+  ClientesDesc: '',
   //FilaTres
   dcalculoppresup: [],
   //condiciones de pago

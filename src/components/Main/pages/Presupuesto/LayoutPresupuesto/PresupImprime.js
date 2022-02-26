@@ -18,7 +18,7 @@ export const PresupImprime = (props, nomCliente, telcliente, suma, nroPresupuest
         .set("X-API-Key", "foobar")
         .then(function (res) {
             const respuesta = JSON.parse(res.text);
-            console.log(respuesta)
+            console.log('respuesta  ', respuesta)
         })
         .catch((err) => CodigoError(err));
 

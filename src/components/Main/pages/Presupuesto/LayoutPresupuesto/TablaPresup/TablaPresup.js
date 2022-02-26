@@ -6,9 +6,7 @@ import { localization } from "../../../../../lib/material-table/localization";
 import FilaCuatro from "../FilaCuatro/FilaCuatro";
 import CurrencyTextField from "@unicef/material-ui-currency-textfield";
 import { PresupPreview } from "../PresupPreview"
-// import MuiAlert from '@material-ui/lab/Alert';
 
-//npm install pdf-viewer-reactjs
 import {
   blue,
   green,
@@ -24,8 +22,17 @@ import { PresupPantContext } from "../../PresupPant";
 
 export default function TablaPresup(props) {
 
+  // const {
+  //   data
+  // } = props;
 
-  // Esto es para poder consumir los datos del CONTEXTAPI
+
+  // const {
+  //   PresupCantidad,
+  //   StkRubroDesc
+  // } = data;
+
+
   const { state } = useContext(PresupPantContext);
   const { datosrenglon, setDatosRenglon } = useContext(PresupPantContext);
   const [anexos, setAnexos] = useState({ anexos: false });
@@ -35,7 +42,6 @@ export default function TablaPresup(props) {
   const columns = state.columns;
 
   const [suma, setSuma] = useState(0);
-
   function sumar() {
     var totalpresup = 0,
       i = 0;
@@ -123,14 +129,14 @@ export default function TablaPresup(props) {
                 <div>
                   <MTableToolbar {...props} />
                   <Grid container>
-                    <Grid xs={4}>
+                    <Grid item xs={4}>
                       <CurrencyTextField
                         id="Suma"
                         label="Total presupuesto : "
                         value={suma}
                       />
                     </Grid>
-                    <Grid xs={4}>
+                    <Grid item xs={4}>
                       {state.renglonanexo.length !== 0 && <h3>Tiene Anexos</h3>}
                     </Grid>
                   </Grid>

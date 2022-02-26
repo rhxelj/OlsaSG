@@ -29,6 +29,7 @@ router.get('/', (req, res, next) => {
 
       datosrec.map(datos => {
         cantidad = datos.cantidad;
+        detallep = datos.detallep
         StkRubroAbrP = datos.StkRubroAbr;
         ivasn = datos.ivasn;
         largo = datos.largo
@@ -111,10 +112,17 @@ router.get('/', (req, res, next) => {
                   //   result[0].ImpUnitario = result[0].ImpUnitario.toFixed(0)
                   callargo = cantidad * result[0].Ancho
                   anchoreal = (largo * 1).toFixed(2)
-                  result[0].Detalle = "Paños Unidos ( " + callargo.toFixed(2) + ' x ' + anchoreal + " ) en : "
+                  if (detallep == '') {
+                    detalle = "Paños Unidos ( " + callargo.toFixed(2) + ' x ' + anchoreal + " ) en : "
+                  }
+                  else {
+                    detalle = detallep + ' '
+                  }
+                  // result[0].Detalle = "Paños Unidos ( " + callargo.toFixed(2) + ' x ' + anchoreal + " ) en : "
+                  result[0].Detalle = detalle
                   result[0].Largo = largo
                   result[0].Ancho = 0
-
+                  result[0].MDesc = 'S'
                   datosenvio.push(result)
                   i++
                   if (i === totalreg) {

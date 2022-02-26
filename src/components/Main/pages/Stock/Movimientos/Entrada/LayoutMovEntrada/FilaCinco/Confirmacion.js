@@ -9,6 +9,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 // import { imprimirQr } from "../../../../../Impresion/ImprimirEtiquetas/imprimirQR";
 import { useContext } from "react";
 import { StkMovEntradaContext } from "../../StkMovEntrada";
+// import { initial_state } from "../../../../../Monedas/Constants";
 
 export default function AlertDialog(props) {
   const { state, setState } = useContext(StkMovEntradaContext);
@@ -16,32 +17,12 @@ export default function AlertDialog(props) {
   // const [open, setOpen] = React.useState(false);
 
   const handleClose = () => {
-    setState({ ...state, imp_etiquetas: true, confOpen: false });
+    /* sacado el 2-11-2021 para por ahora no imprimir etiquetas 
+       setState({ ...state, imp_etiquetas: true, confOpen: false });*/
+    setState({ ...state, confOpen: false, marcasalidaconf: true })
   };
 
-  // function imprimirEtiquetas(prop) {
-  //   alert("imprimiendo Etiquetas");
 
-  //   handleClose();
-  // }
-
-  // const imprimir_etiquetas = () => {
-  // handleClose();
-  // llamo al componente a imprimir y le paso el dato de ubicacion fisica
-  // console.log(
-  //   "Fila Cinco contenido de state.StkEnvaseUbG -> ",
-  //   state.StkEnvaseUbG
-  // );
-  // imprimirQr(state.StkEnvaseUbG);
-
-  // setState(initial_state);
-  // setState(() => {
-  //   return initial_state;
-  // });
-
-  // setState({ ...state, imp_etiquetas: true, confOpen: false });
-  // setState({ ...state, imp_etiquetas: true });
-  // };
 
   return (
     <div>
@@ -52,7 +33,7 @@ export default function AlertDialog(props) {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
-        {console.log('esta en Confirmación')}
+
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             {contentText}

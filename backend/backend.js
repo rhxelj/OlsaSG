@@ -28,6 +28,13 @@ var clientestraenuevos = require("./routes/clientes/clientestraenuevos");
 // var clientespresupagregar = require("./routes/clientes/clientespresupagregar");
 
 
+var transporteleer = require("./routes/transporte/transporteleer");
+var transporteleercod = require("./routes/transporte/transporteleercod");
+var transporteagregar = require("./routes/transporte/transporteagregar");
+var transportemodificar = require("./routes/transporte/transportemodificar");
+var transporteborrar = require("./routes/transporte/transporteborrar");
+
+
 var stkmonedasleer = require("./routes/monedas/stkmonedasleer");
 var stkmonedasleercod = require("./routes/monedas/stkmonedasleercod");
 var stkmonedasagregar = require("./routes/monedas/stkmonedasagregar");
@@ -126,10 +133,14 @@ var presupenrollables = require("./routes/presupuesto/presupenrollables");
 var presupbolsontanque = require("./routes/presupuesto/presupbolsontanque");
 var presuppiletaenr = require("./routes/presupuesto/presuppiletaenr");
 var presupbrazosextens = require("./routes/presupuesto/presupbrazosextens");
+var presuplonapiletaelas = require("./routes/presupuesto/presuplonapiletaelas");
+var presupcargadesc = require("./routes/presupuesto/presupcargadesc");
+var presuplonaabolinada = require("./routes/presupuesto/presuplonaabolinada");
 
 
 var presupencableer = require("./routes/presupuesto/presupencableer");
 var presuprenglonleer = require("./routes/presupuesto/presuprenglonleer");
+var presupnombre = require("./routes/presupuesto/presupnombre");
 
 
 var presupconftipoleer = require("./routes/presupuesto/presupconftipo/presupconftipoleer");
@@ -147,6 +158,9 @@ var presupdetpieborrar = require("./routes/presupuesto/presupdetpie/presupdetpie
 var presupdetpieagregar = require("./routes/presupuesto/presupdetpie/presupdetpieagregar");
 
 var imppresup = require("./routes/impresion/imppresup");
+// const router = require("./routes/impresion/imppresup");
+const { RouterSharp } = require("@material-ui/icons");
+
 // function agregada por el error CROS
 function perimitirCrossDomain(req, res, next) {
   //en vez de * se puede definir SÓLO los orígenes que permitimos
@@ -199,7 +213,11 @@ app.use("/clientesleerpresup", clientesleerpresup);
 app.use("/clientestraenuevos", clientestraenuevos);
 // app.use("/clientespresupagregar", clientespresupagregar);
 
-
+app.use("/transporteleer", transporteleer);
+app.use("/transporteleercod", transporteleercod);
+app.use("/transporteagregar", transporteagregar);
+app.use("/transportemodificar", transportemodificar);
+app.use("/transporteborrar", transporteborrar);
 
 
 app.use("/stkbgsubrubroleer", stkbgsubrubroleer);
@@ -303,9 +321,15 @@ app.use("/presupenrollables", presupenrollables);
 app.use("/presupbolsontanque", presupbolsontanque);
 app.use("/presuppiletaenr", presuppiletaenr);
 app.use("/presupbrazosextens", presupbrazosextens);
+app.use("/presuplonapiletaelas", presuplonapiletaelas);
+app.use("/presupcargadesc", presupcargadesc);
+app.use("/presuplonaabolinada", presuplonaabolinada);
+
 
 app.use("/presupencableer", presupencableer);
 app.use("/presuprenglonleer", presuprenglonleer);
+app.use("/presupnombre", presupnombre);
+
 
 app.use("/presupconftipoleer", presupconftipoleer);
 app.use("/presupconftipoleerdesc", presupconftipoleerdesc);

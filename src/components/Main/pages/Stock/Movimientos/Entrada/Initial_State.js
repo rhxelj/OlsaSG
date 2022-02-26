@@ -63,7 +63,7 @@ export const initial_state = {
   stkenvaseubfisica: [],
 
   imp_etiquetas: false,
-
+  marcasalidaconf: false,
   confOpen: false, // Estado del componnente confirmacion
   noImp: false,
   impOk: false,
