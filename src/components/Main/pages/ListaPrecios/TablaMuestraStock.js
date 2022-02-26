@@ -11,7 +11,8 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
 import MaterialTable from "material-table";
 import { stkitemsred } from "./StkItemsRed";
-
+import BotonEstilo from '../../../../Styles/Boton.module.css'
+import DialogoEstilo from '../../../../Styles/Dialog.module.css'
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -24,16 +25,19 @@ export default function TablaMuestraStock(props) {
       {
         title: "Detalle",
         field: "StkItemsDesc",
+        width: "50%",
       },
       {
         title: "Cant.Disponible",
         field: "StkItemsCantDisp",
         type: "numeric",
+        width: "25%",
       },
       {
         title: "Cantidad",
         field: "StkItemsCantidad",
         type: "numeric",
+        width: "25%",
       },
     ],
 
@@ -58,27 +62,29 @@ export default function TablaMuestraStock(props) {
       aria-labelledby="alert-dialog-slide-title"
       aria-describedby="alert-dialog-slide-description"
     >
-      <DialogTitle id="alert-dialog-slide-title">
-        {"Stock de Items"}
+      {/* <DialogTitle id="alert-dialog-slide-title">
+        Stock de Items
       </DialogTitle>
       <DialogContent>
-        <DialogContentText id="alert-dialog-slide-description">
-          <MaterialTable
-            icons={tableIcons}
-            localization={localization}
-            title="Stock"
-            columns={stock.columns}
-            data={stock.datastock}
+        <DialogContentText id="alert-dialog-slide-description"> */}
+      <DialogContent  >
+        <MaterialTable
+          icons={tableIcons}
+          localization={localization}
+          title="Stock"
+          columns={stock.columns}
+          data={stock.datastock}
 
-          ></MaterialTable>
-        </DialogContentText>
+        ></MaterialTable>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose} color="secondary">
-          Cerrar
-        </Button>
-
-      </DialogActions>
+      {/* </DialogContentText>
+       </DialogContent>
+       <DialogActions>
+       
+      </DialogActions> */}
+      <button onClick={handleClose} className={BotonEstilo.botoncerrar}>
+        Cerrar
+      </button>
     </Dialog>
   );
 }

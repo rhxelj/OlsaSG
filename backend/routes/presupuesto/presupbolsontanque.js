@@ -236,6 +236,18 @@ router.get("/", (req, res) => {
 
             }
           }
+          if (termbordeeleg === "CF") {
+            detalle = detalle + ' borde superior sin terminación '
+          }
+          if (termbordeeleg === "CFS") {
+            detalle = detalle + ' borde superior c/soga de ajuste '
+          }
+          if (termbordeeleg === "CFC") {
+            detalle = detalle + ' borde superior c/criquet de ajuste '
+          }
+          if (termbordeeleg === "SF") {
+            detalle = detalle + ' borde superior recto '
+          }
 
           if (datosrec[0].minmay == 'my') {
             coeficiente = result[0].coeficientemay
@@ -318,31 +330,19 @@ router.get("/", (req, res) => {
                     result[0].Ancho = 0.00
 
                     if (StkRubroAbrP == 'POL19') {
-                      // console.log('parseInt(result[0].ImpUnitario * 1.15 + MOTarmadoAd + importesogaper + importecriquetper)')
-                      // console.log(parseInt(result[0].ImpUnitario * 1.15 + MOTarmadoAd + importesogaper + importecriquetper))
-                      // console.log('(result[0].ImpUnitario * 1.15 + MOTarmadoAd + importesogaper + importecriquetper)')
-                      // console.log((result[0].ImpUnitario * 1.15 + MOTarmadoAd + importesogaper + importecriquetper))
-                      // console.log(' Math.ceil(result[0].ImpUnitario * 1.15 + MOTarmadoAd + importesogaper + importecriquetper)')
-                      // console.log(Math.ceil((result[0].ImpUnitario * 1.15 + MOTarmadoAd + importesogaper + importecriquetper) / 10) * 10)
-                      //result[0].ImpUnitario = parseInt(result[0].ImpUnitario * 1.15 + MOTarmadoAd + importesogaper + importecriquetper)
                       result[0].ImpUnitario = Math.ceil((result[0].ImpUnitario * 1.15 + MOTarmadoAd + importesogaper + importecriquetper) / 10) * 10
                     }
                     else {
                       result[0].ImpUnitario = Math.ceil((result[0].ImpUnitario * 1 + MOTarmadoAd + importesogaper + importecriquetper) / 10) * 10
-                      // result[0].ImpUnitario = parseInt(result[0].ImpUnitario * 1 + MOTarmadoAd + importesogaper + importecriquetper)
                     }
                     if (ivasn == 'CIVA') {
                       result[0].ImpUnitario = Math.ceil((result[0].ImpUnitario) / 10) * 10
-                      // result[0].ImpUnitario = parseInt(result[0].ImpUnitario)
                     }
                     else {
                       result[0].ImpUnitario = Math.ceil((result[0].ImpUnitario / 1.21) / 10) * 10
-                      // result[0].ImpUnitario = parseInt(result[0].ImpUnitario / 1.21)
                     }
 
-
                     datosenvio.push(result)
-
                     res.json(datosenvio)
                     datosenvio = []
                   }

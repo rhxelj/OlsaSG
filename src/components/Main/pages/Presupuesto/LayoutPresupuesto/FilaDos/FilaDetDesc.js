@@ -20,6 +20,11 @@ export default function FilaDetDesc() {
         //   setSelectedValue(event.target.value);
         setState({ ...state, DetallePresup: event.target.value });
     };
+
+    const handleChange5 = (event) => {
+        //   setSelectedValue(event.target.value);
+        setState({ ...state, DetalleRenglon: event.target.value });
+    };
     const classes = useStyles();
     return (
         <>
@@ -48,6 +53,19 @@ export default function FilaDetDesc() {
                 value={state.DetallePresup}
                 helperText='Saca la descripción por defecto'
                 onChange={handleChange4}
+                className={classes.textField}
+            />
+            <TextField
+                inputProps={{ maxLength: 100 }}
+                size="small"
+                variant="outlined"
+                id="DetalleRenglon"
+                margin="dense"
+                label="Agrega en Renglón "
+                // fullWidth
+                value={state.DetalleRenglon}
+                helperText='Se agrega a la descripción'
+                onChange={handleChange5}
                 className={classes.textField}
             />
         </>

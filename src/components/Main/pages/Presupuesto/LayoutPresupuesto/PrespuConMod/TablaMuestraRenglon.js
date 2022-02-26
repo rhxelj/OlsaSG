@@ -3,9 +3,7 @@ import { tableIcons } from "../../../../../lib/material-table/tableIcons";
 import { localization } from "../../../../../lib/material-table/localization";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
 import MaterialTable from "material-table";
@@ -16,9 +14,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 export default function TablaMuestraRenglon(props) {
     const { open, handleClose, Presup } = props;
-
     const [renglon, setRenglon] = useState({
-
         columns: [
             {
                 title: "Cantidad",
@@ -51,7 +47,6 @@ export default function TablaMuestraRenglon(props) {
             {
                 title: "desc",
                 field: "PresupRenglonParamInt",
-                // type: "currency",
             },
         ],
 
@@ -69,6 +64,7 @@ export default function TablaMuestraRenglon(props) {
     }, [Presup]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
+
         <Dialog
             fullWidth={true}
             maxWidth={'xl'}
@@ -80,24 +76,20 @@ export default function TablaMuestraRenglon(props) {
             aria-describedby="alert-dialog-slide-description"
         >
             <DialogTitle id="alert-dialog-slide-title">
-                {"Renglones de Presupuesto"}
+                Renglones de Presupuesto
             </DialogTitle>
             <DialogContent>
-                <DialogContentText id="alert-dialog-slide-description">
-                    <MaterialTable
-                        icons={tableIcons}
-                        localization={localization}
-                        title=""
-                        columns={renglon.columns}
-                        data={renglon.datarenglon}
-                    ></MaterialTable>
-                </DialogContentText>
+                <MaterialTable
+                    icons={tableIcons}
+                    localization={localization}
+                    title=""
+                    columns={renglon.columns}
+                    data={renglon.datarenglon}
+                ></MaterialTable>
             </DialogContent>
-            <DialogActions>
-                <Button onClick={handleClose} color="secondary">
-                    Cerrar
-                </Button>
-            </DialogActions>
+            <Button onClick={handleClose} color="secondary">
+                Cerrar
+            </Button>
         </Dialog>
     );
 }

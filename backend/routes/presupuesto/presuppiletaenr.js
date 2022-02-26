@@ -84,8 +84,8 @@ router.get("/", (req, res, next) => {
               else {
                 detalle = detallep + ''
               }
-              minutosdren = largo / 1.50 * 4
-              /* 4 minutos por drenaje*/
+              minutosdren = largo / 1.50 * 12
+              /* 12 minutos por drenaje*/
             } else {
               if (detallep == '') {
                 detalle = "Lona enrollable para pileta, con fajas en las puntas"
@@ -188,6 +188,7 @@ router.get("/", (req, res, next) => {
               datosenvio[0][0]['Detalle'] = detalle
               datosenvio[0][0]['Largo'] = (largoreal * 1).toFixed(2)
               datosenvio[0][0]['Ancho'] = (anchoreal * 1).toFixed(2)
+              datosenvio[0][0]['MDesc'] = 'S'
               res.json(datosenvio);
               datosenvio = [];
             });

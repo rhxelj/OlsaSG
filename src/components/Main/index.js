@@ -4,6 +4,7 @@ import React from 'react'
 import StkMonedas from "./pages/Monedas/StkMonedas";
 import Proveedores from "./pages/Stock/Proveedores/Proveedores.jsx";
 import Clientes from "./pages/Clientes/Clientes.jsx";
+import Transporte from "./pages/Transporte/Transporte.jsx";
 import StkUnMed from "./pages/Stock/UnidadMedidas/StkUnMed.jsx";
 import StkRubro from "./pages/Stock/Rubros/StkRubro";
 import StkGrupo from "./pages/Stock/Grupos/StkGrupo.jsx";
@@ -13,6 +14,7 @@ import ModPrecios from "./pages/ListaPrecios/ModPrecios";
 import StkMovEntrada from "./pages/Stock/Movimientos/Entrada/StkMovEntrada";
 // import StkMovSalida from "./pages/Stock/Movimientos/Salida/StkMovSalida";
 import StkMovSalida from "./pages/Stock/Movimientos/Salida/LayoutMovSalida/StkMovSalida";
+import ImprimeDisponible from "./pages/Stock/Movimientos/Impresion/ImprimeDisponible";
 import StkMovSalidaFinal from "./pages/Stock/Movimientos/Salida/LayoutMovSalidaFinal/StkMovSalidaFinal";
 // import StkMovimiento from './pages/z_SinClasificarMirar/StkMovimiento'
 import StkItems from "./pages/Stock/Items/StkItems";
@@ -48,9 +50,11 @@ const Main = () => (
       <Route path="/StkMonedas" component={props => <StkMonedas {...props} />} />
       <Route path="/Proveedores" component={Proveedores} />
       <Route path="/Clientes" component={Clientes} />
+      <Route path="/Transporte" component={Transporte} />
       <Route path="/StkUnMed" component={StkUnMed} />
       {/* <Route path="/StkMovimiento"     component={StkMovimiento}/> */}
       <Route path="/StkMovSalida" component={StkMovSalida} />
+      <Route path="/ImprimeDisponible" component={ImprimeDisponible} />
       <Route path="/StkMovSalidaFinal" component={StkMovSalidaFinal} />
       <Route path="/ListaPrecios" component={ListaPrecios} />
       <Route path="/PresupPant" component={PresupPant} />

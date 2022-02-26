@@ -210,10 +210,12 @@ router.get("/", (req, res, next) => {
               j++;
               costooriginal = costooriginal + datosenvio[j][0].CostoOjalM2;
               j++;
+              // console.log('costooriginal  final c/gan  ', costooriginal)
               costooriginal = costooriginal * ganancia * coefimpuesto;
 
               metroscuad = anchoreal * largoreal
               costooriginal = costooriginal * metroscuad
+
               if (metroscuad < 22 && metroscuad >= 16) {
                 costooriginal = costooriginal * 1.0325
               }
@@ -226,16 +228,16 @@ router.get("/", (req, res, next) => {
                 costooriginal = costooriginal * 1.0325
                 costooriginal = costooriginal * 1.0325
               }
+
+              console.log(' costooriginal en confeccionada ', costooriginal)
               // datosenvio[0][0]['ImpItem'] = costooriginal
               if (ivasn == 'CIVA') {
                 costooriginal = Math.ceil(costooriginal.toFixed(0) / 10) * 10
-                // costooriginal = costooriginal.toFixed(0)
               }
               else {
                 costooriginal = Math.ceil(costooriginal.toFixed(0) / 1.21 / 10) * 10
-                // costooriginal = costooriginal.toFixed(0) / 1.21
               }
-              //   datosenvio[0][0]['ImpUnitario'] = costooriginal.toFixed(0)
+
               datosenvio[0][0]['ImpUnitario'] = costooriginal
               datosenvio[0][0]['Detalle'] = detalle
               datosenvio[0][0]['Largo'] = (largoreal * 1).toFixed(2)

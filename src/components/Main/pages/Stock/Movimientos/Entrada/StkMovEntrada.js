@@ -17,6 +17,7 @@ export const StkMovEntradaContext = React.createContext();
 var StkMovEntrada = () => {
   HeaderTitle("Movimiento de Entrada");
 
+
   const [state, setState] = useState(initial_state);
   // const classes = useStyles();
 

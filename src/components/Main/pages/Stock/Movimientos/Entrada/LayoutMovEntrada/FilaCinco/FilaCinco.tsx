@@ -13,13 +13,11 @@ import { stkitemsmodstock } from "../../../../Items/StkItemsModStock"; //"../../
 import { stkenvaseagregar } from "../../../../Envase/StkEnvaseAgregar";
 import { stkitemsleedisp } from "../../../../Items/StkItemsLeeDisp";
 
-import ImprimirEtiquetas from "../../../../../Impresion/ImprimirEtiquetas";
-// import imprimirQr from "../../../../../Impresion/ImprimirEtiquetas/imprimirQR"
-// import { imprimirQr } from "../../../../../Impresion/ImprimirEtiquetas/imprimirQR";
+// import ImprimirEtiquetas from "../../../../../Impresion/ImprimirEtiquetas";
 
 export default function Fila() {
   const { state, setState } = useContext(StkMovEntradaContext);
-
+ 
   //Control del Dialogo INICIO
   // const [open, setOpen] = React.useState(false);
   const [cantidaddisponible, setCantidaddisponible] = React.useState(false);
@@ -32,7 +30,6 @@ export default function Fila() {
     const cantidaddisponible = await stkitemsleedisp(state);
     setCantidaddisponible(cantidaddisponible);
     setState({ ...state, confOpen: true });
-   
   };
 
   const actions = {
@@ -51,13 +48,17 @@ export default function Fila() {
           open={state.confOpen}
           title="Movimiento de Entrada"
           contentText={`Cambio efectuado cantidad disponible ${cantidaddisponible}`}
-    
+ 
         />
+        {state.marcasalidaconf &&
+            setState(initial_state)
+        }
 
+        {/* sacado el 2-11-2021 para por ahora no imprimir etiquetas 
         <ImprimirEtiquetas
           open={state.imp_etiquetas} //inicialmente este componente no se muestra
     
-        />
+        /> */}
       </Grid>
     </>
   );

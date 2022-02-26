@@ -2,8 +2,8 @@ import IpServidor from '../VariablesDeEntorno'
 import request from "superagent";
 
 export function clientestraeNuevos() {
+  console.log('vino a clientes nuevos')
   return new Promise(function (resolve) {
-    console.log('estoy en clietnestraenuevos')
     const url = IpServidor + "/clientestraenuevos";
     request
       .get(url)

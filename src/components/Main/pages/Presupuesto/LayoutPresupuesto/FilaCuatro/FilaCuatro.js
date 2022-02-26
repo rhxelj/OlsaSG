@@ -27,7 +27,6 @@ import { PresupPreview } from "../PresupPreview"
 export default function FilaCuatro(props) {
   // Esto es para poder consumir los datos del CONTEXTAPI
   const { state, setState } = useContext(PresupPantContext);
-
   //const { open, handleClose } = props;
   // var { open } = props;
 
@@ -48,7 +47,7 @@ export default function FilaCuatro(props) {
 
   useEffect(() => {
     clientesleerdescrip();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);  //  eslint-disable-line react-hooks/exhaustive-deps
   // }, [open]); // eslint-disable-line react-hooks/exhaustive-deps
 
   async function grabarpresupuesto() {

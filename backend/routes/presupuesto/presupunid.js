@@ -51,7 +51,7 @@ router.get('/', (req, res, next) => {
           'and StkRubro.StkRubroTM = idStkMonedas',
         ].join(' ')
 
-
+        console.log('q   ', q)
         conexion.query(
           q,
           function (err, result) {
@@ -81,6 +81,7 @@ router.get('/', (req, res, next) => {
               result[0].Detalle = ""
               result[0].Largo = 0
               result[0].Ancho = 0
+              result[0].MDesc = 'S'
               datosenvio.push(result)
               i++
               if (i === totalreg) {

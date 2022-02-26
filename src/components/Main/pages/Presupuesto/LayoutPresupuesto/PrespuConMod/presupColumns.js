@@ -11,6 +11,7 @@ export async function presupColumns() {
         acc[cur.PresupEncabCliente] = cur.ClientesDesc;
         return acc;
     }, {});
+
     return columnsFill(objcliente)
 }
 function columnsFill(objcliente) {

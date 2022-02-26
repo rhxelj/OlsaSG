@@ -104,6 +104,7 @@ router.get('/', (req, res, next) => {
                 result[0].ImpUnitario = Math.ceil(result[0].ImpUnitario.toFixed(0) / 1.21 / 10) * 10
                 // result[0].ImpUnitario = result[0].ImpUnitario.toFixed(0) / 1.21
               }
+              result[0].MDesc = 'S'
               datosenvio.push(result)
               i++
               if (i === totalreg) {

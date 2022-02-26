@@ -1,9 +1,9 @@
 import IpServidor from "../../../VariablesDeEntorno";
 import request from "superagent";
 
-export function presupDatos() {
+export const presupDatos = (date) => {
     return new Promise(function (resolve) {
-        const url = IpServidor + "/presupencableer";
+        const url = IpServidor + "/presupencableer/?id=" + date;
         request
             .get(url)
             .set("Content-Type", "application/json")

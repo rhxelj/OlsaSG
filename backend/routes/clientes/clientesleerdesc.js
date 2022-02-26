@@ -18,6 +18,7 @@ conexion.connect(function (err) {
 var router = express();
 
 router.get('/', async function (req, res) {
+
     indice = req.query.id;
     var q = ['SELECT idClientes, ClientesDesc FROM BasesGenerales.Clientes order by ClientesDesc'].join(' ')
     conexion.query(q,
@@ -26,7 +27,6 @@ router.get('/', async function (req, res) {
                 console.log(err);
             } else {
                 res.json(result);
-
             }
 
         });

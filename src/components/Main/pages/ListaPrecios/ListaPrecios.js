@@ -1,31 +1,33 @@
 import React, { useEffect, useState } from "react";
-import MaterialTable, { MTableToolbar } from "material-table";
-import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import { leelistaprecios } from "./LeeListaPrecios";
 import { localization } from "../../../lib/material-table/localization";
-
+import '../../../../Styles/TableHeader.css'
+import MaterialTable from "material-table";
 import { tableIcons } from "../../../lib/material-table/tableIcons";
+// import { makeStyles } from "@material-ui/core/styles";
+import { leelistaprecios } from "./LeeListaPrecios";
+import { HeaderTitle } from '../../../lib/HeaderTitle'
+import Imprimir from "../Impresion/Imprimir/Imprimir";
+import Paper from "@material-ui/core/Paper";
+
 import TablaMuestraStock from "./TablaMuestraStock";
 import WavesIcon from "@material-ui/icons/Waves";
 import AutorenewIcon from '@material-ui/icons/Autorenew';
 
-import Imprimir from "../Impresion/Imprimir/Imprimir";
-import { HeaderTitle } from '../../../lib/HeaderTitle'
-const useStyles = makeStyles({
-  root: {
-    width: "100%",
-  },
-  container: {
-    maxHeight: 440,
-  },
-});
+// , { MTableToolbar } 
+// const useStyles = makeStyles({
+//   root: {
+//     width: "100%",
+//   },
+//   container: {
+//     maxHeight: 440,
+//   },
+// });
 
 
 
 export default function ListaPrecios() {
   HeaderTitle("Lista de Precios");
-  const classes = useStyles();
+  // const classes = useStyles();
   const [paramitems, setParamItems] = useState({
     idGrupo: 0,
     idRubro: 0,
@@ -104,13 +106,9 @@ export default function ListaPrecios() {
   };
 
   return (
-    <Paper className={classes.root}>
+    // <Paper className={classes.root}>
+    <div>
       <MaterialTable
-        icons={tableIcons}
-        title="Lista de Precios"
-        columns={lista.columns}
-        data={lista.data}
-        localization={localization}
         actions={[
           {
             icon: () => <WavesIcon />,
@@ -130,23 +128,30 @@ export default function ListaPrecios() {
             onClick: () => setImprimirTF({ imprimir: true }),
           },
         ]}
+        title="Lista de Precios"
+        localization={localization}
+        icons={tableIcons}
+        columns={lista.columns}
+        data={lista.data}
         options={{
           exportAllData: true,
           exportButton: true,
           grouping: true,
         }}
-        components={{
-          Toolbar: (props) => (
-            <div>
-              <MTableToolbar {...props} />
-              <div style={{ padding: "0px 10px" }}>
-                {/* <Button color="primary" style={{ marginRight: 5 }}>
-                  Presupuesto
-                </Button> */}
-              </div>
-            </div>
-          ),
-        }}
+      // components={{
+      //   Toolbar: (props) => (
+      //     <React.Fragment>
+      //       {/* <div > */}
+      //       <MTableToolbar {...props} />
+      //       <div style={{ padding: "0px 10px" }}>
+      //         {/* <Button color="primary" style={{ marginRight: 5 }}>
+      //           Presupuesto
+      //         </Button> */}
+      //       </div>
+      //       {/* </div> */}
+      //     </React.Fragment>
+      //   ),
+      // }}
       />
       <Imprimir
         columns={lista.columns}
@@ -160,6 +165,7 @@ export default function ListaPrecios() {
         Grupo={paramitems.idGrupo}
         Rubro={paramitems.idRubro}
       />
-    </Paper>
+      {/* </Paper> */}
+    </div>
   );
 }

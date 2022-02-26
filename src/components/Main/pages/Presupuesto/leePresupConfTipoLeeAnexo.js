@@ -1,10 +1,11 @@
 import IpServidor from "../VariablesDeEntorno";
 import request from "superagent";
 
-export default function leePresupConfTipoLeeAnexo(props) {
-  const AnexoSN = props;
+export default function leePresupConfTipoLeeAnexo(anexo, prodelab) {
+
+
   return new Promise((resolve) => {
-    const url = IpServidor + "/presupconftipoleeanexo/?anexo=" + AnexoSN;
+    const url = IpServidor + "/presupconftipoleeanexo/?anexo=" + anexo + "&prodelab=" + prodelab
     request
       .get(url)
       .set("Content-Type", "application/json")

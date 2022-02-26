@@ -30,6 +30,7 @@ router.get('/', (req, res, next) => {
       datosrec.map(datos => {
         cantidad = datos.cantidad;
         StkRubroAbrP = datos.StkRubroAbr;
+        detallep = datos.detallep
         ivasn = datos.ivasn;
         largo = datos.largo
         if (datos.minmay == 'my') {
@@ -42,11 +43,7 @@ router.get('/', (req, res, next) => {
           coefMOT = result[0].coefMOTmin
         }
 
-        //  minutosunion = result[0].cantminpu
-        //cálculo de cantidad de metros de soldadura
 
-        // valorMOTmup = result[0].costoMOT * coeficiente
-        // valorMOTmup = result[0].costoMOT * coeficiente / 60 / 60
         q2 = ['Select StkRubroAncho as anchotela from BaseStock.StkRubro where StkRubro.StkRubroAbr = "' + StkRubroAbrP + '" '].join(' ')
         conexion.query(q2,
           function (err, result2) {
@@ -114,10 +111,18 @@ router.get('/', (req, res, next) => {
                   // result[0].ImpUnitario = result[0].ImpUnitario.toFixed(0)
                   callargo = cantidad * result[0].Ancho
                   anchoreal = (largo * 1).toFixed(2)
+                  if (detallep == '') {
+                    detalle = "Paños Unidos de ( " + callargo.toFixed(2) + ' x ' + anchoreal + " )  Recortados en : "
+                  }
+                  else {
+                    detalle = detallep + ' '
+                  }
 
-                  result[0].Detalle = "Paños Unidos de ( " + callargo.toFixed(2) + ' x ' + anchoreal + " )  Recortados en : "
+                  // result[0].Detalle = "Paños Unidos de ( " + callargo.toFixed(2) + ' x ' + anchoreal + " )  Recortados en : "
+                  result[0].Detalle = detalle
                   result[0].Largo = largo
                   result[0].Ancho = 0
+                  result[0].MDesc = 'S'
                   datosenvio.push(result)
                   i++
                   if (i === totalreg) {
