@@ -53,7 +53,12 @@ export default function TablaPresup(props) {
     setSuma(totalpresup);
   }
 
+  // const [grabasn, setGrabasn] = useState('S');
+  // const handleOpen = () => {
+  //   setGrabasn('N')
+  //   setFilacuatro({ filacuatro: true })
 
+  // };
   const handleClose = () => {
     setFilacuatro(false);
 
@@ -109,6 +114,13 @@ export default function TablaPresup(props) {
                 isFreeAction: true,
                 onClick: () => setFilacuatro({ filacuatro: true })
               },
+              // {
+              //   icon: () => <tableIcons.Check style={{ color: blue[500] }} />,
+              //   tooltip: "Condiciones/Cliente",
+              //   isFreeAction: true,
+              //   onClick: () => handleOpen()
+              //   // onClick: () => setFilacuatro({ filacuatro: true })
+              // },
               {
                 icon: () => <tableIcons.Print style={{ color: green[500] }} />,
                 tooltip: "Imprimir",
@@ -153,6 +165,7 @@ export default function TablaPresup(props) {
         datos={datosrenglon}
         maymin={props.maymin}
         suma={suma}
+        // graba={grabasn}
         setOpen={setFilacuatro}
         handleClose={handleClose}
       />

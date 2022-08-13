@@ -27,11 +27,12 @@ import { localization } from "../../../lib/material-table/localization";
 
 // import Imprimir from "../Impresion/Imprimir/indexwww";
 
-// import { useContext } from "react";
-// import { globalContext } from "../../../App";
+import { useContext } from "react";
+import { globalContext } from "../../../App";
 
 function Monedas() {
-  // HeaderTitle("Monedas");
+  const { valor, setValor } = useContext(globalContext);
+
   const [data, setData] = useState(initial_state);
   const [imprimirTF, setImprimirTF] = useState(initial_open);
   // const { valor, setValor } = useContext(globalContext);
@@ -79,6 +80,7 @@ function Monedas() {
 
   useEffect(() => {
     initialFetch();
+    setValor("Monedas");
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (

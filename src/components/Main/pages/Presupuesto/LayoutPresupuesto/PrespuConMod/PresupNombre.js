@@ -4,19 +4,19 @@ import IpServidor from "../../../VariablesDeEntorno";
 
 
 export const PresupNombre = (nombrepresup) => {
-
+    console.log('estoy en PresupNombre  ', nombrepresup)
+    var nombrepresupue = "Presupuesto\\ nro\\ " + nombrepresup + "*.pdf";
     return new Promise(resolve => {
-        const url = IpServidor + "/presupnombre/?id=" + nombrepresup;
-        request
-            .get(url)
-            .set("Content-Type", "application/json")
-            .then(res => {
-                // const aviso = JSON.parse(res.text);
-                const aviso = res.statusText
-                console.log('res PresupNombre ', res)
-                console.log('aviso PresupNombre  ', aviso)
-                resolve(aviso);
-            });
+        setTimeout(() => {
+            const url = IpServidor + "/presupnombre/?id=" + nombrepresupue
+            request
+                .get(url)
+                .set("Content-Type", "application/json")
+                .then(res => {
+                    console.log('estoy en PresupNombre res ', res)
+                    resolve(res.text);
+                });
+        }, 1000);
     });
 }
 

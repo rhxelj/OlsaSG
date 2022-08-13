@@ -12,10 +12,6 @@ export default function FilaConf(props) {
   const [selectedValue, setSelectedValue] = React.useState("cs");
   const { state, setState } = useContext(PresupPantContext);
   const [ojalbronce, setOjalBronce] = React.useState('hz');
-  // const [DescripPresup, setDescripPresup] = React.useState('')
-  // var [DetallePresup, setDetallePresup] = React.useState('')
-
-
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);

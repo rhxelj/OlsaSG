@@ -30,7 +30,8 @@ router.get('/', function (req, res, next) {
         ' order by ClientesDesc',
 
     ].join(' ');
-    console.log('q en clientesleerpresup  ', q)
+
+    console.log('q clientesleerpresup ', q)
     conexion.query(
         q,
         function (err, result) {

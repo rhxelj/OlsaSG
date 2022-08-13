@@ -15,6 +15,7 @@ conexion.connect(function (err) {
 
 
 router.delete('/', async function (req, res) {
+    console.log('ingreso Transporte  ')
     indice = req.query.id;
     var q = ['delete from BasesGenerales.Transporte where idTransporte = ' + indice].join(' ')
     conexion.query(q,

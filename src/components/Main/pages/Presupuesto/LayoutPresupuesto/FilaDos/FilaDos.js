@@ -27,6 +27,8 @@ import FilaToldosExt from "../FilaToldosExt/FilaToldosExt";
 import FilaDetDesc from "./FilaDetDesc"
 import FilaCargaDesc from "./FilaCargaDesc";
 import FilaAbolinada from "../FilaAbolinada/FilaAbolinada"
+import FilaComedero from "../FilaComedero/FilaComedero"
+import FilaCambPanio from "../FilaCambPanio/FilaCambPanio"
 
 
 export default function FilaDos() {
@@ -43,22 +45,24 @@ export default function FilaDos() {
 
     //esto es porque va a ser un cálculo especial, tiene un backend para eso
     var rubrosn = ''
-    var labellargo = ''
+    var labellargo = 'Largo'
+    var labelancho = 'Ancho'
+
     if (state.DatosPresupEleg[0].PresupConfTipoRubro === "VS") {
       rubrosn = "S";
     } else {
       rubrosn = "N";
     }
+
     if (presuptipo === "LONAS ENROLLABLES" || presuptipo === "TOLDO BARRACUADRA") {
       labellargo = 'Alto'
     }
-    else {
-      if (presuptipo === "CARGA DESCRIPCION") {
-        labellargo = 'Importe'
-      }
-      else {
-        labellargo = 'Largo'
-      }
+    if (presuptipo === "CARGA DESCRIPCION") {
+      labellargo = 'Importe'
+    }
+    if (presuptipo === "CAMBIO PAÑO") {
+      labelancho = 'Ancho Lona'
+      labellargo = 'Paños en metros'
     }
 
   }
@@ -108,6 +112,8 @@ export default function FilaDos() {
         alto: state.Alto,
         stkrubroabrtbr: state.StkRubroAbrTBR,
         tipomecanismo: state.TipoMecanismo,
+        anchocomedero: state.AnchoComederoEleg,
+        lonanuestraafuera: state.PreuspLNLF,
         tipopresup: presuptipo
       },
     ];
@@ -292,7 +298,8 @@ export default function FilaDos() {
           variant="outlined"
           id="PresupAncho"
           type="number"
-          label="Ancho"
+          // label="Ancho"
+          label={labelancho}
           fullWidth
           margin="dense"
           value={state.PresupAncho}
@@ -303,13 +310,14 @@ export default function FilaDos() {
 
       <Grid container item xs={12}>
         {/* < FilaConf disable={!(presuptipo === "CONFECCIONADA")}></FilaConf> */}
-
         {presuptipo === "CONFECCIONADA" && <FilaConf></FilaConf>}
         {presuptipo === "LONAS ENROLLABLES" && <FilaEnrollables></FilaEnrollables>}
         {presuptipo === "BOLSON PARA TANQUE" && <FilaTanques></FilaTanques>}
         {presuptipo === "PILETA ENROLLABLE" && <FilaPiletasEnr></FilaPiletasEnr>}
         {presuptipo === "TOLDO BARRACUADRA" && <FilaToldosExt></FilaToldosExt>}
         {presuptipo === "ABOLINADA" && <FilaAbolinada></FilaAbolinada>}
+        {presuptipo === "COMEDERO" && <FilaComedero></FilaComedero>}
+        {presuptipo === "CAMBIO PAÑO" && <FilaCambPanio></FilaCambPanio>}
         {(presuptipo !== "UNIDAD" && rubrosn === "S" && presuptipo !== "CARGA DESCRIPCION") ? <FilaDetDesc></FilaDetDesc> : <></>}
         {(presuptipo === "CARGA DESCRIPCION") ? <FilaCargaDesc></FilaCargaDesc> : <></>}
         <IconButton

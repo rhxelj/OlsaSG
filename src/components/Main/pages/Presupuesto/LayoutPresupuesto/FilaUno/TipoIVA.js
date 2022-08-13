@@ -20,7 +20,7 @@ export default function TipoIVA() {
 
   return (
     <>
-      { state.PresupMnMy === "mn" &&
+      {state.PresupMnMy === "mn" &&
         <RadioGroup
           row
           size="small"

@@ -1,34 +1,37 @@
 
 // import carpetaimppresup from '../../PathEspeciales'
 // Lee Rubro por codigo de gupo
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Dialog } from "@material-ui/core";
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import MuiDialogTitle from '@material-ui/core/DialogTitle'
 import Typography from '@material-ui/core/Typography';
-import { PresupNombre } from './PrespuConMod/PresupNombre';
 
 export const PresupPreviewMue = (props) => {
-    const { open, handleClose, Presup } = props;
-
-
-    async function armanombre(Presup) {
-        if (Presup !== 1) {
-            var nombrepresup = "Presupuesto\\ nro\\ " + Presup + "*.pdf";
-            await PresupNombre(nombrepresup);
-        }
-    }
+    const { open, handleClose } = props;
+    console.log('props  ', props)
+    // async function armanombre(Presup) {
+    // if (Presup !== 0) {
+    //     var nombrepresup = "Presupuesto\\ nro\\ " + Presup + "*.pdf";
+    //     resultado = await PresupNombre(nombrepresup);
+    //     Presup = 0
+    //     console.log('resultado  ', resultado)
+    //     // }
+    // }
 
     // function cierradialogo() {
     //     setOpen({ preview: false });
     // }
 
-    useEffect(() => {
-        if (Presup !== 1) {
-            armanombre(Presup);
-        }
-    }, [Presup]); // eslint-disable-line react-hooks/exhaustive-deps
+    // useEffect(() => {
+    //     console.log('Presup  ', Presup)
+    //     if (Presup !== 0) {
+    //         armanombre(Presup);
+    //     }
+    // }, [Presup]); // eslint-disable-line react-hooks/exhaustive-deps
+
+
     return (
         <React.Fragment>
 
@@ -44,25 +47,16 @@ export const PresupPreviewMue = (props) => {
                     </IconButton>
 
                 </MuiDialogTitle>
-
-                {/* <Document>
-                    <View>
-                        <Image
-                            src="../static/media/basics.pdf"
-                            alt="random image"
-                            style={{ maxWidth: "600px", maxHeight: "400" }}
-                        />
-                    </View>
-                </Document> */}
+                {console.log('esta antes del object  ')}
                 <object
                     data={require('../static/media/basics.pdf')}
                     type="application/pdf"
-                    width='100%'
-                    height='100%'
+                    width='80%'
+                    height='80%'
                     cache='false'
                 >
                 </object>
-
+                {console.log('esta fuera del object  ')}
             </Dialog>
         </React.Fragment >
     );

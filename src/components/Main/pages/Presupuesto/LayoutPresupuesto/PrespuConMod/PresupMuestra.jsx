@@ -4,6 +4,7 @@ import MaterialTable, { MTableToolbar } from "material-table";
 import { tableIcons } from "../../../../../lib/material-table/tableIcons";
 import { localization } from "../../../../../lib/material-table/localization";
 import { registerLocale } from "react-datepicker";
+import { PresupNombre } from "../PrespuConMod/PresupNombre";
 // import { registerLocale, setDefaultLocale } from  "react-datepicker";
 import es from "date-fns/locale/es";
 
@@ -13,18 +14,17 @@ import {
 	MuiPickersUtilsProvider,
 	KeyboardDatePicker,
 } from "@material-ui/pickers";
-// import { PresupNombre } from "../PrespuConMod/PresupNombre";
 import Grid from "@material-ui/core/Grid";
 import { presupColumns } from "./presupColumns";
 import { presupDatos } from "./presupDatos";
 import TablaMuestraRenglon from "./TablaMuestraRenglon";
 import WavesIcon from "@material-ui/icons/Waves";
-import { HeaderTitle } from "../../../../../lib/HeaderTitle";
 import { green, purple } from "@material-ui/core/colors";
 //, purple
 import Imprimir from "../../../Impresion/Imprimir/Imprimir";
 import { PresupPreviewMue } from "../PresupPreviewMue";
-
+import { useContext } from "react";
+import { globalContext } from "../../../../../App";
 import VisibilityRoundedIcon from "@material-ui/icons/VisibilityRounded";
 // import { getDate } from "date-fns";
 import { makeStyles } from "@material-ui/core/styles";
@@ -38,22 +38,25 @@ const useStyles = makeStyles({
 });
 
 export default function PresupMuestra() {
-	HeaderTitle("PRESUPUESTOS");
+	const { setValor } = useContext(globalContext);
 	const classes = useStyles();
 	const [open, setOpen] = useState(false);
-
+	const [ppreview, setPPreview] = useState(false);
 	const [imprimirTF, setImprimirTF] = useState({ imprimir: false });
 	const [columns, setColumns] = useState([]);
 	const [data, setData] = useState([]);
-	const [ppreview, setPPreview] = useState(false);
 
+	// const [parampresupreview, setParamPresuPreview] = useState({
+	// 	idpresupreview: 0,
+	// });
 	const [parampresupuesto, setParamPresupuesto] = useState({
 		idpresupuesto: 0,
 	});
+
 	registerLocale("es", es);
 
 	var fecha = new Date();
-	fecha.setDate(fecha.getDate() - 40);
+	fecha.setDate(fecha.getDate() - 360);
 
 	const [selectedDate, setSelectedDate] = useState(fecha);
 
@@ -68,7 +71,6 @@ export default function PresupMuestra() {
 	}
 
 	async function dataFetch(date) {
-		console.log("date   ", date);
 		const data = await presupDatos(date);
 		setData(data);
 	}
@@ -88,27 +90,33 @@ export default function PresupMuestra() {
 	};
 
 	const handleClose = () => {
+		setParamPresupuesto({ parampresupuesto, idpresupuesto: 1 });
 		setOpen(false);
 	};
-
+	var resultado = [{ error: 1 }];
 	/*manejo del preview de <presupuesto></presupuesto>*/
-	const openPreview = (event, idPresupEncab) => {
-		//  console.log('event  ', event)
+	async function openPreview(event, idPresupEncab) {
 		setParamPresupuesto({ parampresupuesto, idpresupuesto: idPresupEncab });
-		handleClickPreview();
-	};
+		resultado = await PresupNombre(idPresupEncab);
+		console.log("resultado  ", resultado);
+		if (resultado === '""') {
+			handleClickPreview();
+		} else {
+			alert("el presupuesto no está en disco");
+		}
+	}
 	const handleClickPreview = () => {
 		setPPreview(true);
 	};
 
 	const handleClosePreview = () => {
-		setParamPresupuesto({ parampresupuesto, idpresupuesto: 0 });
-		handleDateChange(fecha);
+		// initialFetch();
 		setPPreview(false);
 	};
 
 	useEffect(() => {
 		initialFetch();
+		setValor("Muestra Presupuestos");
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
@@ -123,10 +131,9 @@ export default function PresupMuestra() {
 					{
 						icon: () => <WavesIcon />,
 						tooltip: "Ver detalles",
-						onClick: (event, rowData) => {
+						onClick: (event, rowData) =>
 							// setIdPresupuesto(rowData.idPresupEncab);
-							openApp(event, rowData.idPresupEncab);
-						},
+							openApp(event, rowData.idPresupEncab),
 					},
 					{
 						icon: () => (
@@ -135,68 +142,40 @@ export default function PresupMuestra() {
 						onClick: (event, rowData) =>
 							openPreview(event, rowData.idPresupEncab),
 					},
-					// {
-					// 	icon: () => (
-					// 		<VisibilityRoundedIcon style={{ color: purple[500] }} />
-					// 	),
-					// 	tooltip: "Vista Previa",
-
-					// 	onClick: (event, rowData) => {
-					// 		setIdPresupuesto(rowData.idPresupEncab);
-					// 		setPPreview({ preview: true });
-					// 	},
-					// },
-					// {
-					// 	icon: () => <tableIcons.Print style={{ color: green[500] }} />,
-					// 	isFreeAction: true,
-					// 	tooltip: "Imprimir",
-					// 	onClick: () => setImprimirTF({ imprimir: true }),
-					// },
+					{
+						icon: () => <tableIcons.Print style={{ color: green[500] }} />,
+						isFreeAction: true,
+						tooltip: "Imprimir",
+						onClick: () => setImprimirTF({ imprimir: true }),
+					},
 				]}
-				// onSelectionChange={(event, selectedRow) => {
-				// 	console.log("selectedRow  ", selectedRow);
-				// 	setIdPresupuesto(selectedRow.idPresupEncab);
-				// }}
-				// 	// setSelectedRow(selectedRow.idPresupEncab);
-				// 	// handleOnSelectionChange(event, selectedRow);
-				// 	armanombre(selectedRow.idPresupEncab);
+				components={{
+					Toolbar: (props) => (
+						<React.Fragment>
+							<MTableToolbar {...props} />
+							<MuiPickersUtilsProvider utils={DateFnsUtils}>
+								<Grid container>
+									<KeyboardDatePicker
+										disableToolbar
+										variant="inline"
+										format="dd/MM/yyyy"
+										margin="normal"
+										id="date-picker-inline"
+										label="Desde :"
+										value={selectedDate}
+										onChange={handleDateChange}
+										KeyboardButtonProps={{
+											"aria-label": "change date",
+										}}
+									/>
+								</Grid>
+							</MuiPickersUtilsProvider>
+						</React.Fragment>
+					),
+				}}
+			/>
 
-				// 	// setIdPresupuesto(selectedRow.idPresupEncab);
-				// 	// // setParamPresup({ parampresup, idPresup: nropresup });
-				// 	//armanombre(event, selectedRow.idPresupEncab);
-				// }}
-				// components={{
-				// 	Toolbar: (props) => (
-				// 		<React.Fragment>
-				// 			<MTableToolbar {...props} />
-				// 			<MuiPickersUtilsProvider utils={DateFnsUtils}>
-				// 				<Grid container>
-				// 					<KeyboardDatePicker
-				// 						disableToolbar
-				// 						variant="inline"
-				// 						format="dd/MM/yyyy"
-				// 						margin="normal"
-				// 						id="date-picker-inline"
-				// 						label="Desde :"
-				// 						value={selectedDate}
-				// 						onChange={handleDateChange}
-				// 						KeyboardButtonProps={{
-				// 							"aria-label": "change date",
-				// 						}}
-				// 					/>
-				// 				</Grid>
-				// 			</MuiPickersUtilsProvider>
-				// 		</React.Fragment>
-				// 	),
-				// }}
-			/>
-			<PresupPreviewMue
-				open={ppreview}
-				handleClose={handleClosePreview}
-				Presup={parampresupuesto.idpresupuesto}
-				// setOpen={setPPreview}
-				// handleClose={closeClickPresup}
-			/>
+			<PresupPreviewMue open={ppreview} handleClose={handleClosePreview} />
 
 			<Imprimir
 				columns={columns}
@@ -204,18 +183,6 @@ export default function PresupMuestra() {
 				open={imprimirTF.imprimir}
 				setOpen={setImprimirTF}
 			/>
-			{/* <PresupPreview
-				open={ppreview.ppreview}
-				// setOpen={setPPreview}
-				setOpen={CierraPreview}
-			></PresupPreview> */}
-			{/* {console.log("ppreview.ppreview   ", ppreview)}
-
-			<PresupPreviewMue
-				open={ppreview.ppreview}
-				//	setOpen={setPPreview}
-				Presup={idpresupuesto}
-			></PresupPreviewMue> */}
 
 			<TablaMuestraRenglon
 				open={open}

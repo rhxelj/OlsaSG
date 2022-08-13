@@ -54,27 +54,28 @@ router.get('/', (req, res, next) => {
             //corte de la tela 120 segundos por paño independiente del largo
 
             //unión de los paños 150 segundos por metro de soldadura
-            if (datos.minmay == 'my' || StkRubroAbrP == 'PLURI') {
-              valorMOTmup = result[0].costoMOT * coefMOT / 60 / 60 * result[0].segsolpu
-              valorMOTcorte = result[0].costoMOT * coefMOT / 60 / 60 * result[0].segpurecorte
+            // if (datos.minmay == 'my' || StkRubroAbrP == 'PLURI') {
+            valorMOTmup = result[0].costoMOT * coefMOT / 60 / 60 * result[0].segsolpu
+            valorMOTcorte = result[0].costoMOT * coefMOT / 60 / 60 * result[0].segpurecorte
 
-              if ((cantidad * 1 - Math.trunc(cantidad)) > 0) {
-                // impunion = ((((Math.trunc(cantidad))) * largo + 0.75)) * valorMOTmup
-                impunion = ((((Math.trunc(cantidad))) * largo + (anchotela / 2))) * valorMOTmup
-                impcorte = (cantidad + 1) * valorMOTcorte
-              }
-              else {
-                impunion = ((cantidad - 1) * largo) * valorMOTmup
-                impcorte = cantidad * valorMOTcorte
-              }
-
-              importeMOTtotal = impunion + impcorte
+            if ((cantidad * 1 - Math.trunc(cantidad)) > 0) {
+              impunion = ((((Math.trunc(cantidad))) * largo + (anchotela / 2))) * valorMOTmup
+              impcorte = (cantidad + 1) * valorMOTcorte
             }
+            else {
+              impunion = ((cantidad - 1) * largo) * valorMOTmup
+              impcorte = cantidad * valorMOTcorte
+            }
+
+            importeMOTtotal = impunion + impcorte
+
+
+            // }
 
             // if (datos.minmay == 'mn') 
-            else {
-              importeMOTtotal = 0
-            }
+            // else {
+            //   importeMOTtotal = 0
+            // }
 
 
             q = ['Select',
@@ -89,6 +90,7 @@ router.get('/', (req, res, next) => {
               'where StkRubro.StkRubroAbr = "' + StkRubroAbrP + '" ',
               'and StkRubro.StkRubroTM = idStkMonedas '
             ].join(' ')
+
             conexion.query(
               q,
               function (err, result) {
@@ -97,21 +99,16 @@ router.get('/', (req, res, next) => {
                   console.log(err)
                 }
                 else {
-                  // if (ivasn == 'CIVA') {
-                  //   result[0].ImpUnitario = result[0].ImpUnitario.toFixed(0) * 1
-                  // }
-                  // else {
-                  //   result[0].ImpUnitario = result[0].ImpUnitario.toFixed(0) / 1.21
-                  // }
+
                   if (ivasn == 'CIVA') {
                     result[0].ImpUnitario = Math.ceil(result[0].ImpUnitario.toFixed(0) / 10) * 10
                   }
                   else {
                     result[0].ImpUnitario = Math.ceil(result[0].ImpUnitario.toFixed(0) / 1.21 / 10) * 10
                   }
-                  //   result[0].ImpUnitario = result[0].ImpUnitario.toFixed(0)
                   callargo = cantidad * result[0].Ancho
                   anchoreal = (largo * 1).toFixed(2)
+
                   if (detallep == '') {
                     detalle = "Paños Unidos ( " + callargo.toFixed(2) + ' x ' + anchoreal + " ) en : "
                   }

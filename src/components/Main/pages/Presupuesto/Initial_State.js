@@ -20,7 +20,8 @@ export const initial_state = {
   TamCristal: 'PVC05',
   AltoVolado: 20,
   SobranteMarco: 20,
-
+  //cambio PAño
+  PreuspLNLF: "LN",
   //Brazos extensibles
   TipoMecanismo: 'Manual',
   TamToldoEleg: '',
@@ -66,6 +67,22 @@ export const initial_state = {
     {
       value: 'CFC',
       label: 'Con Forma y Criquet'
+    }
+  ],
+
+  AnchoComederoEleg: '0.68',
+  AnchoComedero: [
+    {
+      value: '0.68',
+      label: 'Ancho 0.68'
+    },
+    {
+      value: '0.90',
+      label: 'Ancho 0.90'
+    },
+    {
+      value: '1.2',
+      label: 'Ancho 1.2'
     }
   ],
   //FilaDos
@@ -176,6 +193,7 @@ export const initial_state = {
 
   //FilaCuatro
   nomCliente: "",
-  telCliente: "",
+  // telCliente: "",
+  otraCondicion: "",
   NroPresupuesto: 0
 };

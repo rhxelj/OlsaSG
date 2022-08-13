@@ -35,9 +35,8 @@ router.all("/", async function (req, res) {
     PresupEncabFecha: finalDate,
     PresupEncabCliente: cliente,
     PresupEncabTotal: req.body.DatosPresup.suma,
-    PresupEncabMayMin: req.body.DatosPresup.maymin
+    PresupEncabMayMin: req.body.maymin
   }
-
 
   conexion.query("INSERT INTO BasePresup.PresupEncab SET ?", registro, function (err, result) {
     if (err) {
@@ -92,4 +91,3 @@ router.all("/", async function (req, res) {
 });
 conexion.end;
 module.exports = router;
-return

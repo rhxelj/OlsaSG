@@ -1,24 +1,15 @@
 export function presupdetpieColumns() {
     return new Promise(function (resolve) {
         resolve([
-            // {
-            //     title: "Presup.Pie(ID)",
-            //     field: "idPresupDetPie",
-            //     editable: "never",
-            //     order: true,
-            // },
+
             {
                 title: "Leyenda",
                 field: "PresupDetPieLeyenda",
-                length: 120,
+                length: 70,
+                // width: 150,
                 order: true,
             },
-            // {
-            //     title: "Por Defecto S/N",
-            //     field: "PresupDetPieSelec",
-            //     length: 1,
-            //     order: true,
-            // },
+
         ]);
     });
 }

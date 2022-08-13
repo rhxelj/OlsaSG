@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { tableIcons } from "../../../../../lib/material-table/tableIcons";
 import { localization } from "../../../../../lib/material-table/localization";
-import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
 import MaterialTable from "material-table";
+import BotonEstilo from '../../../../../../Styles/Boton.module.css'
 import { presuprenglonleer } from "./PresupRenglonLeer";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -67,7 +66,7 @@ export default function TablaMuestraRenglon(props) {
 
         <Dialog
             fullWidth={true}
-            maxWidth={'xl'}
+            // maxWidth={'xl'}
             open={open}
             TransitionComponent={Transition}
             keepMounted
@@ -75,9 +74,9 @@ export default function TablaMuestraRenglon(props) {
             aria-labelledby="alert-dialog-slide-title"
             aria-describedby="alert-dialog-slide-description"
         >
-            <DialogTitle id="alert-dialog-slide-title">
+            {/* <DialogTitle id="alert-dialog-slide-title">
                 Renglones de Presupuesto
-            </DialogTitle>
+            </DialogTitle> */}
             <DialogContent>
                 <MaterialTable
                     icons={tableIcons}
@@ -87,9 +86,9 @@ export default function TablaMuestraRenglon(props) {
                     data={renglon.datarenglon}
                 ></MaterialTable>
             </DialogContent>
-            <Button onClick={handleClose} color="secondary">
+            <button onClick={handleClose} className={BotonEstilo.botoncerrar}>
                 Cerrar
-            </Button>
+            </button>
         </Dialog>
     );
 }

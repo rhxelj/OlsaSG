@@ -2,14 +2,18 @@ import request from "superagent";
 
 import IpServidor from "../VariablesDeEntorno";
 var nroPresupuesto = 0
-export const PresupGrabar = (props, nomCliente, idClientes) => {
+export const PresupGrabar = (props, ClienteMayMin, nomCliente, idClientes) => {
   // debugger
+
+
   return new Promise(resolve => {
+
     const url = IpServidor + "/presupgraba";
     request
       .post(url)
       .set("Content-Type", "application/json")
       .send({ DatosPresup: props })
+      .send({ maymin: ClienteMayMin })
       .send({ nomCliente: nomCliente })
       .send({ idClientes: idClientes })
       .set("X-API-Key", "foobar")

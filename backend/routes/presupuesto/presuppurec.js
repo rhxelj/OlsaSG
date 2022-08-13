@@ -52,29 +52,29 @@ router.get('/', (req, res, next) => {
             }
             var anchotela = result2[0].anchotela
 
-            if (datos.minmay == 'my' || StkRubroAbrP == 'PLURI') {
-              valorMOTmup = result[0].costoMOT * coefMOT / 60 / 60 * result[0].segsolpu
-              valorMOTrecorte = result[0].costoMOT * coefMOT / 60 / 60 * result[0].segpurecorte
-              valorMOTcorte = result[0].costoMOT * coefMOT / 60 / 60 * result[0].segpurecorte
-              if ((cantidad - Math.trunc(cantidad)) > 0) {
-                // impunion = ((((Math.trunc(cantidad))) * largo + 0.75)) * valorMOTmup
-                impunion = ((((Math.trunc(cantidad))) * largo + (anchotela / 2))) * valorMOTmup
-                impcorte = (cantidad + 1) * valorMOTcorte
-              }
-              else {
-                impunion = ((cantidad - 1) * largo) * valorMOTmup
-                impcorte = cantidad * valorMOTcorte
-              }
-
-
-              imprecorte = largo * valorMOTrecorte
-              importeMOTtotal = impunion + imprecorte + impcorte
+            // if (datos.minmay == 'my' || StkRubroAbrP == 'PLURI') {
+            valorMOTmup = result[0].costoMOT * coefMOT / 60 / 60 * result[0].segsolpu
+            valorMOTrecorte = result[0].costoMOT * coefMOT / 60 / 60 * result[0].segpurecorte
+            valorMOTcorte = result[0].costoMOT * coefMOT / 60 / 60 * result[0].segpurecorte
+            if ((cantidad - Math.trunc(cantidad)) > 0) {
+              // impunion = ((((Math.trunc(cantidad))) * largo + 0.75)) * valorMOTmup
+              impunion = ((((Math.trunc(cantidad))) * largo + (anchotela / 2))) * valorMOTmup
+              impcorte = (cantidad + 1) * valorMOTcorte
             }
-            // if (datos.minmay == 'mn')
             else {
-
-              importeMOTtotal = 0
+              impunion = ((cantidad - 1) * largo) * valorMOTmup
+              impcorte = cantidad * valorMOTcorte
             }
+
+
+            imprecorte = largo * valorMOTrecorte
+            importeMOTtotal = impunion + imprecorte + impcorte
+            // }
+            // if (datos.minmay == 'mn')
+            // else {
+
+            //   importeMOTtotal = 0
+            // }
             q = ['Select',
               'StkRubroDesc, StkRubroAbr, ',
               '(((StkRubroCosto * StkMonedasCotizacion * ', coeficiente, ')',
