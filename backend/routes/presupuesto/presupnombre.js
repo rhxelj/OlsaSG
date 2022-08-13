@@ -3,13 +3,14 @@ var router = express.Router();
 var moment = require("moment");
 const { exec } = require("child_process");
 var path = require("path");
-var variables = require('../../public/variables')
+var variables = require('../../public/variables');
+const { response } = require("express");
 
 
 
 router.get("/", function (req, res) {
-    console.log(process.cwd())  ///home/sandra/SistOLSA/OlsaSG/backend
-
+    // console.log(process.cwd())  ///home/sandra/SistOLSA/OlsaSG/backend
+    console.log('vino a presupnombre  ')
     var nombrepresupeleg = req.query.id;
     // var comando = "cp -R /home/sandra/Documentos/OLSAFrecuentes/PresupSistema/"
     var comando = "cp -R " + variables.dirpresupdocumento
@@ -18,8 +19,15 @@ router.get("/", function (req, res) {
     console.log('comando  ', comando)
     //' /home/sandra/SistOLSA/OlsaSG/src/components/Main/pages/Presupuesto/static/media/basics.pdf'
     exec(comando, (error, stdout, stderr) => {
+        console.log(`error aqui: ${error}`);
+        console.log(`stdout aqui: ${stdout}`);
+        console.log(`stderr aqui: ${stderr
+            }`);
         if (error) {
             console.log(`error: ${error.message}`);
+            console.log(`error: ${error.code}`);
+            res.json([{ error: error.code }])
+
             return;
         }
         if (stderr) {
@@ -28,6 +36,7 @@ router.get("/", function (req, res) {
         }
         res.json(stdout)
     });
-
+    // console.log('req ', req)
 })
+
 module.exports = router;

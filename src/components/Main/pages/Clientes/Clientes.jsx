@@ -8,14 +8,15 @@ import { clientestraeNuevos } from "./ClientesTraeNuevos";
 // import { clientesagregaFac } from "./ClientesAgregaFac";
 import { onRowUpdate } from "./onRowUpdate";
 import { onRowDelete } from "./onRowDelete";
-import { HeaderTitle } from "../../../lib/HeaderTitle";
 import { localization } from "../../../lib/material-table/localization";
 import Imprimir from "../Impresion/Imprimir/Imprimir";
 import { teal } from "@material-ui/core/colors";
 
-export default function Clientes() {
-	// HeaderTitle("Clientes");
+import { useContext } from "react";
+import { globalContext } from "../../../App";
 
+export default function Clientes() {
+	const { setValor } = useContext(globalContext);
 	const [columns, setColumns] = useState([]);
 	const [data, setData] = useState([]);
 	const [imprimirTF, setImprimirTF] = useState({ imprimir: false });
@@ -43,6 +44,7 @@ export default function Clientes() {
 	}
 	useEffect(() => {
 		initialFetch();
+		setValor("Clientes");
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (

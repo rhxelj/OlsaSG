@@ -22,8 +22,9 @@ export default function FilaCargaDesc() {
     // };
 
     const handleChange5 = (event) => {
-        //   setSelectedValue(event.target.value);
         setState({ ...state, DetalleRenglon: event.target.value });
+        //para que no salga Ancho y Largo en la tabla del presupuesto cuando se carga por descripción
+        // setState({ ...state, DescripPresup: '------' });
     };
     const classes = useStyles();
     return (

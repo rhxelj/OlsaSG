@@ -2,7 +2,7 @@ import IpServidor from "../VariablesDeEntorno";
 import request from "superagent";
 // import { resolve } from "dns";
 
-export const leerMonedas = () => {
+export const leerStkMonedas = () => {
   return new Promise((resolve) => {
     const url = IpServidor + "/stkmonedasleer";
     request

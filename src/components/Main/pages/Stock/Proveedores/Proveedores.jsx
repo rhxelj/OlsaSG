@@ -8,12 +8,14 @@ import { leerProveedores } from "./ProveedoresLeer";
 import { onRowAdd } from "./onRowAdd";
 import { onRowUpdate } from "./onRowUpdate";
 import { onRowDelete } from "./onRowDelete";
-import { HeaderTitle } from "../../../../lib/HeaderTitle";
 import Imprimir from "../../Impresion/Imprimir/Imprimir";
 
-export default function Proveedores() {
-	HeaderTitle("Proveedores");
+import { useContext } from "react";
+import { globalContext } from "../../../../App";
 
+export default function Proveedores() {
+	// HeaderTitle("Proveedores");
+	const { setValor } = useContext(globalContext);
 	const [columns, setColumns] = useState([]);
 	const [data, setData] = useState([]);
 	const [imprimirTF, setImprimirTF] = useState({ imprimir: false });
@@ -35,6 +37,7 @@ export default function Proveedores() {
 
 	useEffect(() => {
 		initialFetch();
+		setValor("Proveedores");
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
@@ -48,7 +51,7 @@ export default function Proveedores() {
 						onClick: () => setImprimirTF({ imprimir: true }),
 					},
 				]}
-				title="PROVEEDORES"
+				title=""
 				localization={localization}
 				icons={tableIcons}
 				columns={columns}

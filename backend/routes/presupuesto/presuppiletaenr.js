@@ -84,7 +84,8 @@ router.get("/", (req, res, next) => {
               else {
                 detalle = detallep + ''
               }
-              minutosdren = largo / 1.50 * 12
+              minutosdren = ((largo / 1.50) + 2) * 12
+
               /* 12 minutos por drenaje*/
             } else {
               if (detallep == '') {
@@ -170,6 +171,10 @@ router.get("/", (req, res, next) => {
               } else {
                 datosenvio.push(result);
               }
+              console.log('datosenvio[0][0].ImpUnitario   ', datosenvio[0][0].ImpUnitario)
+              console.log('datosenvio[1][0].ValorOjales  ', datosenvio[1][0].ValorOjales)
+              console.log('valorMOT  ', valorMOT)
+
               costooriginal = datosenvio[0][0].ImpUnitario + datosenvio[1][0].ValorOjales + valorMOT
               if (ivasn == 'CIVA') {
                 costooriginal = Math.ceil(costooriginal.toFixed(0) / 10) * 10

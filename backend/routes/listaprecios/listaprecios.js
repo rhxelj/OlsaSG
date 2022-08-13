@@ -6,9 +6,9 @@ var conexion = require('../conexion');
 
 conexion.connect(function (err) {
     if (!err) {
-        console.log("base de datos conectada en stkrubroleermezcla");
+        console.log("base de datos conectada en listaprecios");
     } else {
-        console.log("no se conecto en stkrubroleermezcla");
+        console.log("no se conecto en listaprecios");
     }
 });
 

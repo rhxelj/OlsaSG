@@ -10,15 +10,15 @@ import { onRowAdd } from "./onRowAdd";
 import { onRowUpdate } from "./onRowUpdate";
 import { onRowDelete } from "./onRowDelete";
 import MaterialTable from "material-table";
-import { HeaderTitle } from "../../../../lib/HeaderTitle";
 import Imprimir from "../../Impresion/Imprimir/Imprimir";
 
 // import StkMinMaxDialog from "./StkMinMaxDialog";
+import { useContext } from "react";
+import { globalContext } from "../../../../App";
 
 export default function StkRubro() {
   // const [lookconst, setLookconst] = useState();
-  HeaderTitle("RUBROS"); //titulo a mostrar en el navbar
-
+  const { setValor } = useContext(globalContext);
   // const [nameError, setNameError] = useState({
   //   error: false,
   //   label: "",
@@ -59,6 +59,7 @@ export default function StkRubro() {
 
   useEffect(() => {
     initialFetch();
+    setValor("Rubros");
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
   // console.log("contenido de StkMinMaxDialogTF ", StkMinMaxDialogTF);
   return (

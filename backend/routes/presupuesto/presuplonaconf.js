@@ -115,6 +115,7 @@ router.get("/", (req, res, next) => {
           "and StkRubro.StkRubroTM = idStkMonedas"
         ].join("");
 
+
         msogadobladillo = [
           "Select ",
           "(StkRubroCosto * StkMonedasCotizacion) as CostoMSDobladillo ",
@@ -159,6 +160,7 @@ router.get("/", (req, res, next) => {
             console.log(err);
           } else {
             datosenvio.push(result);
+            console.log('msogachicote  ', result)
           }
         });
         if (tipoconf === 'cs') {
@@ -168,6 +170,7 @@ router.get("/", (req, res, next) => {
               console.log(err);
             } else {
               datosenvio.push(result);
+              console.log('msogadobladillo  ', result)
             }
           });
         }
@@ -178,6 +181,7 @@ router.get("/", (req, res, next) => {
             console.log(err);
           } else {
             datosenvio.push(result);
+            console.log('cotizacion  ', result)
           }
         });
 
@@ -187,11 +191,10 @@ router.get("/", (req, res, next) => {
             console.log(err);
           } else {
             datosenvio.push(result);
-            // i++
-            //  if (i === totalreg) {
+            console.log('ojales  ', result)
+
             j = 0;
-            // fin = totalreg * 4;
-            // while (j < fin) {
+
             while (j < 4) {
               costooriginal =
                 datosenvio[j][0].CostoCobMC + datosenvio[j][0].CostoRefuerzo;
@@ -210,11 +213,26 @@ router.get("/", (req, res, next) => {
               j++;
               costooriginal = costooriginal + datosenvio[j][0].CostoOjalM2;
               j++;
-              // console.log('costooriginal  final c/gan  ', costooriginal)
+
+
+
+              console.log('datosenvio[0][0]  ', datosenvio[0][0])
+              console.log('datosenvio[1][0]  ', datosenvio[1][0])
+              console.log('datosenvio[2][0]  ', datosenvio[2][0])
+              console.log('datosenvio[3][0]  ', datosenvio[3][0])
+              console.log('datosenvio[4][0]  ', datosenvio[4][0])
+              console.log('costooriginal  ', costooriginal)
+              console.log(' costooriginal = costooriginal * ganancia * coefimpuesto;')
               costooriginal = costooriginal * ganancia * coefimpuesto;
+              console.log('ganancia  ', ganancia)
+              console.log('coefimpuesto  ', coefimpuesto)
+              console.log('costooriginal  ', costooriginal)
 
               metroscuad = anchoreal * largoreal
+              console.log(' costooriginal = costooriginal * metroscuad')
               costooriginal = costooriginal * metroscuad
+              console.log('metroscuad  ', metroscuad)
+              console.log('costooriginal  ', costooriginal)
 
               if (metroscuad < 22 && metroscuad >= 16) {
                 costooriginal = costooriginal * 1.0325
@@ -229,7 +247,6 @@ router.get("/", (req, res, next) => {
                 costooriginal = costooriginal * 1.0325
               }
 
-              console.log(' costooriginal en confeccionada ', costooriginal)
               // datosenvio[0][0]['ImpItem'] = costooriginal
               if (ivasn == 'CIVA') {
                 costooriginal = Math.ceil(costooriginal.toFixed(0) / 10) * 10

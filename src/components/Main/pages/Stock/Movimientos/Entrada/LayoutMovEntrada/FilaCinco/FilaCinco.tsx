@@ -13,7 +13,7 @@ import { stkitemsmodstock } from "../../../../Items/StkItemsModStock"; //"../../
 import { stkenvaseagregar } from "../../../../Envase/StkEnvaseAgregar";
 import { stkitemsleedisp } from "../../../../Items/StkItemsLeeDisp";
 
-// import ImprimirEtiquetas from "../../../../../Impresion/ImprimirEtiquetas";
+ //import ImprimirEtiquetas from "../../../../../Impresion/ImprimirEtiquetas";
 
 export default function Fila() {
   const { state, setState } = useContext(StkMovEntradaContext);

@@ -36,19 +36,7 @@ export default function F2C1() {
     const result = await stkitemsleecodgryrb(codigogrupo, codigorubro);
     setState({ ...state, stkitems: result });
   }
-  // function reducer(stater, action){
-  //   switch (action.type) {
-  //     case 'idStkGrupo':
-  //       stkrubroleercodgrupo(state.idStkGrupo)
-  //       return console.log ('idStkGrupo');
-  //     case 'idStkRubro':
-  //       stkitemsleercodgryrb(state.idStkGrupo, state.idStkRubro);
-  //       return console.log ('idStkRubro');
 
-  //     default:
-  //       return console.log ('estaria dando error');
-  //   }
-  // }
 
   useEffect(() => {
     if (state.idStkGrupo === "") {

@@ -85,12 +85,13 @@ router.get("/", (req, res, next) => {
         }
 
 
-        minutosunion = (datos.ancho + 0.08) * largo * 5;
+        // minutosunion = (datos.ancho * 1 + 0.08) * largo * 5;
         sogadobladillo = result[0].sogadobladillo;
         valorflete = result[0].flete;
         valorMOT = result[0].MOTpM2;
         codmoneda = result[0].codmoneda;
         coefimpuesto = result[0].coefimpuestos
+
 
         mcuadcob = [
           "Select ",
@@ -104,7 +105,6 @@ router.get("/", (req, res, next) => {
           "and StkRubro.StkRubroTM = idStkMonedas"
         ].join("");
 
-        console.log('mcuadcob  ', mcuadcob);
 
         msogachicote = [
           "Select ",
@@ -137,12 +137,14 @@ router.get("/", (req, res, next) => {
         //   "'",
         //   " and StkRubro.StkRubroTM = idStkMonedas"
         // ].join("");
-
-        ojales = ['select sum(BaseStock.StkRubro.StkRubroCosto * BaseStock.StkMonedas.StkMonedasCotizacion * BasePresup.PresupConfTipo.PresupConfTipoCant) ' +
+        // ojales = ['select sum(BaseStock.StkRubro.StkRubroCosto * BaseStock.StkMonedas.StkMonedasCotizacion * BasePresup.PresupConfTipo.PresupConfTipoCant) ' +
+        ojales = ['select sum(BaseStock.StkRubro.StkRubroCosto * BaseStock.StkMonedas.StkMonedasCotizacion) ' +
           'as CostoOjalM2 from BasePresup.PresupConfTipo, BaseStock.StkRubro, BaseStock.StkMonedas ' +
           'where  PresupConfTipoRubro = BaseStock.StkRubro.StkRubroAbr and ' +
           'BaseStock.StkRubro.StkRubroTM = BaseStock.StkMonedas.idStkMonedas and ' +
           'BaseStock.StkRubro.StkRubroAbr = "' + tipoojal + '"'].join("");
+
+
         cotizacion = [
           "Select ",
           "StkMonedasCotizacion ",
@@ -169,16 +171,17 @@ router.get("/", (req, res, next) => {
             datosenvio.push(result);
           }
         });
-        if (tipoconf === 'cs') {
-          conexion.query(msogadobladillo, function (err, result) {
-            if (err) {
-              console.log("error en mysql");
-              console.log(err);
-            } else {
-              datosenvio.push(result);
-            }
-          });
-        }
+
+        // if (tipoconf === 'cs') {
+        conexion.query(msogadobladillo, function (err, result) {
+          if (err) {
+            console.log("error en mysql");
+            console.log(err);
+          } else {
+            datosenvio.push(result);
+          }
+        });
+        // }
 
         conexion.query(cotizacion, function (err, result) {
           if (err) {
@@ -195,36 +198,28 @@ router.get("/", (req, res, next) => {
             console.log(err);
           } else {
             datosenvio.push(result);
-
             j = 0;
             while (j < 4) {
               // costooriginal =
               //   datosenvio[j][0].CostoCobMC + datosenvio[j][0].CostoRefuerzo;
               costooriginal = datosenvio[j][0].CostoCobMC
-              console.log('datosenvio[j][0].CostoCobMC  ', datosenvio[j][0].CostoCobMC)
               j++;
               //traía el valor del chicote de 1,50 que se calcula 1 por m2
               //estoy calculando por m2 4 mts.de soga más el 25% para abolinar
               //guarda el valor de la soga para después calcular la soga para abolinar
               costooriginal = costooriginal + (datosenvio[j][0].CostoMSChicote);
-              console.log('datosenvio[j][0].CostoMSChicote  ', datosenvio[j][0].CostoMSChicote)
               j++;
               // costooriginal = costooriginal + datosenvio[j][0].CostoMSDobladillo;
               costooriginal = costooriginal + datosenvio[j][0].CostoMSDobladillo;
-              console.log('datosenvio[j][0].CostoMSDobladillo  ', datosenvio[j][0].CostoMSDobladillo)
               j++;
               costooriginal =
                 costooriginal +
                 datosenvio[j][0].StkMonedasCotizacion * valorflete +
                 +(datosenvio[j][0].StkMonedasCotizacion * valorMOT);
-              console.log('datosenvio[j][0].StkMonedasCotizacion  ', datosenvio[j][0].StkMonedasCotizacion)
               j++;
 
-              console.log('valorflete  ', valorflete)
-              console.log('valorMOT  ', valorMOT)
 
               metroscuad = anchoreal * largoreal
-              console.log('metroscuad  ', metroscuad)
 
               //estaba así como se calcula la lona tipo
               //   costooriginal = costooriginal + datosenvio[j][0].CostoOjalM2;
@@ -237,34 +232,23 @@ router.get("/", (req, res, next) => {
 
               costooriginal = costooriginal * metroscuad
               //suma la soga para abolinar
-              console.log('costooriginal  ', costooriginal)
 
               if (metroscuad < 22 && metroscuad >= 16) {
                 costooriginal = costooriginal * 1.0325
-                console.log('metroscuad  ', 'metroscuad 1')
 
               }
               if (metroscuad < 16 && metroscuad >= 12) {
                 costooriginal = costooriginal * 1.0325
                 costooriginal = costooriginal * 1.0325
-                console.log('metroscuad  ', 'metroscuad 2')
-
               }
               if (metroscuad < 12) {
                 costooriginal = costooriginal * 1.0325
                 costooriginal = costooriginal * 1.0325
                 costooriginal = costooriginal * 1.0325
-                console.log('metroscuad  ', 'metroscuad 3')
-
               }
               totalojales = (perimetro / (ojalescada / 100));
               costoojales = totalojales * valorojales
               costooriginal = costooriginal + costoojales
-              console.log('totalojales  ', totalojales)
-              console.log('valorojales  ', valorojales)
-              console.log('costoojales  ', costoojales)
-              console.log('costooriginal  ', costooriginal)
-
 
               if (ivasn == 'CIVA') {
                 costooriginal = Math.ceil(costooriginal.toFixed(0) / 10) * 10

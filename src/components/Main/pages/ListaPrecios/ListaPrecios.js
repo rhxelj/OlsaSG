@@ -3,11 +3,8 @@ import { localization } from "../../../lib/material-table/localization";
 import '../../../../Styles/TableHeader.css'
 import MaterialTable from "material-table";
 import { tableIcons } from "../../../lib/material-table/tableIcons";
-// import { makeStyles } from "@material-ui/core/styles";
 import { leelistaprecios } from "./LeeListaPrecios";
-import { HeaderTitle } from '../../../lib/HeaderTitle'
 import Imprimir from "../Impresion/Imprimir/Imprimir";
-import Paper from "@material-ui/core/Paper";
 
 import TablaMuestraStock from "./TablaMuestraStock";
 import WavesIcon from "@material-ui/icons/Waves";
@@ -23,11 +20,14 @@ import AutorenewIcon from '@material-ui/icons/Autorenew';
 //   },
 // });
 
+import { useContext } from "react";
+import { globalContext } from "../../../App";
 
 
 export default function ListaPrecios() {
-  HeaderTitle("Lista de Precios");
   // const classes = useStyles();
+
+  const { setValor } = useContext(globalContext);
   const [paramitems, setParamItems] = useState({
     idGrupo: 0,
     idRubro: 0,
@@ -89,6 +89,7 @@ export default function ListaPrecios() {
 
   useEffect(() => {
     leerlistaprecios();
+    setValor("Lista de Precios");
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const openApp = (event, StkRubroCodGrp, idStkRubro) => {

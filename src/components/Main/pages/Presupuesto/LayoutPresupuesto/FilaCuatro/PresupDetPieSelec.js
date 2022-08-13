@@ -46,6 +46,7 @@ export default function PresupDetPieSelect() {
   return (
     <div>
       <MaterialTable
+
         onSelectionChange={handleOnSelectionChange}
         title="PIE DE PRESUPUESTO"
         columns={columns}
@@ -58,6 +59,7 @@ export default function PresupDetPieSelect() {
           addRowPosition: "first",
           showTextRowsSelected: true,
           actionsColumnIndex: -1,
+          // tableLayout: "fixed",
         }}
 
       />

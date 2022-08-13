@@ -1,3 +1,8 @@
+/* para agregar un item debo agregar en :
+/home/sandra/SistOLSA/OlsaSG/src/components/Main/index.js
+/home/sandra/SistOLSA/OlsaSG/src/components/Header/Header.js
+/home/sandra/SistOLSA/OlsaSG/src/components/Header/menues.js*/
+
 export const movimientos = [
   { link: "/ListaPrecios", primary: "Lista de Precios" },
   // { link: "/Presupuestos", primary: "Presupuestos" },
@@ -7,6 +12,7 @@ export const movimientos = [
   // { link: "/PresupPantVie", primary: "Presupuesto Viejo" },
   // { link: "/StkGenImpQR", primary: "ImprimeQR" },
   { link: "/StkMovEntrada", primary: "Entrada Mercadería" },
+  { link: "/MovStockPant", primary: "Ingreso Mercadería" },
   { link: "/StkMovSalida", primary: "Salida de Disponible" },
   { link: "/ImprimeDisponible", primary: "Impresión Mercadería Disponible" },
   { link: "/StkMovSalidaFinal", primary: "Salida Final" },

@@ -1,20 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { initial_state } from "./Initial_State";
 import FilaUno from "./LayoutPresupuesto/FilaUno";
 import FilaDos from "./LayoutPresupuesto/FilaDos";
 // import TablaPresup from "./LayoutPresupuesto/TablaPresup/TablaPresup";
 
-import { HeaderTitle } from "../../../lib/HeaderTitle";
+// import { HeaderTitle } from "../../../lib/HeaderTitle";
 import { Grid } from "@material-ui/core";
+import { useContext } from "react";
+import { globalContext } from "../../../App";
 
 export const PresupPantContext = React.createContext();
 
 var PresupPant = () => {
-	// HeaderTitle("Presupuestos");
-
+	const { setValor } = useContext(globalContext);
 	const [state, setState] = useState(initial_state);
 	const [datosrenglon, setDatosRenglon] = useState([]);
-
+	useEffect(() => {
+		setValor("Presupuestos");
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 	return (
 		<div>
 			{/* <Container> */}

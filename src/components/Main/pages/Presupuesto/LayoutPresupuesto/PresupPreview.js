@@ -3,25 +3,16 @@
 // Lee Rubro por codigo de gupo
 import React from 'react';
 import { Dialog } from "@material-ui/core";
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
 import MuiDialogTitle from '@material-ui/core/DialogTitle'
-import Typography from '@material-ui/core/Typography';
 import BCierraDialogo from '../../../../../Styles/Boton.module.css'
 import { tableIcons } from '../../../../lib/material-table/tableIcons'
-import WavesIcon from "@material-ui/icons/Waves";
 
 
-import {
-    blue,
-    green,
-    purple,
-    red,
-    teal,
-} from "@material-ui/core/colors";
+
 // export default function PresupPreview(props) {
 export const PresupPreview = (props) => {
     function cierradialogo() {
+        console.log('entro en cierradialog  ')
         props.setOpen({ ppreview: false });
     }
 

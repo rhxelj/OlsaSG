@@ -13,71 +13,72 @@ import { onRowUpdate } from "./onRowUpdate";
 import { onRowDelete } from "./onRowDelete";
 
 import "../../../../../Styles/TableHeader.css";
-import { HeaderTitle } from "../../../../lib/HeaderTitle"
 import Imprimir from "../../Impresion/Imprimir/Imprimir";
+import { useContext } from "react";
+import { globalContext } from "../../../../App";
 
 export default function UnidadMedidas() {
-  HeaderTitle("Unidad De Medidas")
+	const { setValor } = useContext(globalContext);
+	const [columns, setColumns] = useState([]);
+	const [data, setData] = useState([]);
+	const [imprimirTF, setImprimirTF] = useState({ imprimir: false });
+	async function columnsFetch() {
+		const col = await unidadMedidasColumns();
+		setColumns(() => col);
+	}
 
-  const [columns, setColumns] = useState([]);
-  const [data, setData] = useState([]);
-  const [imprimirTF, setImprimirTF] = useState({ imprimir: false });
-  async function columnsFetch() {
-    const col = await unidadMedidasColumns();
-    setColumns(() => col);
-  }
+	async function dataFetch() {
+		const data = await unidadMedidasData();
+		setData(data);
+	}
 
-  async function dataFetch() {
-    const data = await unidadMedidasData();
-    setData(data);
-  }
+	async function initialFetch() {
+		columnsFetch();
+		dataFetch();
+	}
 
-  async function initialFetch() {
-    columnsFetch();
-    dataFetch();
-  }
+	useEffect(() => {
+		initialFetch();
+		setValor("Unidad de Medidas");
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => {
-    initialFetch();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  return (
-    <div>
-      <MaterialTable
-        actions={[
-          {
-            icon: () => <tableIcons.Print />,
-            tooltip: "Imprimir",
-            isFreeAction: true,
-            onClick: () => setImprimirTF({ imprimir: true }),
-          },
-        ]}
-        title=""
-        icons={tableIcons}
-        localization={localization}
-        columns={columns}
-        data={data}
-        options={{
-          exportAllData: true,
-          exportButton: true,
-          grouping: true,
-          addRowPosition: "first",
-          actionsColumnIndex: -1,
-        }}
-        editable={{
-          onRowAdd: (newData) => onRowAdd(newData).then(() => dataFetch()),
-          onRowUpdate: (newData, oldData) =>
-            onRowUpdate(newData, oldData).then(() => dataFetch()),
-          onRowDelete: (oldData) =>
-            onRowDelete(oldData).then(() => dataFetch()),
-        }}
-      />
-      <Imprimir
-        columns={columns}
-        datos={data}
-        open={imprimirTF.imprimir}
-        setOpen={setImprimirTF}
-      />
-    </div>
-  );
+	return (
+		<div>
+			<MaterialTable
+				actions={[
+					{
+						icon: () => <tableIcons.Print />,
+						tooltip: "Imprimir",
+						isFreeAction: true,
+						onClick: () => setImprimirTF({ imprimir: true }),
+					},
+				]}
+				title=""
+				icons={tableIcons}
+				localization={localization}
+				columns={columns}
+				data={data}
+				options={{
+					exportAllData: true,
+					exportButton: true,
+					grouping: true,
+					addRowPosition: "first",
+					actionsColumnIndex: -1,
+				}}
+				editable={{
+					onRowAdd: (newData) => onRowAdd(newData).then(() => dataFetch()),
+					onRowUpdate: (newData, oldData) =>
+						onRowUpdate(newData, oldData).then(() => dataFetch()),
+					onRowDelete: (oldData) =>
+						onRowDelete(oldData).then(() => dataFetch()),
+				}}
+			/>
+			<Imprimir
+				columns={columns}
+				datos={data}
+				open={imprimirTF.imprimir}
+				setOpen={setImprimirTF}
+			/>
+		</div>
+	);
 }

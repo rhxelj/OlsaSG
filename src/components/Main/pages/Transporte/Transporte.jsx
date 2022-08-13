@@ -7,13 +7,14 @@ import { leerTransporte } from "./TransporteLeer";
 import { onRowAdd } from "./onRowAdd";
 import { onRowUpdate } from "./onRowUpdate";
 import { onRowDelete } from "./onRowDelete";
-import { HeaderTitle } from "../../../lib/HeaderTitle";
 import { localization } from "../../../lib/material-table/localization";
 import Imprimir from "../Impresion/Imprimir/Imprimir";
 
-export default function Transporte() {
-	HeaderTitle("Transporte");
+import { useContext } from "react";
+import { globalContext } from "../../../App";
 
+export default function Transporte() {
+	const { setValor } = useContext(globalContext);
 	const [columns, setColumns] = useState([]);
 	const [data, setData] = useState([]);
 	const [imprimirTF, setImprimirTF] = useState({ imprimir: false });
@@ -36,6 +37,7 @@ export default function Transporte() {
 
 	useEffect(() => {
 		initialFetch();
+		setValor("Transportes");
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (

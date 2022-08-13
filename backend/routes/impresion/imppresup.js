@@ -4,10 +4,20 @@ var path = require("path");
 var moment = require("moment");
 var variables = require('../../public/variables')
 
-//var conexion = require('../conexion');
+var conexion = require('../conexion');
 var PdfPrinter = require('pdfmake');
 var dateFormat = require('dateformat');
 var url = require('url');
+
+
+conexion.connect(function (err) {
+    if (!err) {
+        console.log("base de datos conectada en imppresup");
+    } else {
+        console.log("no se conecto en imppresup");
+    }
+});
+
 var router = express();
 
 var TotalPresup = 0
@@ -29,10 +39,11 @@ var fonts = {
 };
 
 router.post("/", function (req, res, next) {
-    console.log('dirpresupdocumento  ', variables.dirpresupdocumento)
     var datospresup = req.body.datospresup
     var descrip = req.body.descrip
     var Presupuestonro = req.body.nroPresupuesto
+
+    var maymin = req.body.PresupMnMy
     var d = new Date();
     var Fecha = dateFormat(d, "dd-mm-yyyy ");
     var condicionpago1 = []
@@ -52,13 +63,12 @@ router.post("/", function (req, res, next) {
         i++
     }
     )
-
+    condicionpago1.push(req.body.otraCondicion)
     TotalPresup = req.body.suma
 
     var Cliente = req.body.nomCliente
-    var Telefono = req.body.telCliente
+    // var Telefono = req.body.otraCondicion
     var largocli = Cliente.length
-    console.log('Cliente   ', Cliente)
     while ((Cliente.substr(largocli, 1) == ' ' || Cliente.substr(largocli, 1) == '') && largocli >= 0) {
         largocli--
     }
@@ -150,15 +160,17 @@ router.post("/", function (req, res, next) {
     if (condicionpago1.length > 0) {
         condpag.push([{ text: 'Condiciones de presupuesto', style: 'resaltado' }])
         condpag.push(condicionpago1)
-        if (tipoleygral < 0) {
-            condpaggral.push([{ text: 'El precio acordado, se mantiene, hasta 5 días posteriores a la fecha de entrega establecida.', style: 'resaltado' }])
-            condpaggral.push([{ text: 'Pasados los 5 días SE ACTUALIZARÁ A LA FECHA DE RETIRO', style: 'resaltado' }])
-            condpaggral.push([{ text: 'Si la mercadería no se retira dentro de los 60 días posteriores a la fecha establecida para la entrega, se considerará abandonada y nuestra empresa dispondrá de ella, incluso para su destrucción, tomando la seña como indemnización del trabajo realizado', style: 'resaltado' }])
-        }
-        else {
-            condpaggral.push([{ text: 'La seña, confirma el precio acordado hasta 5 días posteriores a la fecha de entrega establecida', style: 'resaltado' }])
-            condpaggral.push([{ text: 'Pasados los 5 días el SALDO SE ACTUALIZARÁ A LA FECHA DE RETIRO', style: 'resaltado' }])
-            condpaggral.push([{ text: 'Si la mercadería no se retira dentro de los 60 días posteriores a la fecha establecida para la entrega, se considerará abandonada y nuestra empresa dispondrá de ella, incluso para su destrucción, tomando la seña como indemnización del trabajo realizado', style: 'resaltado' }])
+        if (maymin === 'mn') {
+            if (tipoleygral < -0) {
+                condpaggral.push([{ text: 'El precio acordado, se mantiene, hasta 5 días posteriores a la fecha de entrega establecida.', style: 'resaltado' }])
+                condpaggral.push([{ text: 'Pasados los 5 días SE ACTUALIZARÁ A LA FECHA DE RETIRO', style: 'resaltado' }])
+                condpaggral.push([{ text: 'Si la mercadería no se retira dentro de los 60 días posteriores a la fecha establecida para la entrega, se considerará abandonada y nuestra empresa dispondrá de ella, incluso para su destrucción, tomando la seña como indemnización del trabajo realizado', style: 'resaltado' }])
+            }
+            else {
+                condpaggral.push([{ text: 'La seña, confirma el precio acordado hasta 5 días posteriores a la fecha de entrega establecida', style: 'resaltado' }])
+                condpaggral.push([{ text: 'Pasados los 5 días el SALDO SE ACTUALIZARÁ A LA FECHA DE RETIRO', style: 'resaltado' }])
+                condpaggral.push([{ text: 'Si la mercadería no se retira dentro de los 60 días posteriores a la fecha establecida para la entrega, se considerará abandonada y nuestra empresa dispondrá de ella, incluso para su destrucción, tomando la seña como indemnización del trabajo realizado', style: 'resaltado' }])
+            }
         }
     }
 
@@ -168,7 +180,6 @@ router.post("/", function (req, res, next) {
     var fs = require('fs');
     var chartLines = [];
     var chartText = [];
-
     var docDefinition = {
         pageMargins: [40, 130, 40, 40],
         header: {
@@ -208,10 +219,10 @@ router.post("/", function (req, res, next) {
                 text: Cliente,
                 style: 'textoI',
             },
-            {
-                text: Telefono,
-                style: 'textoI',
-            },
+            // {
+            //     text: Telefono,
+            //     style: 'textoI',
+            // },
 
             {
                 text: ' ',
@@ -377,10 +388,10 @@ router.post("/", function (req, res, next) {
         }
 
     };
-
     var pdfDoc = printer.createPdfKitDocument(docDefinition);
     pdfDoc.pipe(fs.createWriteStream('/home/sandra/SistOLSA/OlsaSG/src/components/Main/pages/Presupuesto/static/media/basics.pdf'));
     // pdfDoc.pipe(fs.createWriteStream(('/home/sandra/Documentos/OLSAFrecuentes/PresupSistema/' + nombrepresup)));
+
     pdfDoc.pipe(fs.createWriteStream((variables.dirpresupdocumento + nombrepresup)));
 
     pdfDoc.end();

@@ -28,6 +28,8 @@ import AutorenewIcon from '@material-ui/icons/Autorenew';
 import LibraryAddCheckIcon from '@material-ui/icons/LibraryAddCheck';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import HighlightOffSharpIcon from '@material-ui/icons/HighlightOffSharp';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+
 
 export const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -59,4 +61,5 @@ export const tableIcons = {
   Autorenew: forwardRef((props, ref) => <AutorenewIcon {...props} ref={ref} />),
   LibraryAddCheck: forwardRef((props, ref) => <LibraryAddCheckIcon {...props} ref={ref} />),
   GroupAdd: forwardRef((props, ref) => <GroupAddIcon {...props} ref={ref} />),
+  MoreVert: forwardRef((props, ref) => <MoreVertIcon {...props} ref={ref} />),
 };
