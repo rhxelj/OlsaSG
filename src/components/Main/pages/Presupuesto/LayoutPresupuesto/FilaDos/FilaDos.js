@@ -314,6 +314,7 @@ export default function FilaDos() {
         {presuptipo === "LONAS ENROLLABLES" && <FilaEnrollables></FilaEnrollables>}
         {presuptipo === "BOLSON PARA TANQUE" && <FilaTanques></FilaTanques>}
         {presuptipo === "PILETA ENROLLABLE" && <FilaPiletasEnr></FilaPiletasEnr>}
+        {presuptipo === "PILETA CAÑOS ALUMINIO" && <FilaPiletasEnr></FilaPiletasEnr>}
         {presuptipo === "TOLDO BARRACUADRA" && <FilaToldosExt></FilaToldosExt>}
         {presuptipo === "ABOLINADA" && <FilaAbolinada></FilaAbolinada>}
         {presuptipo === "COMEDERO" && <FilaComedero></FilaComedero>}
