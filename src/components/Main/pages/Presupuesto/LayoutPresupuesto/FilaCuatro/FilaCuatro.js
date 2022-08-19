@@ -49,18 +49,16 @@ export default function FilaCuatro(props) {
         var idClienteElegE, nomClienteElegE;
         var descrip = state.DescripPresup
         var otraCondicion = state.otraCondicion
-        if (state.idClientes !== 0) {
-            // if (state.nomCliente === '') {
-            idClienteElegE = state.idClientes
-            const datoscliente = await clientesleercod(idClienteElegE);
-            nomClienteElegE = datoscliente[0].ClientesDesc
-            //  otraCondicion = datoscliente[0].ClientesTel
-        }
-        else {
+
+        if (state.idClientes === 0 || state.idClientes === '') {
             idClienteElegE = 0
             nomClienteElegE = state.nomCliente
         }
-        // const nroPresupuesto1 = 9999990
+        else {
+            idClienteElegE = state.idClientes
+            const datoscliente = await clientesleercod(idClienteElegE);
+            nomClienteElegE = datoscliente[0].ClientesDesc
+        }
 
 
 

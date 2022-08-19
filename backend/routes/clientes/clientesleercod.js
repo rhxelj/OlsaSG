@@ -20,12 +20,21 @@ var router = express();
 
 router.get('/', async function (req, res) {
     indice = req.query.id;
+
     var q = ['SELECT * FROM BasesGenerales.Clientes where idClientes = ' + indice].join(' ')
     conexion.query(q,
         function (err, result) {
             if (err) {
-                console.log(err);
-            } else {
+                if (err.errno === 1064) {
+                    result = 0
+                    res.json(result);
+                }
+                else {
+                    console.log('ingreso al error  ', result)
+                    console.log(err);
+                }
+            }
+            else {
                 res.json(result);
 
             }

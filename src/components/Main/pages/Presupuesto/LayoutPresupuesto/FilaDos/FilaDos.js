@@ -160,7 +160,6 @@ export default function FilaDos() {
 
       importeanexo = 0
 
-      console.log('state.renglonanexo.length  ', state.renglonanexo.length)
       if (state.renglonanexo.length !== 0) {
 
         importeanexo = state.renglonanexo.ImpItemAnexo
