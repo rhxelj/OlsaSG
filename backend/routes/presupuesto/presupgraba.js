@@ -37,7 +37,6 @@ router.all("/", async function (req, res) {
     PresupEncabTotal: req.body.DatosPresup.suma,
     PresupEncabMayMin: req.body.maymin
   }
-
   conexion.query("INSERT INTO BasePresup.PresupEncab SET ?", registro, function (err, result) {
     if (err) {
       if (err.errno == 1062) {
