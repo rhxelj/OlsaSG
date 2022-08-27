@@ -10,10 +10,12 @@ import es from "date-fns/locale/es";
 
 import Paper from "@material-ui/core/Paper";
 import DateFnsUtils from "@date-io/date-fns";
-import {
-	MuiPickersUtilsProvider,
-	KeyboardDatePicker,
-} from "@material-ui/pickers";
+import DatePicker from "react-datepicker";
+
+// import {
+// 	MuiPickersUtilsProvider,
+// 	KeyboardDatePicker,
+// } from "@material-ui/pickers";
 import Grid from "@material-ui/core/Grid";
 import { presupColumns } from "./presupColumns";
 import { presupDatos } from "./presupDatos";
@@ -28,6 +30,9 @@ import { globalContext } from "../../../../../App";
 import VisibilityRoundedIcon from "@material-ui/icons/VisibilityRounded";
 // import { getDate } from "date-fns";
 import { makeStyles } from "@material-ui/core/styles";
+import FormControl from "@material-ui/core/FormControl";
+import FormLabel from "@material-ui/core/FormLabel";
+import FormHelperText from "@material-ui/core/FormHelperText";
 const useStyles = makeStyles({
 	root: {
 		width: "100%",
@@ -59,8 +64,9 @@ export default function PresupMuestra() {
 	fecha.setDate(fecha.getDate() - 360);
 
 	const [selectedDate, setSelectedDate] = useState(fecha);
-
+	const [startDate, setStartDate] = useState(fecha);
 	const handleDateChange = (date) => {
+		console.log("date  ", date);
 		setSelectedDate(date);
 		dataFetch(date);
 	};
@@ -121,7 +127,11 @@ export default function PresupMuestra() {
 
 	return (
 		<Paper className={classes.root}>
-			<MaterialTable
+			<DatePicker
+				selected={startDate}
+				onChange={(date) => setStartDate(date)}
+			/>
+			{/* <MaterialTable
 				columns={columns}
 				data={data}
 				icons={tableIcons}
@@ -153,7 +163,46 @@ export default function PresupMuestra() {
 					Toolbar: (props) => (
 						<React.Fragment>
 							<MTableToolbar {...props} />
-							<MuiPickersUtilsProvider utils={DateFnsUtils}>
+						</React.Fragment>
+					),
+				}}
+				/>
+
+			<PresupPreviewMue open={ppreview} handleClose={handleClosePreview} />
+
+			<Imprimir
+				columns={columns}
+				datos={data}
+				open={imprimirTF.imprimir}
+				setOpen={setImprimirTF}
+				/>
+
+			<TablaMuestraRenglon
+				open={open}
+				handleClose={handleClose}
+				Presup={parampresupuesto.idpresupuesto}
+				/> */}
+		</Paper>
+	);
+}
+
+{
+	/* <DatePicker
+								selected={selectedDate}
+								// onSelect={handleDateSelect} //when day is clicked
+								format="dd/MM/yyyy"
+								margin="normal"
+								id="date-picker-inline"
+								label="Desde :"
+								variant="inline"
+								onChange={handleDateChange} //only when value has changed
+								KeyboardButtonProps={{
+									"aria-label": "change date",
+								}}
+							/> */
+}
+{
+	/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
 								<Grid container>
 									<KeyboardDatePicker
 										disableToolbar
@@ -169,26 +218,5 @@ export default function PresupMuestra() {
 										}}
 									/>
 								</Grid>
-							</MuiPickersUtilsProvider>
-						</React.Fragment>
-					),
-				}}
-			/>
-
-			<PresupPreviewMue open={ppreview} handleClose={handleClosePreview} />
-
-			<Imprimir
-				columns={columns}
-				datos={data}
-				open={imprimirTF.imprimir}
-				setOpen={setImprimirTF}
-			/>
-
-			<TablaMuestraRenglon
-				open={open}
-				handleClose={handleClose}
-				Presup={parampresupuesto.idpresupuesto}
-			/>
-		</Paper>
-	);
+							</MuiPickersUtilsProvider> */
 }
