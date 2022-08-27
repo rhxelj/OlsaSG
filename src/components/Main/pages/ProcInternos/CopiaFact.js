@@ -7,7 +7,6 @@ export const copiafact = () => {
     return new Promise(resolve => {
         // setTimeout(() => {
         const url = IpServidor + "/copiafact";
-        console.log('url  ', url)
         request
             .get(url)
             .set("Content-Type", "application/json")
