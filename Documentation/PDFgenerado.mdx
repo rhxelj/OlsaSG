@@ -1,0 +1,11 @@
+Cuando realizo instalación de una nueva versión en el servidor, se genera un
+problema con la impresión de presupuesto
+
+Debo cambiar en el backend, en .....backend/routes/impresion/imppresup.js
+
+pdfDoc.pipe(fs.createWriteStream('/home/sandra/SIOLSA/Stock/build/static/media/basics.pdf'));
+pdfDoc.pipe(fs.createWriteStream('/home/sandra/SIOLSA/Stock/build/static/media/basics.31a85e2c.pdf'));
+
+Este último nombre, sale de : Cuando voy a imprimir un presupuesto  
+ Aparece en la vista previa Ahí a la derecha arriba, hay un ícono de una flecha que
+indica el nombre que tendrá al descargarlo ese nombre es el que debe ir en esta sentencia

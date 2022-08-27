@@ -24,30 +24,17 @@ export default function BackupDiario() {
 
     useEffect(() => {
         inicio()
-        //    if (finsn === true) {
-        // const result = CopiaFact();
-        // if (result === '""') {
-        //     console.log('en if result ', result)
-        //     setFinsn(true)
-        // }
+
 
     });
 
-    // React.useEffect(() => {
-    //     const timer = setInterval(() => {
-    //         setProgress((prevProgress) => (prevProgress >= 100 ? 0 : prevProgress + 10));
-    //     }, 800);
-    //     return () => {
-    //         clearInterval(timer);
-    //     }
-    // }, []);
+
     const fechaComoCadena = Date()
     const numeroDia = new Date(fechaComoCadena).getDay();
     const diasemana = ['DOMINGO', 'LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES', 'SABADO']
     const hoyes = diasemana[numeroDia]
     async function copiafacturacion() {
         const result = await copiafact();
-        console.log('result  ', result)
         if (result === '""') {
             swal({
                 title: "Backup Realizado!",

@@ -137,7 +137,7 @@ export default function FilaCuatro(props) {
 
                 <h3>Cliente Presupuesto</h3>
                 <TextField
-                    inputProps={{ maxLength: 20 }}
+                    inputProps={{ maxLength: 45 }}
                     size="small"
                     variant="outlined"
                     id="nomCliente"
