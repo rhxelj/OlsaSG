@@ -3,7 +3,7 @@ import IpServidor from "../VariablesDeEntorno";
 
 
 export const copiafact = () => {
-
+    console.log('Esta en copiafact  ')
     return new Promise(resolve => {
         // setTimeout(() => {
         const url = IpServidor + "/copiafact";
