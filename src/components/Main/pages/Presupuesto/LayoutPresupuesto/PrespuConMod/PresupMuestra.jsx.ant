@@ -4,31 +4,35 @@ import MaterialTable, { MTableToolbar } from "material-table";
 import { tableIcons } from "../../../../../lib/material-table/tableIcons";
 import { localization } from "../../../../../lib/material-table/localization";
 import { registerLocale } from "react-datepicker";
-import { PresupNombre } from "./PresupNombre";
-import Estilos from "../../../../../Componentes/Boton.module.css";
+import { PresupNombre } from "../PrespuConMod/PresupNombre";
+
 // import { registerLocale, setDefaultLocale } from  "react-datepicker";
 import es from "date-fns/locale/es";
 
 import Paper from "@material-ui/core/Paper";
-// import DateFnsUtils from "@date-io/date-fns";
+import DateFnsUtils from "@date-io/date-fns";
+
 // import {
 // 	MuiPickersUtilsProvider,
 // 	KeyboardDatePicker,
 // } from "@material-ui/pickers";
-
 import Grid from "@material-ui/core/Grid";
 import { presupColumns } from "./presupColumns";
 import { presupDatos } from "./presupDatos";
 import TablaMuestraRenglon from "./TablaMuestraRenglon";
 import WavesIcon from "@material-ui/icons/Waves";
 import { green, purple } from "@material-ui/core/colors";
+//, purple
 import Imprimir from "../../../Impresion/Imprimir/Imprimir";
 import { PresupPreviewMue } from "../PresupPreviewMue";
 import { useContext } from "react";
 import { globalContext } from "../../../../../App";
 import VisibilityRoundedIcon from "@material-ui/icons/VisibilityRounded";
+// import { getDate } from "date-fns";
 import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
+import FormControl from "@material-ui/core/FormControl";
+import FormLabel from "@material-ui/core/FormLabel";
+import FormHelperText from "@material-ui/core/FormHelperText";
 import { Button } from "@material-ui/core";
 const useStyles = makeStyles({
 	root: {
@@ -47,7 +51,9 @@ export default function PresupMuestra() {
 	const [imprimirTF, setImprimirTF] = useState({ imprimir: false });
 	const [columns, setColumns] = useState([]);
 	const [data, setData] = useState([]);
-	const [fechasel, setFechasel] = useState();
+	// const [parampresupreview, setParamPresuPreview] = useState({
+	// 	idpresupreview: 0,
+	// });
 	const [parampresupuesto, setParamPresupuesto] = useState({
 		idpresupuesto: 0,
 	});
@@ -55,17 +61,16 @@ export default function PresupMuestra() {
 	registerLocale("es", es);
 
 	var fecha = new Date();
-	fecha.setDate(fecha.getDate() - 5);
+	fecha.setDate(fecha.getDate() - 360);
+	console.log("fecha  ", fecha);
 
 	const [selectedDate, setSelectedDate] = useState(fecha);
+	const [value, setValue] = React.useState(null);
 
-	const handleChange = (event) => {
-		setFechasel(event.target.value);
-	};
-
-	//para buscar datos una vez elegida una fecha
-	const buscadatos = () => {
-		dataFetch(fechasel);
+	const handleDateChange = (date) => {
+		console.log("date  ", date);
+		setSelectedDate(date);
+		dataFetch(date);
 	};
 
 	async function columnsFetch() {
@@ -73,14 +78,13 @@ export default function PresupMuestra() {
 		setColumns(() => col);
 	}
 
-	async function dataFetch(date) {
-		const data = await presupDatos(date);
+	async function dataFetch(fecha) {
+		const data = await presupDatos(fecha);
 		setData(data);
 	}
 
 	async function initialFetch() {
 		columnsFetch();
-		//va a buscar datos para mostrar desde el inicio
 		dataFetch(selectedDate);
 	}
 
@@ -102,6 +106,7 @@ export default function PresupMuestra() {
 	async function openPreview(event, idPresupEncab) {
 		setParamPresupuesto({ parampresupuesto, idpresupuesto: idPresupEncab });
 		resultado = await PresupNombre(idPresupEncab);
+		console.log("resultado  ", resultado);
 		if (resultado === '""') {
 			handleClickPreview();
 		} else {
@@ -156,22 +161,6 @@ export default function PresupMuestra() {
 					Toolbar: (props) => (
 						<React.Fragment>
 							<MTableToolbar {...props} />
-							<Grid container>
-								<TextField
-									inputProps={{ maxLength: 14 }}
-									size="small"
-									variant="outlined"
-									id="FechaSel"
-									type="date"
-									helperText="Fecha Desde"
-									value={fechasel}
-									onChange={handleChange}
-									className={classes.textField}
-								/>
-								<Button onClick={buscadatos} className={Estilos.botonchico}>
-									Busca fecha
-								</Button>
-							</Grid>
 						</React.Fragment>
 					),
 				}}
@@ -193,4 +182,39 @@ export default function PresupMuestra() {
 			/>
 		</Paper>
 	);
+}
+
+{
+	/* <DatePicker
+								selected={selectedDate}
+								// onSelect={handleDateSelect} //when day is clicked
+								format="dd/MM/yyyy"
+								margin="normal"
+								id="date-picker-inline"
+								label="Desde :"
+								variant="inline"
+								onChange={handleDateChange} //only when value has changed
+								KeyboardButtonProps={{
+									"aria-label": "change date",
+								}}
+							/> */
+}
+{
+	/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
+								<Grid container>
+									<KeyboardDatePicker
+										disableToolbar
+										variant="inline"
+										format="dd/MM/yyyy"
+										margin="normal"
+										id="date-picker-inline"
+										label="Desde :"
+										value={selectedDate}
+										onChange={handleDateChange}
+										KeyboardButtonProps={{
+											"aria-label": "change date",
+										}}
+									/>
+								</Grid>
+							</MuiPickersUtilsProvider> */
 }

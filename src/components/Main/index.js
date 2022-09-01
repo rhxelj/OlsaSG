@@ -27,7 +27,6 @@ import PresupDetPie from "./pages/Presupuesto/PresupDetPie/PresupDetPie";
 import ImprimeQR from "./pages/Impresion/ImprimeQR";
 
 
-
 import BackupDiario from "./pages/ProcInternos/BackupDiario";
 import RecuperaDatos from "./pages/ProcInternos/RecuperaDatos";
 
