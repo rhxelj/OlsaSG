@@ -55,7 +55,7 @@ export default function PresupMuestra() {
 	registerLocale("es", es);
 
 	var fecha = new Date();
-	fecha.setDate(fecha.getDate() - 5);
+	fecha.setDate(fecha.getDate() - 360);
 
 	const [selectedDate, setSelectedDate] = useState(fecha);
 
