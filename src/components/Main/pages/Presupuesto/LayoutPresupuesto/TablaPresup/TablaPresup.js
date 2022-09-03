@@ -114,13 +114,7 @@ export default function TablaPresup(props) {
                 isFreeAction: true,
                 onClick: () => setFilacuatro({ filacuatro: true })
               },
-              // {
-              //   icon: () => <tableIcons.Check style={{ color: blue[500] }} />,
-              //   tooltip: "Condiciones/Cliente",
-              //   isFreeAction: true,
-              //   onClick: () => handleOpen()
-              //   // onClick: () => setFilacuatro({ filacuatro: true })
-              // },
+
               {
                 icon: () => <tableIcons.Print style={{ color: green[500] }} />,
                 tooltip: "Imprimir",

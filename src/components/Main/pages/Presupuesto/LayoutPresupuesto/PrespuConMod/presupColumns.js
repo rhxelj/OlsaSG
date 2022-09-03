@@ -53,6 +53,11 @@ function columnsFill(objcliente) {
                 field: "PresupEncabTotal",
                 order: true,
             },
+            {
+                title: "Explicación",
+                field: "PresupEncabExplic",
+                order: true,
+            },
 
         ]);
     });

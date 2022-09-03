@@ -49,6 +49,7 @@ export default function FilaCuatro(props) {
         var idClienteElegE, nomClienteElegE;
         var descrip = state.DescripPresup
         var otraCondicion = state.otraCondicion
+        var explicacionPresup = state.ExplicaPresup
 
         if (state.idClientes === 0 || state.idClientes === '') {
             idClienteElegE = 0
@@ -62,7 +63,7 @@ export default function FilaCuatro(props) {
 
 
 
-        const nroPresupuesto1 = await PresupGrabar(props, ClienteMayMin, nomClienteElegE, idClienteElegE);
+        const nroPresupuesto1 = await PresupGrabar(props, ClienteMayMin, nomClienteElegE, idClienteElegE, explicacionPresup);
         setState({ ...state, NroPresupuesto: nroPresupuesto1 });
         PresupImprime(props.datos, nomClienteElegE, otraCondicion, props.suma, nroPresupuesto1, descrip, state.condpagoeleg, state.PresupMnMy)
 

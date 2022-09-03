@@ -30,12 +30,12 @@ router.all("/", async function (req, res) {
   else {
     cliente = req.body.nomCliente
   }
-
   var registro = {
     PresupEncabFecha: finalDate,
     PresupEncabCliente: cliente,
     PresupEncabTotal: req.body.DatosPresup.suma,
-    PresupEncabMayMin: req.body.maymin
+    PresupEncabMayMin: req.body.maymin,
+    PresupEncabExplic: req.body.explicacionPresup
   }
   conexion.query("INSERT INTO BasePresup.PresupEncab SET ?", registro, function (err, result) {
     if (err) {
