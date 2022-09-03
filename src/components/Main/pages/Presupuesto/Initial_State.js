@@ -111,6 +111,7 @@ export const initial_state = {
   indexborrado: 1000,
   DetallePresup: '',
   DetalleRenglon: '',
+  ExplicaPresup: '',
   ClientesDesc: '',
   //FilaTres
   dcalculoppresup: [],

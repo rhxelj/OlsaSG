@@ -2,10 +2,7 @@ import request from "superagent";
 
 import IpServidor from "../VariablesDeEntorno";
 var nroPresupuesto = 0
-export const PresupGrabar = (props, ClienteMayMin, nomCliente, idClientes) => {
-  // debugger
-
-
+export const PresupGrabar = (props, ClienteMayMin, nomCliente, idClientes, explicacionPresup) => {
   return new Promise(resolve => {
 
     const url = IpServidor + "/presupgraba";
@@ -16,14 +13,12 @@ export const PresupGrabar = (props, ClienteMayMin, nomCliente, idClientes) => {
       .send({ maymin: ClienteMayMin })
       .send({ nomCliente: nomCliente })
       .send({ idClientes: idClientes })
+      .send({ explicacionPresup: explicacionPresup })
+
       .set("X-API-Key", "foobar")
       .then(res => {
         const respuesta = JSON.parse(res.text);
         nroPresupuesto = respuesta.insertId
-
-        // if (respuesta.affectedRows !== 0) alert("EXITO");
-        // else alert("No modifico");
-
         resolve(nroPresupuesto);
       })
   })
