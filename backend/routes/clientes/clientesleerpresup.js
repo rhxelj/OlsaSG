@@ -31,7 +31,6 @@ router.get('/', function (req, res, next) {
 
     ].join(' ');
 
-    console.log('q clientesleerpresup ', q)
     conexion.query(
         q,
         function (err, result) {

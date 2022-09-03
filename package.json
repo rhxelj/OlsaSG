@@ -23,6 +23,7 @@
     "dayjs": "^1.11.5",
     "fecha": "^4.2.0",
     "lodash": "^4.17.20",
+    "material-react-table": "^1.0.0-beta.2",
     "material-table": "^1.57.2",
     "pdf-viewer-reactjs": "^2.1.2",
     "pdfkit": "^0.13.0",

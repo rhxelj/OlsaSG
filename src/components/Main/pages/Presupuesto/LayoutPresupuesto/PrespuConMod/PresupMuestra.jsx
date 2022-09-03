@@ -1,35 +1,31 @@
 import React, { useEffect, useState } from "react";
 
 import MaterialTable, { MTableToolbar } from "material-table";
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+import WavesIcon from "@material-ui/icons/Waves";
 import { tableIcons } from "../../../../../lib/material-table/tableIcons";
 import { localization } from "../../../../../lib/material-table/localization";
-import { registerLocale } from "react-datepicker";
-import { PresupNombre } from "./PresupNombre";
-import Estilos from "../../../../../Componentes/Boton.module.css";
-// import { registerLocale, setDefaultLocale } from  "react-datepicker";
-import es from "date-fns/locale/es";
-
-import Paper from "@material-ui/core/Paper";
-// import DateFnsUtils from "@date-io/date-fns";
-// import {
-// 	MuiPickersUtilsProvider,
-// 	KeyboardDatePicker,
-// } from "@material-ui/pickers";
-
-import Grid from "@material-ui/core/Grid";
-import { presupColumns } from "./presupColumns";
-import { presupDatos } from "./presupDatos";
-import TablaMuestraRenglon from "./TablaMuestraRenglon";
-import WavesIcon from "@material-ui/icons/Waves";
 import { green, purple } from "@material-ui/core/colors";
-import Imprimir from "../../../Impresion/Imprimir/Imprimir";
-import { PresupPreviewMue } from "../PresupPreviewMue";
-import { useContext } from "react";
-import { globalContext } from "../../../../../App";
 import VisibilityRoundedIcon from "@material-ui/icons/VisibilityRounded";
 import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
 import { Button } from "@material-ui/core";
+import Estilos from "../../../../../Componentes/Boton.module.css";
+
+import Paper from "@material-ui/core/Paper";
+
+import { PresupNombre } from "./PresupNombre";
+import { presupColumns } from "./presupColumns";
+import { presupDatos } from "./presupDatos";
+import { presupDatosReng } from "./presupDatosReng";
+import { PresupPreviewMue } from "../PresupPreviewMue";
+
+import TablaMuestraRenglon from "./TablaMuestraRenglon";
+import Imprimir from "../../../Impresion/Imprimir/Imprimir";
+
+import { useContext } from "react";
+import { globalContext } from "../../../../../App";
+
 const useStyles = makeStyles({
 	root: {
 		width: "100%",
@@ -48,23 +44,31 @@ export default function PresupMuestra() {
 	const [columns, setColumns] = useState([]);
 	const [data, setData] = useState([]);
 	const [fechasel, setFechasel] = useState();
+	const [detbusca, setDetbusca] = useState("");
 	const [parampresupuesto, setParamPresupuesto] = useState({
 		idpresupuesto: 0,
 	});
-
-	registerLocale("es", es);
 
 	var fecha = new Date();
 	fecha.setDate(fecha.getDate() - 360);
 
 	const [selectedDate, setSelectedDate] = useState(fecha);
 
-	const handleChange = (event) => {
-		setFechasel(event.target.value);
+	const handleChangeFB = (event1) => {
+		setFechasel(event1.target.value);
+	};
+	const handleChangeDB = (event) => {
+		setDetbusca(event.target.value);
 	};
 
+	//para buscar detalles en los renglones de presupuestos
+	async function buscadetreng() {
+		const datosreng = await presupDatosReng(detbusca);
+		setData(datosreng);
+	}
+
 	//para buscar datos una vez elegida una fecha
-	const buscadatos = () => {
+	const buscadatosfecha = () => {
 		dataFetch(fechasel);
 	};
 
@@ -124,6 +128,35 @@ export default function PresupMuestra() {
 
 	return (
 		<Paper className={classes.root}>
+			<Grid container>
+				<TextField
+					inputProps={{ maxLength: 14 }}
+					size="small"
+					variant="outlined"
+					id="FechaSel"
+					type="date"
+					helperText="Fecha Desde"
+					value={fechasel}
+					onChange={handleChangeFB}
+					className={classes.textField}
+				/>
+				<Button onClick={buscadatosfecha} className={Estilos.botonchico}>
+					Busca fecha
+				</Button>
+				<TextField
+					inputProps={{ maxLength: 14 }}
+					size="small"
+					variant="outlined"
+					id="DetalleBusca"
+					type="text"
+					helperText="Detalle"
+					value={detbusca}
+					onChange={handleChangeDB}
+				/>
+				<Button onClick={buscadetreng} className={Estilos.botonchico}>
+					Busca Detalle
+				</Button>
+			</Grid>
 			<MaterialTable
 				columns={columns}
 				data={data}
@@ -156,22 +189,6 @@ export default function PresupMuestra() {
 					Toolbar: (props) => (
 						<React.Fragment>
 							<MTableToolbar {...props} />
-							<Grid container>
-								<TextField
-									inputProps={{ maxLength: 14 }}
-									size="small"
-									variant="outlined"
-									id="FechaSel"
-									type="date"
-									helperText="Fecha Desde"
-									value={fechasel}
-									onChange={handleChange}
-									className={classes.textField}
-								/>
-								<Button onClick={buscadatos} className={Estilos.botonchico}>
-									Busca fecha
-								</Button>
-							</Grid>
 						</React.Fragment>
 					),
 				}}
