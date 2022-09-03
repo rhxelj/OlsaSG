@@ -151,6 +151,7 @@ var presupponchorie = require("./routes/presupuesto/presupponchorie");
 var presupencableer = require("./routes/presupuesto/presupencableer");
 var presuprenglonleer = require("./routes/presupuesto/presuprenglonleer");
 var presupnombre = require("./routes/presupuesto/presupnombre");
+var presuprengleer = require("./routes/presupuesto/presuprengleer");
 
 
 var presupconftipoleer = require("./routes/presupuesto/presupconftipo/presupconftipoleer");
@@ -357,6 +358,8 @@ app.use("/presupponchorie", presupponchorie);
 app.use("/presupencableer", presupencableer);
 app.use("/presuprenglonleer", presuprenglonleer);
 app.use("/presupnombre", presupnombre);
+app.use("/presuprengleer", presuprengleer);
+
 
 
 app.use("/presupconftipoleer", presupconftipoleer);
