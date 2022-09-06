@@ -21,18 +21,6 @@ import { useContext } from "react";
 import { PresupPantContext } from "../../PresupPant";
 
 export default function TablaPresup(props) {
-
-  // const {
-  //   data
-  // } = props;
-
-
-  // const {
-  //   PresupCantidad,
-  //   StkRubroDesc
-  // } = data;
-
-
   const { state } = useContext(PresupPantContext);
   const { datosrenglon, setDatosRenglon } = useContext(PresupPantContext);
   const [anexos, setAnexos] = useState({ anexos: false });
@@ -53,12 +41,7 @@ export default function TablaPresup(props) {
     setSuma(totalpresup);
   }
 
-  // const [grabasn, setGrabasn] = useState('S');
-  // const handleOpen = () => {
-  //   setGrabasn('N')
-  //   setFilacuatro({ filacuatro: true })
 
-  // };
   const handleClose = () => {
     setFilacuatro(false);
 

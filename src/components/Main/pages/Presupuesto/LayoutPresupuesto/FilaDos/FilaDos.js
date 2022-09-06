@@ -46,9 +46,10 @@ export default function FilaDos() {
 
     //esto es porque va a ser un cálculo especial, tiene un backend para eso
     var rubrosn = ''
-    var labellargo = 'Largo'
-    var labelancho = 'Ancho'
-
+    // var labellargo = 'Largo'
+    // var labelancho = 'Ancho'
+    state.labellargo = 'Largo'
+    state.labelancho = 'Ancho'
     if (state.DatosPresupEleg[0].PresupConfTipoRubro === "VS") {
       rubrosn = "S";
     } else {
@@ -56,14 +57,14 @@ export default function FilaDos() {
     }
 
     if (presuptipo === "LONAS ENROLLABLES" || presuptipo === "TOLDO BARRACUADRA") {
-      labellargo = 'Alto'
+      state.labellargo = 'Alto'
     }
     if (presuptipo === "CARGA DESCRIPCION") {
-      labellargo = 'Importe'
+      state.labellargo = 'Importe'
     }
     if (presuptipo === "CAMBIO PAÑO") {
-      labelancho = 'Ancho Lona'
-      labellargo = 'Paños en metros'
+      state.labelancho = 'Ancho Lona'
+      state.labellargo = 'Paños en metros'
     }
 
   }
@@ -110,6 +111,7 @@ export default function FilaDos() {
         termbordeeleg: state.TermBordeEleg,
         anchopared: state.AnchoPared,
         medida: state.Medida,
+        //para el alto del tanque
         alto: state.Alto,
         stkrubroabrtbr: state.StkRubroAbrTBR,
         tipomecanismo: state.TipoMecanismo,
@@ -145,7 +147,6 @@ export default function FilaDos() {
       StkRubroDesc =
         unidmed +
         datosrenglon1[0][0].Detalle +
-        //" " + state.DetalleRenglon +
         datosrenglon1[0][0].StkRubroDesc;
 
       if (datosrenglon1[0][0].MDesc === 'S') {
@@ -282,7 +283,7 @@ export default function FilaDos() {
           variant="outlined"
           id="PresupLargo"
           type="number"
-          label={labellargo}
+          label={state.labellargo}
           fullWidth
           margin="dense"
           value={state.PresupLargo}
@@ -299,7 +300,7 @@ export default function FilaDos() {
           id="PresupAncho"
           type="number"
           // label="Ancho"
-          label={labelancho}
+          label={state.labelancho}
           fullWidth
           margin="dense"
           value={state.PresupAncho}

@@ -30,8 +30,3 @@ export const PresupGrabar = (props, ClienteMayMin, nomCliente, idClientes, expli
     );
 
 }
-// .then(function (res) {
-//   const respuesta = JSON.parse(res.text);
-//   console.log('respuesta.affectedRows   ', respuesta)
-// })
-// .catch((err) => CodigoError(err));

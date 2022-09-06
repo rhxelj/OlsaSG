@@ -17,33 +17,13 @@ export default function FilaTanques() {
 
 
     const handleChange = (event) => {
-        // var labelMedida
-        // if (event.target.value === 'CC') {
-        //     labelMedida = 'Cantidad de Chapas'
 
-        // }
-
-        // if (event.target.value === 'PE') {
-        //     labelMedida = 'Metros Perímetro'
-        // }
-
-        // if (event.target.value === 'DI' || event.target.value === 'DE') {
-        //     labelMedida = 'Metros Diámetro'
-        // }
         const id = event.target.id;
         setState({ ...state, [id]: event.target.value });
 
     };
 
-    // const ParedSN = (event) => {
-    //     setPared(event.target.value);
-    //     setState({ ...state, ParedSN: event.target.value });
-    // };
 
-    // const tamfaja = (event) => {
-    //     setFaja(event.target.value);
-    //     setState({ ...state, TamFaja: event.target.value });
-    // };
 
     const tipomedidatanque = [
         {
@@ -126,40 +106,6 @@ export default function FilaTanques() {
                     </TextField>
                 ))}
             </Grid>
-            {/* {state.TipoMedidaEleg !== "CC" &&
-                <Grid item xs={12} sm={3}>
-                    <RadioGroup
-                        row
-                        size="small"
-                        name="ParedSN"
-                        label="Pared"
-                        value={Pared}
-                        onChange={ParedSN}
-                        margin="dense"
-                    >
-
-                        <FormControlLabel
-                            size="small"
-                            value="CP"
-                            control={<Radio />}
-                            label="Con Pared"
-                            labelPlacement="top"
-                            disabled={props.disable}
-                            margin="dense"
-                        />
-                        <FormControlLabel
-                            size="small"
-                            value="SP"
-                            control={<Radio />}
-                            label="Sin Pared"
-                            labelPlacement="top"
-                            disabled={props.disable}
-                            margin="dense"
-                        />
-                    </RadioGroup>
-
-                </Grid>} */}
-            {/* {state.TipoMedidaEleg !== "CC" && */}
             <Grid item xs={1} >
                 <TextField
                     inputProps={{ maxLength: 3 }}
@@ -177,10 +123,7 @@ export default function FilaTanques() {
                 />
 
             </Grid>
-            {/* } */}
 
-
-            {/* } */}
             <Grid item xs={1}>
                 <TextField
                     inputProps={{ maxLength: 5 }}
@@ -189,7 +132,6 @@ export default function FilaTanques() {
                     id="Medida"
                     margin="dense"
                     label="Medida/Cant."
-                    // fullWidth
                     value={state.Medida}
                     onChange={handleChange}
                     className={classes.textField}
@@ -204,14 +146,12 @@ export default function FilaTanques() {
                     id="Alto"
                     margin="dense"
                     label="Alto"
-                    // fullWidth
                     value={state.Alto}
                     onChange={handleChange}
                     className={classes.textField}
                     helperText='Altura del tanque'
                 />
             </Grid>
-            {/* </Grid> */}
         </>
     );
 }

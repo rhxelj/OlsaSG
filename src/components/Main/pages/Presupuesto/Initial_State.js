@@ -117,6 +117,9 @@ export const initial_state = {
   dcalculoppresup: [],
   //condiciones de pago
   condpagoeleg: [],
+  //FilaDos
+  labellargo: 'Largo',
+  labelancho: 'Ancho',
   columns: [
     {
       title: "Cant.",
@@ -196,5 +199,7 @@ export const initial_state = {
   nomCliente: "",
   // telCliente: "",
   otraCondicion: "",
-  NroPresupuesto: 0
+  NroPresupuesto: 0,
+
+
 };

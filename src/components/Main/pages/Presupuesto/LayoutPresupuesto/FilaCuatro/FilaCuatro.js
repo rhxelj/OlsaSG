@@ -28,7 +28,6 @@ export default function FilaCuatro(props) {
     // Esto es para poder consumir los datos del CONTEXTAPI
     const { state, setState } = useContext(PresupPantContext);
     const [ppreview, setPPreview] = useState({ ppreview: false });
-
     const handleChange = (event) => {
         const id = event.target.id;
         setState({ ...state, [id]: event.target.value });
@@ -65,26 +64,15 @@ export default function FilaCuatro(props) {
 
         const nroPresupuesto1 = await PresupGrabar(props, ClienteMayMin, nomClienteElegE, idClienteElegE, explicacionPresup);
         setState({ ...state, NroPresupuesto: nroPresupuesto1 });
-        PresupImprime(props.datos, nomClienteElegE, otraCondicion, props.suma, nroPresupuesto1, descrip, state.condpagoeleg, state.PresupMnMy)
+        PresupImprime(props.datos, nomClienteElegE, otraCondicion, props.suma, nroPresupuesto1, descrip, state.condpagoeleg, state.PresupMnMy, state.labellargo, state.labelancho)
 
-
-
-
-        //cancelar();
         cierrafilacuatro();
     }
 
 
     function cierrafilacuatro() {
         props.setOpen({ filacuatro: false });
-        // open = false
     }
-
-
-    // function vepresupuesto() {
-    //     setPPreview({ ppreview: true })
-    //     // open = false
-    // }
 
 
     const textdata = [
@@ -112,14 +100,10 @@ export default function FilaCuatro(props) {
                 maxWidth="md"
                 open={props.open}
 
-            //  keepMounted
-            // onClose={props.handleClose}
-            // onClose={handleClose}
-            // aria-labelledby="alert-dialog-slide-title"
-            // aria-describedby="alert-dialog-slide-description"
+
             >
                 <PresupDetPieSelec></PresupDetPieSelec>
-                {/* <DialogTitle id="simple-dialog-title">Cliente Presupuesto</DialogTitle> */}
+
                 <TextField
                     inputProps={{ maxLength: CHARACTER_LIMIT }}
                     size="small"
