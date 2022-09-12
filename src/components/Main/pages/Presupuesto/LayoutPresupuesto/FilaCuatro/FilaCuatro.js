@@ -6,7 +6,6 @@ import {
     DialogActions,
 }
     from "@material-ui/core";
-// import DialogActions from "@material-ui/core/DialogActions";
 import useStyles from "../styles";
 
 
@@ -16,13 +15,11 @@ import { PresupPantContext } from "../../PresupPant";
 
 import { clientesleerdescmayigual } from "../../../Clientes/ClientesLeerDesc";
 import { PresupGrabar } from "../../PresupGrabar";
-//  import PresupMostrar from "../../PresupMostrar";
 
 import { clientesleercod } from '../../../Clientes/ClientesLeerCod'
 import { PresupImprime } from "../PresupImprime"
 import PresupDetPieSelec from './PresupDetPieSelec'
 import { PresupPreview } from "../PresupPreview"
-// import { AddAlertTwoTone, Pause } from "@material-ui/icons";
 
 export default function FilaCuatro(props) {
     // Esto es para poder consumir los datos del CONTEXTAPI
@@ -64,6 +61,7 @@ export default function FilaCuatro(props) {
 
         const nroPresupuesto1 = await PresupGrabar(props, ClienteMayMin, nomClienteElegE, idClienteElegE, explicacionPresup);
         setState({ ...state, NroPresupuesto: nroPresupuesto1 });
+
         PresupImprime(props.datos, nomClienteElegE, otraCondicion, props.suma, nroPresupuesto1, descrip, state.condpagoeleg, state.PresupMnMy, state.labellargo, state.labelancho)
 
         cierrafilacuatro();

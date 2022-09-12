@@ -8,11 +8,10 @@ import { stkrubroleeconf } from "../../../Stock/Rubros/StkRubroLeeConf";
 import { presupcalculador } from "../../PresupCalculador";
 
 
+
 import AssignmentReturnedIcon from '@material-ui/icons/AssignmentReturned';
 import {
   red,
-  green
-
 } from "@material-ui/core/colors";
 // import { presupgrabar } from "../../PresupGrabar";
 
@@ -30,6 +29,7 @@ import FilaCargaDesc from "./FilaCargaDesc";
 import FilaAbolinada from "../FilaAbolinada/FilaAbolinada"
 import FilaComedero from "../FilaComedero/FilaComedero"
 import FilaCambPanio from "../FilaCambPanio/FilaCambPanio"
+import FilaModMed from "../FilaModMed/FilaModMed";
 
 
 export default function FilaDos() {
@@ -66,6 +66,10 @@ export default function FilaDos() {
       state.labelancho = 'Ancho Lona'
       state.labellargo = 'Paños en metros'
     }
+    if (presuptipo === "MODIFICA MEDIDAS") {
+      state.labelancho = 'Ancho Actual'
+      state.labellargo = 'Largo Actual'
+    }
 
   }
 
@@ -97,6 +101,8 @@ export default function FilaDos() {
         cantidad: state.PresupCantidad,
         largo: state.PresupLargo,
         ancho: state.PresupAncho,
+        largon: state.PresupLargoN,
+        anchon: state.PresupAnchoN,
         tipoconf: state.PresupCsSs,
         tipoojale: state.PresupOB,
         drenajesn: state.PresupDrenaje,
@@ -165,7 +171,6 @@ export default function FilaDos() {
       if (state.renglonanexo.length !== 0) {
 
         importeanexo = state.renglonanexo.ImpItemAnexo
-        // ImpUnitario = ImpUnitario * 1 + importeanexo * 1
         ImpUnitario = ImpUnitario * 1 + importeanexo
         ImpItem = ImpItem + importeanexo * state.PresupCantidad;
         StkRubroDesc = StkRubroDesc + state.renglonanexo.StkRubroDesc;
@@ -190,6 +195,10 @@ export default function FilaDos() {
       ImpUnitario = datosrenglon1[0]
       ImpItem = datosrenglon1[0] * PresupCantidadM;
     }
+    if (presuptipo === "MODIFICA MEDIDAS") {
+      PresupLargo = '-'
+      PresupAncho = '-'
+    }
     var datospresup = [
       {
         PresupCantidad: state.PresupCantidad,
@@ -198,7 +207,6 @@ export default function FilaDos() {
         PresupAncho,
         ImpUnitario,
         ImpItem,
-        // datoscalculos,
         dcalculo,
       },
     ];
@@ -254,28 +262,29 @@ export default function FilaDos() {
             {data.mapeo}
           </TextField>
         ))}
-      <Grid item xs={1}>
-        <TextField
-          inputProps={{ maxLength: 5 }}
-          size="small"
-          variant="outlined"
-          id="PresupCantidad"
-          type="number"
-          label="Cantidad"
-          fullWidth
-          margin="dense"
-          value={state.PresupCantidad}
-          onChange={handleChange}
-          className={classes.textField}
-          onKeyPress={(event) => {
-            if (event.key === "Enter")
-              document.getElementById("idStkRubro").focus();
-          }}
-        />
-      </Grid>
+      {presuptipo !== "MODIFICA MEDIDAS" &&
+        <Grid item xs={1}>
+          <TextField
+            inputProps={{ maxLength: 5 }}
+            size="small"
+            variant="outlined"
+            id="PresupCantidad"
+            type="number"
+            label="Cantidad"
+            fullWidth
+            margin="dense"
+            value={state.PresupCantidad}
+            onChange={handleChange}
+            className={classes.textField}
+            onKeyPress={(event) => {
+              if (event.key === "Enter")
+                document.getElementById("idStkRubro").focus();
+            }}
+          />
+        </Grid>}
 
 
-      <Grid item xs={1}>
+      <Grid item xs={1} >
         <TextField
           disabled={largo === "N"}
           inputProps={{ maxLength: 3 }}
@@ -299,8 +308,8 @@ export default function FilaDos() {
           variant="outlined"
           id="PresupAncho"
           type="number"
-          // label="Ancho"
           label={state.labelancho}
+          // helperText={state.labelancho}
           fullWidth
           margin="dense"
           value={state.PresupAncho}
@@ -308,10 +317,46 @@ export default function FilaDos() {
           className={classes.textField}
         />
       </Grid>
-
+      {presuptipo === "MODIFICA MEDIDAS" &&
+        <Grid item xs={1}>
+          <TextField
+            // disabled={ancho === "N"}
+            inputProps={{ maxLength: 3 }}
+            size="small"
+            variant="outlined"
+            id="PresupLargoN"
+            type="number"
+            // label="Ancho"
+            label={state.labellargoN}
+            fullWidth
+            margin="dense"
+            value={state.PresupLargoN}
+            onChange={handleChange}
+            className={classes.textField}
+          />
+        </Grid>}
+      {presuptipo === "MODIFICA MEDIDAS" &&
+        <Grid item xs={1}>
+          <TextField
+            //    disabled={ancho === "N"}
+            inputProps={{ maxLength: 3 }}
+            size="small"
+            variant="outlined"
+            id="PresupAnchoN"
+            type="number"
+            // label="Ancho"
+            label={state.labelanchoN}
+            fullWidth
+            margin="dense"
+            value={state.PresupAnchoN}
+            onChange={handleChange}
+            className={classes.textField}
+          />
+        </Grid>}
       <Grid container item xs={12}>
         {/* < FilaConf disable={!(presuptipo === "CONFECCIONADA")}></FilaConf> */}
         {presuptipo === "CONFECCIONADA" && <FilaConf></FilaConf>}
+        {presuptipo === "MODIFICA MEDIDAS" && <FilaModMed></FilaModMed>}
         {presuptipo === "LONAS ENROLLABLES" && <FilaEnrollables></FilaEnrollables>}
         {presuptipo === "BOLSON PARA TANQUE" && <FilaTanques></FilaTanques>}
         {presuptipo === "PILETA ENROLLABLE" && <FilaPiletasEnr></FilaPiletasEnr>}

@@ -142,7 +142,6 @@ export default function TablaPresup(props) {
         datos={datosrenglon}
         maymin={props.maymin}
         suma={suma}
-        // graba={grabasn}
         setOpen={setFilacuatro}
         handleClose={handleClose}
       />

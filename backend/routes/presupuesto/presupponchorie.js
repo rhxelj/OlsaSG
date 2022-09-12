@@ -201,18 +201,27 @@ router.get("/", (req, res, next) => {
               metroscuad = anchoreal * largoreal
               costooriginal = costooriginal * metroscuad
 
-              if (metroscuad < 22 && metroscuad >= 16) {
+              ciclo = (metroscuad < 12) ? 3 : 0
+              ciclo = (metroscuad < 16 && metroscuad >= 12) ? 2 : 0
+              ciclo = (metroscuad < 22 && metroscuad >= 16) ? 1 : ciclo = 0
+              i = 0
+              while (i < ciclo) {
                 costooriginal = costooriginal * 1.0325
+                i++
               }
-              if (metroscuad < 16 && metroscuad >= 12) {
-                costooriginal = costooriginal * 1.0325
-                costooriginal = costooriginal * 1.0325
-              }
-              if (metroscuad < 12) {
-                costooriginal = costooriginal * 1.0325
-                costooriginal = costooriginal * 1.0325
-                costooriginal = costooriginal * 1.0325
-              }
+
+              // if (metroscuad < 22 && metroscuad >= 16) {
+              //   costooriginal = costooriginal * 1.0325
+              // }
+              // if (metroscuad < 16 && metroscuad >= 12) {
+              //   costooriginal = costooriginal * 1.0325
+              //   costooriginal = costooriginal * 1.0325
+              // }
+              // if (metroscuad < 12) {
+              //   costooriginal = costooriginal * 1.0325
+              //   costooriginal = costooriginal * 1.0325
+              //   costooriginal = costooriginal * 1.0325
+              // }
 
               // datosenvio[0][0]['ImpItem'] = costooriginal
               if (ivasn == 'CIVA') {

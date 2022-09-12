@@ -98,6 +98,8 @@ export const initial_state = {
   clientes: [],
   PresupLargo: 0.0,
   PresupAncho: 0.0,
+  PresupLargoN: 0.0,
+  PresupAnchoN: 0.0,
   AnexoLargo: 0.0,
   StkRubroAbr: "",
   StkRubroAbrTBR: "",
@@ -120,6 +122,8 @@ export const initial_state = {
   //FilaDos
   labellargo: 'Largo',
   labelancho: 'Ancho',
+  labellargoN: 'Largo Nuevo',
+  labelanchoN: 'Ancho Nuevo',
   columns: [
     {
       title: "Cant.",

@@ -1,4 +1,5 @@
-import { Route, BrowserRouter as Router, } from "react-router-dom";
+import { Route } from "react-router-dom";
+//import { Route, BrowserRouter as Router, } from "react-router-dom";
 
 import React from 'react'
 import StkMonedas from "./pages/Monedas/StkMonedas.jsx";

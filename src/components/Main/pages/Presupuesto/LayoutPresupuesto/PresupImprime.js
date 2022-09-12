@@ -20,7 +20,7 @@ export const PresupImprime = (props, nomCliente, otraCondicion, suma, nroPresupu
         .send({ Tancho: Tancho })
         .set("X-API-Key", "foobar")
         .then(function (res) {
-            const respuesta = JSON.parse(res.text);
+            //         const respuesta = JSON.parse(res.text);
         })
         .catch((err) => CodigoError(err));
 

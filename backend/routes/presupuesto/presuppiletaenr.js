@@ -144,14 +144,6 @@ router.get("/", (req, res, next) => {
               " and StkRubro.StkRubroTM = idStkMonedas"
             ].join("");
 
-            // cotizacion = [
-            //   "Select ",
-            //   "StkMonedasCotizacion ",
-            //   "from   BaseStock.StkMonedas ",
-            //   "where  StkMonedas.idStkMonedas = '",
-            //   codmoneda,
-            //   "'"
-            // ].join("");
 
             conexion.query(mcuadcob, function (err, result) {
               if (err) {
@@ -171,9 +163,6 @@ router.get("/", (req, res, next) => {
               } else {
                 datosenvio.push(result);
               }
-              console.log('datosenvio[0][0].ImpUnitario   ', datosenvio[0][0].ImpUnitario)
-              console.log('datosenvio[1][0].ValorOjales  ', datosenvio[1][0].ValorOjales)
-              console.log('valorMOT  ', valorMOT)
 
               costooriginal = datosenvio[0][0].ImpUnitario + datosenvio[1][0].ValorOjales + valorMOT
               if (ivasn == 'CIVA') {
@@ -183,12 +172,7 @@ router.get("/", (req, res, next) => {
                 costooriginal = Math.ceil(costooriginal.toFixed(0) / 1.21 / 10) * 10
               }
 
-              // if (ivasn == 'CIVA') {
-              //   costooriginal = costooriginal.toFixed(0)
-              // }
-              // else {
-              //   costooriginal = costooriginal.toFixed(0) / 1.21
-              // }
+
               datosenvio[0][0]['ImpUnitario'] = costooriginal
               datosenvio[0][0]['Detalle'] = detalle
               datosenvio[0][0]['Largo'] = (largoreal * 1).toFixed(2)

@@ -5,13 +5,14 @@ var conexion = require("../conexion");
 
 conexion.connect(function (err) {
   if (!err) {
-    console.log("base de datos conectada en presuplonaconf");
+    console.log("base de datos conectada en presupmodificamed");
   } else {
-    console.log("no se conecto en presuplonaconf");
+    console.log("no se conecto en presupmodificamed");
   }
 });
 
 var datosenvio = [];
+var valorhora = 0;
 
 var router = express();
 router.get("/", (req, res, next) => {
@@ -44,27 +45,27 @@ router.get("/", (req, res, next) => {
         ivasn = datos.ivasn;
         largoreal = (datos.largo * 1)
         anchoreal = (datos.ancho * 1)
+        largorealn = (datos.largon * 1)
+        anchorealn = (datos.anchon * 1)
         largo = (datos.largo * 1) + 0.08;
         ancho = (datos.ancho * 1) + 0.08;
+        largon = (datos.largon * 1) + 0.08;
+        anchon = (datos.anchon * 1) + 0.08;
+        lna = datos.lonanuestraafuera;
 
-
+        // if (tipoconf == 'cs') {
+        if (detallep == '') {
+          detalle = "Modificación de lona de : " + largoreal + " x " + anchoreal + " a => " + largorealn + " x " + anchorealn
+        }
+        else {
+          detalle = detallep + ''
+        }
         if (tipoconf == 'cs') {
-          if (detallep == '') {
-            detalle = "Lona con ojales reforzados, chicotes y soga en dobladillo"
-          }
-          else {
-            detalle = detallep + ''
-          }
           ganancia = result[0].coefgancsoga
         } else {
-          if (detallep == '') {
-            detalle = "Lona con ojales reforzados, chicotes sin soga en dobladillo"
-          }
-          else {
-            detalle = detallep + ''
-          }
           ganancia = result[0].coefganssoga
         }
+
         if (datos.minmay == 'my') {
           coeficiente = result[0].coeficientemay;
           tipoojal = result[0].abrojales28;
@@ -85,6 +86,7 @@ router.get("/", (req, res, next) => {
           tipoojal = result[0].abrojales3b
           detalle = detalle + ' c/ojales de bronce en : '
         }
+
         minutosunion = (datos.ancho + 0.08) * largo * 5;
         sogadobladillo = result[0].sogadobladillo;
         valorflete = result[0].flete;
@@ -92,10 +94,11 @@ router.get("/", (req, res, next) => {
         codmoneda = result[0].codmoneda;
         coefimpuesto = result[0].coefimpuestos
 
+        vhln = ["SELECT REPValorMOT FROM reparacion.parametrosrep"].join("");
+        vhla = ["SELECT REPValorMOTLA FROM reparacion.parametrosrep"].join("");
         mcuadcob = [
           "Select ",
           "StkRubroDesc, StkRubroAbr, ",
-          //      "(StkRubroCosto * StkMonedasCotizacion / 1.50 * 1.02 ) as CostoCobMC, ",
           "(StkRubroCosto * StkMonedasCotizacion / StkRubroAncho * 1.02 ) as CostoCobMC, ",
           "(StkRubroCosto * StkMonedasCotizacion * 0.20 / 11 ) as CostoRefuerzo ",
           "from BaseStock.StkRubro JOIN  BaseStock.StkMonedas ",
@@ -160,7 +163,6 @@ router.get("/", (req, res, next) => {
             console.log(err);
           } else {
             datosenvio.push(result);
-            console.log('msogachicote  ', result)
           }
         });
         if (tipoconf === 'cs') {
@@ -170,10 +172,10 @@ router.get("/", (req, res, next) => {
               console.log(err);
             } else {
               datosenvio.push(result);
-              console.log('msogadobladillo  ', result)
             }
           });
         }
+
 
         conexion.query(cotizacion, function (err, result) {
           if (err) {
@@ -181,18 +183,35 @@ router.get("/", (req, res, next) => {
             console.log(err);
           } else {
             datosenvio.push(result);
-            console.log('cotizacion  ', result)
           }
         });
 
+        if (lna === 'LN') {
+          conexion.query(vhln, function (err, result) {
+            if (err) {
+              console.log("error en mysql");
+              console.log(err);
+            } else {
+              valorhora = result[0].REPValorMOT
+            }
+          });
+        }
+        else {
+          conexion.query(vhla, function (err, result) {
+            if (err) {
+              console.log("error en mysql");
+              console.log(err);
+            } else {
+              valorhora = result[0].REPValorMOTLA
+            }
+          });
+        }
         conexion.query(ojales, function (err, result) {
           if (err) {
             console.log("error en mysql");
             console.log(err);
           } else {
             datosenvio.push(result);
-            console.log('ojales  ', result)
-
             j = 0;
 
             while (j < 4) {
@@ -215,9 +234,12 @@ router.get("/", (req, res, next) => {
               j++;
 
 
-
-
               costooriginal = costooriginal * ganancia * coefimpuesto;
+              /* hasta acá es para calcular el metro cuadrado de tela */
+
+              /* Esto lo pongo primero para no agregar una variable para costo original */
+              metroscuadn = anchorealn * largorealn
+              costooriginaln = costooriginal * metroscuadn
 
               metroscuad = anchoreal * largoreal
               costooriginal = costooriginal * metroscuad
@@ -230,6 +252,7 @@ router.get("/", (req, res, next) => {
                 costooriginal = costooriginal * 1.0325
                 i++
               }
+
               // if (metroscuad < 22 && metroscuad >= 16) {
               //   costooriginal = costooriginal * 1.0325
               // }
@@ -243,7 +266,58 @@ router.get("/", (req, res, next) => {
               //   costooriginal = costooriginal * 1.0325
               // }
 
-              // datosenvio[0][0]['ImpItem'] = costooriginal
+              ciclo = (metroscuadn < 12) ? 3 : 0
+              ciclo = (metroscuadn < 16 && metroscuadn >= 12) ? 2 : 0
+              ciclo = (metroscuadn < 22 && metroscuadn >= 16) ? 1 : ciclo = 0
+              i = 0
+              while (i < ciclo) {
+                costooriginaln = costooriginaln * 1.0325
+                i++
+              }
+
+              // if (metroscuadn < 22 && metroscuadn >= 16) {
+              //   costooriginaln = costooriginaln * 1.0325
+              // }
+              // if (metroscuadn < 16 && metroscuadn >= 12) {
+              //   costooriginaln = costooriginaln * 1.0325
+              //   costooriginaln = costooriginaln * 1.0325
+              // }
+              // if (metroscuadn < 12) {
+              //   costooriginaln = costooriginaln * 1.0325
+              //   costooriginaln = costooriginaln * 1.0325
+              //   costooriginaln = costooriginaln * 1.0325
+              // }
+
+
+              if ((largorealn > largoreal) || (anchorealn > anchoreal)) {
+                costooriginal = costooriginaln - costooriginal
+              }
+
+
+
+              if (largorealn > largoreal) {
+                //alarga
+                //8 min x anchorealn
+                costooriginal = costooriginal + (valorhora / 60 * 8 * anchorealn)
+              }
+              if (largorealn < largoreal) {
+                //achica
+                //8 min x anchoreal
+                costooriginal = (valorhora / 60 * 8 * anchoreal)
+              }
+              if (anchorealn > anchoreal) {
+                //ensancha
+                //24 min x largoreal
+                costooriginal = costooriginal + (valorhora / 60 * 24 * largoreal)
+              }
+              if (anchorealn < anchoreal) {
+                //achica
+                //12 min x largoreal + anchorealn
+                costooriginal = (valorhora / 60 * 12 * (largoreal + anchorealn))
+              }
+
+              // costooriginal = costooriginal + (valorhora / 60 * 21 * anchoreal * 2)
+
               if (ivasn == 'CIVA') {
                 costooriginal = Math.ceil(costooriginal.toFixed(0) / 10) * 10
               }

@@ -1,37 +1,27 @@
 import React, { useEffect, useState, useRef } from "react";
 // import "../../../../Styles/TableHeader.css";
 import Estilos from '../../Estilos.module.css'
-import MaterialTable, { MTableCell, MTableToolbar, activateAccount, openRightDrawer, stopPropagation } from "material-table";
+import MaterialTable from "material-table";
 
 import { tableIcons } from "../../../../../lib/material-table/tableIcons";
 import { localization } from "../../../../../lib/material-table/localization";
 
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 
 import { columnasdi } from "./columnasdi";
 import { stkrubrolee } from './LeeRubro'
 import { stkgrupoleer } from './LeeGrupos'
 import { datosingreso } from "./DatosIngreso";
-import { onRowUpdate } from "./onRowUpdate";
 import {
     Button,
     Grid,
     TextField,
-    Dialog,
-    Input,
-    Container,
     // DataGrid,
 } from "@material-ui/core";
 // Context
 import { useContext } from "react";
 import { MovStockPantContext } from "../../MovStockPant";
-import { SelectAll, SkipNext } from "@material-ui/icons";
-// import { Edit, Label, SportsMotorsportsSharp } from "@material-ui/icons";
-// import FilaMuestraDatos from "../../../Stock/Movimientos/Salida/LayoutMovSalidaFinal/FilaMuestraDatos";
 
 export default function PantallaIngreso() {
     const { state, setState } = useContext(MovStockPantContext);
@@ -44,8 +34,6 @@ export default function PantallaIngreso() {
     const textInput = useRef(null);
     const textInput1 = useRef(null);
     const textInput2 = useRef(null);
-    const [datoselegidos, setDatoselegidos] = useState('')
-    const [anexos, setAnexos] = useState({ anexos: false });
     let abrrrubro
     async function leegrupos() {
         const result = await stkgrupoleer();
@@ -66,7 +54,6 @@ export default function PantallaIngreso() {
         } else {
             setCanting(event.target.value)
         }
-        //   setState({ ...state, [id]: event.target.value });
 
     }
     async function handleChange(event) {
@@ -102,10 +89,6 @@ export default function PantallaIngreso() {
         setIndicetabla(indicetabla)
         setCantpres(0)
         setCanting(0)
-        // setDatoselegidos(data[indicetabla].StkRubroPresDes +
-        //     ' ' + data[indicetabla].StkRubroPres +
-        //     ' ' + data[indicetabla].StkRubroUM +
-        //     ' ' + data[indicetabla].StkRubroAncho)
 
     }
 

@@ -44,6 +44,10 @@ router.post("/", function (req, res, next) {
     var Presupuestonro = req.body.nroPresupuesto
     var Titlargo = req.body.Tlargo
     var Titancho = req.body.Tancho
+    if (Titancho === 'Ancho Actual') {
+        Titancho = 'Ancho'
+        Titlargo = 'Largo'
+    }
     var maymin = req.body.PresupMnMy
     var d = new Date();
     var Fecha = dateFormat(d, "dd-mm-yyyy ");
@@ -133,6 +137,7 @@ router.post("/", function (req, res, next) {
             datospresup.map(reng => {
                 var Cantidad = { text: reng.PresupCantidad.toString(), style: 'tableDatosD' }
                 var Descripcion = { text: reng.StkRubroDesc, style: 'tableDatosI' }
+                console.log(' reng.PresupLargo.toString()  ', reng.PresupLargo.toString())
                 var Largo = { text: reng.PresupLargo.toString(), style: 'tableDatosD' }
                 var Ancho = { text: reng.PresupAncho.toString(), style: 'tableDatosD' }
                 var ImpUnit = { text: formatter.format(reng.ImpUnitario).toString(), style: 'tableDatosD' }
@@ -151,6 +156,7 @@ router.post("/", function (req, res, next) {
             datospresup.map(reng => {
                 var Cantidad = { text: reng.PresupCantidad.toString(), style: 'tableDatosD' }
                 var Descripcion = { text: reng.StkRubroDesc, style: 'tableDatosI' }
+                console.log(' reng.PresupLargo.toString()  ', reng.PresupLargo.toString())
                 var ImpUnit = { text: formatter.format(reng.ImpUnitario).toString(), style: 'tableDatosD' }
                 var ImpItem = { text: formatter.format(reng.ImpItem).toString(), style: 'tableDatosD' }
                 rows.push([Cantidad, Descripcion, ImpUnit, ImpItem])

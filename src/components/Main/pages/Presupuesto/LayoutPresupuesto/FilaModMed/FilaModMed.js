@@ -8,10 +8,11 @@ import { Grid } from "@material-ui/core";
 import { useContext } from "react";
 import { PresupPantContext } from "../../PresupPant";
 
-export default function FilaConf(props) {
+export default function FilaModMed(props) {
   const [selectedValue, setSelectedValue] = React.useState("cs");
   const { state, setState } = useContext(PresupPantContext);
   const [ojalbronce, setOjalBronce] = React.useState('hz');
+  const [lonanuesafu, setLonaNuesAfu] = React.useState("LN");
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
@@ -22,6 +23,13 @@ export default function FilaConf(props) {
     setOjalBronce(event.target.value);
     setState({ ...state, PresupOB: event.target.value });
   };
+
+  const handleChange3 = (event) => {
+    setLonaNuesAfu(event.target.value);
+    setState({ ...state, PreuspLNLF: event.target.value });
+  };
+
+
 
 
 
@@ -88,6 +96,36 @@ export default function FilaConf(props) {
             margin="dense"
           />
 
+        </RadioGroup>
+      </Grid>
+      <Grid item xs={2}>
+        <RadioGroup
+          row
+          size="small"
+          name="lonadeAca"
+          value={lonanuesafu}
+          onChange={handleChange3}
+          margin="dense"
+        >
+
+          <FormControlLabel
+            size="small"
+            value="LN"
+            control={<Radio />}
+            label="LN"
+            labelPlacement="top"
+            disabled={props.disable}
+            margin="dense"
+          />
+          <FormControlLabel
+            size="small"
+            value="LA"
+            control={<Radio />}
+            label="LA"
+            labelPlacement="top"
+            disabled={props.disable}
+            margin="dense"
+          />
         </RadioGroup>
       </Grid>
 
