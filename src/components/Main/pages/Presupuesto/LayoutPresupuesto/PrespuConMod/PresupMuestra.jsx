@@ -1,33 +1,31 @@
 import React, { useEffect, useState } from "react";
 
 import MaterialTable, { MTableToolbar } from "material-table";
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+import WavesIcon from "@material-ui/icons/Waves";
 import { tableIcons } from "../../../../../lib/material-table/tableIcons";
 import { localization } from "../../../../../lib/material-table/localization";
-import { registerLocale } from "react-datepicker";
-import { PresupNombre } from "../PrespuConMod/PresupNombre";
-// import { registerLocale, setDefaultLocale } from  "react-datepicker";
-import es from "date-fns/locale/es";
+import { green, purple } from "@material-ui/core/colors";
+import VisibilityRoundedIcon from "@material-ui/icons/VisibilityRounded";
+import { makeStyles } from "@material-ui/core/styles";
+import { Button } from "@material-ui/core";
+import Estilos from "../../../../../Componentes/Boton.module.css";
 
 import Paper from "@material-ui/core/Paper";
-import DateFnsUtils from "@date-io/date-fns";
-import {
-	MuiPickersUtilsProvider,
-	KeyboardDatePicker,
-} from "@material-ui/pickers";
-import Grid from "@material-ui/core/Grid";
+
+import { PresupNombre } from "./PresupNombre";
 import { presupColumns } from "./presupColumns";
 import { presupDatos } from "./presupDatos";
-import TablaMuestraRenglon from "./TablaMuestraRenglon";
-import WavesIcon from "@material-ui/icons/Waves";
-import { green, purple } from "@material-ui/core/colors";
-//, purple
-import Imprimir from "../../../Impresion/Imprimir/Imprimir";
+import { presupDatosReng } from "./presupDatosReng";
 import { PresupPreviewMue } from "../PresupPreviewMue";
+
+import TablaMuestraRenglon from "./TablaMuestraRenglon";
+import Imprimir from "../../../Impresion/Imprimir/Imprimir";
+
 import { useContext } from "react";
 import { globalContext } from "../../../../../App";
-import VisibilityRoundedIcon from "@material-ui/icons/VisibilityRounded";
-// import { getDate } from "date-fns";
-import { makeStyles } from "@material-ui/core/styles";
+
 const useStyles = makeStyles({
 	root: {
 		width: "100%",
@@ -45,24 +43,33 @@ export default function PresupMuestra() {
 	const [imprimirTF, setImprimirTF] = useState({ imprimir: false });
 	const [columns, setColumns] = useState([]);
 	const [data, setData] = useState([]);
-
-	// const [parampresupreview, setParamPresuPreview] = useState({
-	// 	idpresupreview: 0,
-	// });
+	const [fechasel, setFechasel] = useState();
+	const [detbusca, setDetbusca] = useState("");
 	const [parampresupuesto, setParamPresupuesto] = useState({
 		idpresupuesto: 0,
 	});
-
-	registerLocale("es", es);
 
 	var fecha = new Date();
 	fecha.setDate(fecha.getDate() - 360);
 
 	const [selectedDate, setSelectedDate] = useState(fecha);
 
-	const handleDateChange = (date) => {
-		setSelectedDate(date);
-		dataFetch(date);
+	const handleChangeFB = (event1) => {
+		setFechasel(event1.target.value);
+	};
+	const handleChangeDB = (event) => {
+		setDetbusca(event.target.value);
+	};
+
+	//para buscar detalles en los renglones de presupuestos
+	async function buscadetreng() {
+		const datosreng = await presupDatosReng(detbusca);
+		setData(datosreng);
+	}
+
+	//para buscar datos una vez elegida una fecha
+	const buscadatosfecha = () => {
+		dataFetch(fechasel);
 	};
 
 	async function columnsFetch() {
@@ -77,6 +84,7 @@ export default function PresupMuestra() {
 
 	async function initialFetch() {
 		columnsFetch();
+		//va a buscar datos para mostrar desde el inicio
 		dataFetch(selectedDate);
 	}
 
@@ -98,7 +106,6 @@ export default function PresupMuestra() {
 	async function openPreview(event, idPresupEncab) {
 		setParamPresupuesto({ parampresupuesto, idpresupuesto: idPresupEncab });
 		resultado = await PresupNombre(idPresupEncab);
-		console.log("resultado  ", resultado);
 		if (resultado === '""') {
 			handleClickPreview();
 		} else {
@@ -121,6 +128,35 @@ export default function PresupMuestra() {
 
 	return (
 		<Paper className={classes.root}>
+			<Grid container>
+				<TextField
+					inputProps={{ maxLength: 14 }}
+					size="small"
+					variant="outlined"
+					id="FechaSel"
+					type="date"
+					helperText="Fecha Desde"
+					value={fechasel}
+					onChange={handleChangeFB}
+					className={classes.textField}
+				/>
+				<Button onClick={buscadatosfecha} className={Estilos.botonchico}>
+					Busca fecha
+				</Button>
+				<TextField
+					inputProps={{ maxLength: 14 }}
+					size="small"
+					variant="outlined"
+					id="DetalleBusca"
+					type="text"
+					helperText="Detalle"
+					value={detbusca}
+					onChange={handleChangeDB}
+				/>
+				<Button onClick={buscadetreng} className={Estilos.botonchico}>
+					Busca Detalle
+				</Button>
+			</Grid>
 			<MaterialTable
 				columns={columns}
 				data={data}
@@ -153,7 +189,46 @@ export default function PresupMuestra() {
 					Toolbar: (props) => (
 						<React.Fragment>
 							<MTableToolbar {...props} />
-							<MuiPickersUtilsProvider utils={DateFnsUtils}>
+						</React.Fragment>
+					),
+				}}
+				/>
+
+			<PresupPreviewMue open={ppreview} handleClose={handleClosePreview} />
+
+			<Imprimir
+				columns={columns}
+				datos={data}
+				open={imprimirTF.imprimir}
+				setOpen={setImprimirTF}
+				/>
+
+			<TablaMuestraRenglon
+				open={open}
+				handleClose={handleClose}
+				Presup={parampresupuesto.idpresupuesto}
+				/> */}
+		</Paper>
+	);
+}
+
+{
+	/* <DatePicker
+								selected={selectedDate}
+								// onSelect={handleDateSelect} //when day is clicked
+								format="dd/MM/yyyy"
+								margin="normal"
+								id="date-picker-inline"
+								label="Desde :"
+								variant="inline"
+								onChange={handleDateChange} //only when value has changed
+								KeyboardButtonProps={{
+									"aria-label": "change date",
+								}}
+							/> */
+}
+{
+	/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
 								<Grid container>
 									<KeyboardDatePicker
 										disableToolbar
@@ -169,26 +244,5 @@ export default function PresupMuestra() {
 										}}
 									/>
 								</Grid>
-							</MuiPickersUtilsProvider>
-						</React.Fragment>
-					),
-				}}
-			/>
-
-			<PresupPreviewMue open={ppreview} handleClose={handleClosePreview} />
-
-			<Imprimir
-				columns={columns}
-				datos={data}
-				open={imprimirTF.imprimir}
-				setOpen={setImprimirTF}
-			/>
-
-			<TablaMuestraRenglon
-				open={open}
-				handleClose={handleClose}
-				Presup={parampresupuesto.idpresupuesto}
-			/>
-		</Paper>
-	);
+							</MuiPickersUtilsProvider> */
 }

@@ -98,6 +98,8 @@ export const initial_state = {
   clientes: [],
   PresupLargo: 0.0,
   PresupAncho: 0.0,
+  PresupLargoN: 0.0,
+  PresupAnchoN: 0.0,
   AnexoLargo: 0.0,
   StkRubroAbr: "",
   StkRubroAbrTBR: "",
@@ -111,11 +113,17 @@ export const initial_state = {
   indexborrado: 1000,
   DetallePresup: '',
   DetalleRenglon: '',
+  ExplicaPresup: '',
   ClientesDesc: '',
   //FilaTres
   dcalculoppresup: [],
   //condiciones de pago
   condpagoeleg: [],
+  //FilaDos
+  labellargo: 'Largo',
+  labelancho: 'Ancho',
+  labellargoN: 'Largo Nuevo',
+  labelanchoN: 'Ancho Nuevo',
   columns: [
     {
       title: "Cant.",
@@ -195,5 +203,7 @@ export const initial_state = {
   nomCliente: "",
   // telCliente: "",
   otraCondicion: "",
-  NroPresupuesto: 0
+  NroPresupuesto: 0,
+
+
 };
