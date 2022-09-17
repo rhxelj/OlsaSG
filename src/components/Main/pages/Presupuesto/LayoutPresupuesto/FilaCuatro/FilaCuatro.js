@@ -6,7 +6,6 @@ import {
     DialogActions,
 }
     from "@material-ui/core";
-// import DialogActions from "@material-ui/core/DialogActions";
 import useStyles from "../styles";
 
 
@@ -16,19 +15,16 @@ import { PresupPantContext } from "../../PresupPant";
 
 import { clientesleerdescmayigual } from "../../../Clientes/ClientesLeerDesc";
 import { PresupGrabar } from "../../PresupGrabar";
-//  import PresupMostrar from "../../PresupMostrar";
 
 import { clientesleercod } from '../../../Clientes/ClientesLeerCod'
 import { PresupImprime } from "../PresupImprime"
 import PresupDetPieSelec from './PresupDetPieSelec'
 import { PresupPreview } from "../PresupPreview"
-// import { AddAlertTwoTone, Pause } from "@material-ui/icons";
 
 export default function FilaCuatro(props) {
     // Esto es para poder consumir los datos del CONTEXTAPI
     const { state, setState } = useContext(PresupPantContext);
     const [ppreview, setPPreview] = useState({ ppreview: false });
-
     const handleChange = (event) => {
         const id = event.target.id;
         setState({ ...state, [id]: event.target.value });
@@ -49,6 +45,7 @@ export default function FilaCuatro(props) {
         var idClienteElegE, nomClienteElegE;
         var descrip = state.DescripPresup
         var otraCondicion = state.otraCondicion
+        var explicacionPresup = state.ExplicaPresup
 
         if (state.idClientes === 0 || state.idClientes === '') {
             idClienteElegE = 0
@@ -62,28 +59,18 @@ export default function FilaCuatro(props) {
 
 
 
-        const nroPresupuesto1 = await PresupGrabar(props, ClienteMayMin, nomClienteElegE, idClienteElegE);
+        const nroPresupuesto1 = await PresupGrabar(props, ClienteMayMin, nomClienteElegE, idClienteElegE, explicacionPresup);
         setState({ ...state, NroPresupuesto: nroPresupuesto1 });
-        PresupImprime(props.datos, nomClienteElegE, otraCondicion, props.suma, nroPresupuesto1, descrip, state.condpagoeleg, state.PresupMnMy)
 
+        PresupImprime(props.datos, nomClienteElegE, otraCondicion, props.suma, nroPresupuesto1, descrip, state.condpagoeleg, state.PresupMnMy, state.labellargo, state.labelancho)
 
-
-
-        //cancelar();
         cierrafilacuatro();
     }
 
 
     function cierrafilacuatro() {
         props.setOpen({ filacuatro: false });
-        // open = false
     }
-
-
-    // function vepresupuesto() {
-    //     setPPreview({ ppreview: true })
-    //     // open = false
-    // }
 
 
     const textdata = [
@@ -111,14 +98,10 @@ export default function FilaCuatro(props) {
                 maxWidth="md"
                 open={props.open}
 
-            //  keepMounted
-            // onClose={props.handleClose}
-            // onClose={handleClose}
-            // aria-labelledby="alert-dialog-slide-title"
-            // aria-describedby="alert-dialog-slide-description"
+
             >
                 <PresupDetPieSelec></PresupDetPieSelec>
-                {/* <DialogTitle id="simple-dialog-title">Cliente Presupuesto</DialogTitle> */}
+
                 <TextField
                     inputProps={{ maxLength: CHARACTER_LIMIT }}
                     size="small"

@@ -117,6 +117,9 @@ var stkenvaseleeimp = require("./routes/stock/envase/stkenvaseleeimp");
 var stkenvasecambiaimp = require("./routes/stock/envase/stkenvasecambiaimp");
 
 var leedatosingreso = require("./routes/stock/ingresos/leedatosingreso");
+var sumaingreso = require("./routes/stock/ingresos/sumaingreso");
+
+
 
 var listaprecios = require("./routes/listaprecios/listaprecios");
 var modprecios = require("./routes/listaprecios/modprecios");
@@ -145,11 +148,15 @@ var presuplonaabolinada = require("./routes/presupuesto/presuplonaabolinada");
 var presupcomedero = require("./routes/presupuesto/presupcomedero");
 var presupcambpanio = require("./routes/presupuesto/presupcambpanio");
 var presuppiletafca = require("./routes/presupuesto/presuppiletafca");
+var presupponchorie = require("./routes/presupuesto/presupponchorie");
+var presupmodificamed = require("./routes/presupuesto/presupmodificamed");
+
 
 
 var presupencableer = require("./routes/presupuesto/presupencableer");
 var presuprenglonleer = require("./routes/presupuesto/presuprenglonleer");
 var presupnombre = require("./routes/presupuesto/presupnombre");
+var presuprengleer = require("./routes/presupuesto/presuprengleer");
 
 
 var presupconftipoleer = require("./routes/presupuesto/presupconftipo/presupconftipoleer");
@@ -321,6 +328,8 @@ app.use("/stkenvaseleeimp", stkenvaseleeimp);
 app.use("/stkenvasecambiaimp", stkenvasecambiaimp);
 
 app.use("/leedatosingreso", leedatosingreso);
+app.use("/sumaingreso", sumaingreso);
+
 
 // app.use('/imprime1', imprime1);
 app.use("/stkmovvtaagregar", stkmovvtaagregar);
@@ -350,12 +359,15 @@ app.use("/presuplonaabolinada", presuplonaabolinada);
 app.use("/presupcomedero", presupcomedero);
 app.use("/presupcambpanio", presupcambpanio);
 app.use("/presuppiletafca", presuppiletafca);
-
+app.use("/presupponchorie", presupponchorie);
+app.use("/presupmodificamed", presupmodificamed);
 
 
 app.use("/presupencableer", presupencableer);
 app.use("/presuprenglonleer", presuprenglonleer);
 app.use("/presupnombre", presupnombre);
+app.use("/presuprengleer", presuprengleer);
+
 
 
 app.use("/presupconftipoleer", presupconftipoleer);

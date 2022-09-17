@@ -50,9 +50,7 @@ router.get("/", (req, res, next) => {
 
         cantidadojales = (perimetro / ojalescada) + (largoreal)
 
-        // console.log('ojalescada  ', ojalescada)
-        // console.log('perimetro  ', perimetro)
-        console.log('cantidadojales  ', cantidadojales)
+
         if (detallep == '') {
           detalle = "Comedero "
         }
@@ -68,11 +66,6 @@ router.get("/", (req, res, next) => {
         }
 
 
-        console.log('cantidadcob  ', cantidadcob)
-        console.log('largo  ', largo)
-        console.log('Math.ceil(largo / 1.5)  ', Math.ceil(largo / 1.5))
-        console.log('ancho  ', ancho)
-
         ganancia = result[0].coefgancsoga
 
         if (datos.minmay == 'my') {
@@ -87,9 +80,7 @@ router.get("/", (req, res, next) => {
           coefMOT = result[0].coefMOTmin
         }
 
-        console.log('coeficiente para el material may o min  ', coeficiente)
-        console.log('coeficiente de coefMOT  ', coefMOT)
-        console.log('coeficiente de ganancia  ', ganancia)
+
 
         if (tipoojale == 'hz') {
           tipoojal = 'OHCOL'
@@ -111,13 +102,9 @@ router.get("/", (req, res, next) => {
         codmoneda = result[0].codmoneda;
         coefimpuesto = result[0].coefimpuestos
 
-        console.log('sogadobladillo  ', sogadobladillo)
+
         ValorMOTtotal = ((result[0].costoMOT / 60) * 3.5 * largo) * coefMOT
-        console.log('ValorMOTtotal = ((result[0].costoMOT / 60)) * coefMOT  ', ((result[0].costoMOT / 60)) * coefMOT)
-        // console.log('6.5 * largo  ', (6.5 * largo))
-        // console.log('(result[0].costoMOT / 60)  ', (result[0].costoMOT / 60))
-        // console.log('((result[0].costoMOT / 60) * 6.5 * largo)  ', ((result[0].costoMOT / 60) * 6.5 * largo))
-        console.log('ValorMOTtotal  ', ValorMOTtotal)
+
 
         mlinealcob = [
           "Select ",
@@ -166,7 +153,6 @@ router.get("/", (req, res, next) => {
             console.log(err);
           } else {
             datosenvio.push(result);
-            console.log('ValorCobML  ', result)
           }
         });
 
@@ -177,7 +163,6 @@ router.get("/", (req, res, next) => {
             console.log(err);
           } else {
             datosenvio.push(result);
-            console.log('ValorMSDobladillo  ', result)
           }
         });
         // }
@@ -197,7 +182,6 @@ router.get("/", (req, res, next) => {
             console.log(err);
           } else {
             datosenvio.push(result);
-            console.log('ValorGrsOjal  ', result)
             j = 0;
 
 
@@ -205,15 +189,14 @@ router.get("/", (req, res, next) => {
 
               costooriginal = datosenvio[j][0].ValorCobML * cantidadcob
               j++;
-              console.log('costooriginal = datosenvio[j][0].ValorCobML * cantidadcob  ', costooriginal)
+
 
               costooriginal = costooriginal + (datosenvio[j][0].ValorMSDobladillo * metsogadob);
-              console.log('(datosenvio[j][0].ValorMSDobladillo * metsogadob)  ', (datosenvio[j][0].ValorMSDobladillo * metsogadob))
+
               j++;
               j++;
               costooriginal = costooriginal + (datosenvio[j][0].ValorGrsOjal / 100 * cantidadojales)
 
-              console.log('(datosenvio[j][0].ValorGrsOjal / 100 * cantidadojales) ', (datosenvio[j][0].ValorGrsOjal / 100 * cantidadojales))
               costooriginal = costooriginal * coefimpuesto + ValorMOTtotal
               // costooriginal = costooriginal * ganancia * coefimpuesto;
 
@@ -223,7 +206,7 @@ router.get("/", (req, res, next) => {
               else {
                 costooriginal = Math.ceil(costooriginal.toFixed(0) / 1.21 / 10) * 10
               }
-              console.log('costooriginal  ', costooriginal)
+
               datosenvio[0][0]['ImpUnitario'] = costooriginal
               datosenvio[0][0]['Detalle'] = detalle
               datosenvio[0][0]['Largo'] = (largoreal * 1).toFixed(2)

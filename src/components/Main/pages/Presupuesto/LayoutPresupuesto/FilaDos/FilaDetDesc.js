@@ -25,6 +25,12 @@ export default function FilaDetDesc() {
         //   setSelectedValue(event.target.value);
         setState({ ...state, DetalleRenglon: event.target.value });
     };
+
+    const handleChange6 = (event) => {
+        //   setSelectedValue(event.target.value);
+        setState({ ...state, ExplicaPresup: event.target.value });
+    };
+
     const classes = useStyles();
     return (
         <>
@@ -66,6 +72,19 @@ export default function FilaDetDesc() {
                 value={state.DetalleRenglon}
                 helperText='Se agrega a la descripción'
                 onChange={handleChange5}
+                className={classes.textField}
+            />
+            <TextField
+                inputProps={{ maxLength: 100 }}
+                size="small"
+                variant="outlined"
+                id="ExplicaPresup"
+                margin="dense"
+                label="Explicación de Presupuesto "
+                // fullWidth
+                value={state.ExplicaPresup}
+                helperText='No aparece en el presupuesto'
+                onChange={handleChange6}
                 className={classes.textField}
             />
         </>

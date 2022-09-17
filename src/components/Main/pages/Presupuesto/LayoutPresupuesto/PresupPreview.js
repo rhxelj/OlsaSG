@@ -9,10 +9,8 @@ import { tableIcons } from '../../../../lib/material-table/tableIcons'
 
 
 
-// export default function PresupPreview(props) {
 export const PresupPreview = (props) => {
     function cierradialogo() {
-        console.log('entro en cierradialog  ')
         props.setOpen({ ppreview: false });
     }
 
@@ -27,29 +25,20 @@ export const PresupPreview = (props) => {
                 <MuiDialogTitle>
                     <button
                         variant="contained"
-                        // color="secondary"
-                        //startIcon={<tableIcons.AddShoppingCart />}
                         onClick={cierradialogo}
                         className={BCierraDialogo.botoncierradialogo}
                     >
                         <div className={BCierraDialogo.iconocierradialogo}>
                             <tableIcons.Close />
-                            {/* style={{ color: red[0], width: 30, height: 30 }} */}
+
                         </div>
                         Cerrar
                     </button>
 
-                    {/* <IconButton onClick={cierradialogo} color='primary' edge='start' size='small'> */}
-                    {/* <CloseIcon />
-                        Cierra Impresión */}
-                    {/* <Typography variant="subtitle2">Cierra Impresión</Typography> */}
 
                 </MuiDialogTitle>
 
                 <object
-                    // data={require('../../../../../docspdf/basics.pdf')}
-
-                    //  data={require('../../../../../docspdf/basics.pdf')}
                     data={require('../static/media/basics.pdf')}
                     type="application/pdf"
                     width='100%'
@@ -57,7 +46,6 @@ export const PresupPreview = (props) => {
                     cache='false'
                 >
                 </object>
-                {/* {alert('al final de presupPreview')} */}
             </Dialog>
         </div >
     );

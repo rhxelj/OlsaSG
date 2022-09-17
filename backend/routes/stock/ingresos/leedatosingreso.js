@@ -18,7 +18,7 @@ router.get("/", function (req, res, next) {
     console.log('vino a ver  ', req.query.abr)
     var StkRubroAbr = req.query.abr;
     var q = [
-        'Select idStkRubro, StkRubroCodGrp, StkRubroDesc, StkGrupo.StkGrupoDesc as GrupoDesc, ',
+        'Select idStkRubro, StkRubroCodGrp, StkRubroDesc, StkItems.idStkItems,  StkGrupo.StkGrupoDesc as GrupoDesc, ',
         'StkItemsDesc, BasesGenerales.Proveedores.ProveedoresDesc, StkRubroPresDes, StkRubroAncho, StkRubroPres, ',
         'StkItemsMin, StkItemsMax, StkItemsCantidad, StkItemsCantDisp, StkRubroUM, ',
         'date_format(StkRubroFecha, "%d-%m-%Y") as StkRubroFecha ',
@@ -33,12 +33,12 @@ router.get("/", function (req, res, next) {
         // "Select * from StkItems where StkItemsRubroAbr = '" + StkRubroAbr + "'",
 
     ].join(" ");
-    console.log('q  ', q)
     conexion.query(q, function (err, result) {
         if (err) {
             console.log(err);
         } else {
             res.json(result);
+            console.log('result  ', result)
         }
     });
 });

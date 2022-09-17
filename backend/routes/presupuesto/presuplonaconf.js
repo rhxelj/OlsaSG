@@ -160,7 +160,6 @@ router.get("/", (req, res, next) => {
             console.log(err);
           } else {
             datosenvio.push(result);
-            console.log('msogachicote  ', result)
           }
         });
         if (tipoconf === 'cs') {
@@ -170,7 +169,6 @@ router.get("/", (req, res, next) => {
               console.log(err);
             } else {
               datosenvio.push(result);
-              console.log('msogadobladillo  ', result)
             }
           });
         }
@@ -181,7 +179,6 @@ router.get("/", (req, res, next) => {
             console.log(err);
           } else {
             datosenvio.push(result);
-            console.log('cotizacion  ', result)
           }
         });
 
@@ -191,8 +188,6 @@ router.get("/", (req, res, next) => {
             console.log(err);
           } else {
             datosenvio.push(result);
-            console.log('ojales  ', result)
-
             j = 0;
 
             while (j < 4) {
@@ -216,36 +211,32 @@ router.get("/", (req, res, next) => {
 
 
 
-              console.log('datosenvio[0][0]  ', datosenvio[0][0])
-              console.log('datosenvio[1][0]  ', datosenvio[1][0])
-              console.log('datosenvio[2][0]  ', datosenvio[2][0])
-              console.log('datosenvio[3][0]  ', datosenvio[3][0])
-              console.log('datosenvio[4][0]  ', datosenvio[4][0])
-              console.log('costooriginal  ', costooriginal)
-              console.log(' costooriginal = costooriginal * ganancia * coefimpuesto;')
+
               costooriginal = costooriginal * ganancia * coefimpuesto;
-              console.log('ganancia  ', ganancia)
-              console.log('coefimpuesto  ', coefimpuesto)
-              console.log('costooriginal  ', costooriginal)
 
               metroscuad = anchoreal * largoreal
-              console.log(' costooriginal = costooriginal * metroscuad')
               costooriginal = costooriginal * metroscuad
-              console.log('metroscuad  ', metroscuad)
-              console.log('costooriginal  ', costooriginal)
 
-              if (metroscuad < 22 && metroscuad >= 16) {
+              ciclo = (metroscuad < 12) ? 3 : 0
+              ciclo = (metroscuad < 16 && metroscuad >= 12) ? 2 : 0
+              ciclo = (metroscuad < 22 && metroscuad >= 16) ? 1 : ciclo = 0
+              i = 0
+              while (i < ciclo) {
                 costooriginal = costooriginal * 1.0325
+                i++
               }
-              if (metroscuad < 16 && metroscuad >= 12) {
-                costooriginal = costooriginal * 1.0325
-                costooriginal = costooriginal * 1.0325
-              }
-              if (metroscuad < 12) {
-                costooriginal = costooriginal * 1.0325
-                costooriginal = costooriginal * 1.0325
-                costooriginal = costooriginal * 1.0325
-              }
+              // if (metroscuad < 22 && metroscuad >= 16) {
+              //   costooriginal = costooriginal * 1.0325
+              // }
+              // if (metroscuad < 16 && metroscuad >= 12) {
+              //   costooriginal = costooriginal * 1.0325
+              //   costooriginal = costooriginal * 1.0325
+              // }
+              // if (metroscuad < 12) {
+              //   costooriginal = costooriginal * 1.0325
+              //   costooriginal = costooriginal * 1.0325
+              //   costooriginal = costooriginal * 1.0325
+              // }
 
               // datosenvio[0][0]['ImpItem'] = costooriginal
               if (ivasn == 'CIVA') {
