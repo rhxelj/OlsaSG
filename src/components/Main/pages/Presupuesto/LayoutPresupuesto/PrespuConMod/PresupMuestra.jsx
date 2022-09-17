@@ -192,7 +192,7 @@ export default function PresupMuestra() {
 						</React.Fragment>
 					),
 				}}
-			/>
+				/>
 
 			<PresupPreviewMue open={ppreview} handleClose={handleClosePreview} />
 
@@ -201,13 +201,48 @@ export default function PresupMuestra() {
 				datos={data}
 				open={imprimirTF.imprimir}
 				setOpen={setImprimirTF}
-			/>
+				/>
 
 			<TablaMuestraRenglon
 				open={open}
 				handleClose={handleClose}
 				Presup={parampresupuesto.idpresupuesto}
-			/>
+				/> */}
 		</Paper>
 	);
+}
+
+{
+	/* <DatePicker
+								selected={selectedDate}
+								// onSelect={handleDateSelect} //when day is clicked
+								format="dd/MM/yyyy"
+								margin="normal"
+								id="date-picker-inline"
+								label="Desde :"
+								variant="inline"
+								onChange={handleDateChange} //only when value has changed
+								KeyboardButtonProps={{
+									"aria-label": "change date",
+								}}
+							/> */
+}
+{
+	/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
+								<Grid container>
+									<KeyboardDatePicker
+										disableToolbar
+										variant="inline"
+										format="dd/MM/yyyy"
+										margin="normal"
+										id="date-picker-inline"
+										label="Desde :"
+										value={selectedDate}
+										onChange={handleDateChange}
+										KeyboardButtonProps={{
+											"aria-label": "change date",
+										}}
+									/>
+								</Grid>
+							</MuiPickersUtilsProvider> */
 }
