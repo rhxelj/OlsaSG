@@ -10,37 +10,50 @@ conexion.connect(function (err) {
         console.log("no se conecto en sumaingreso");
     }
 });
-
+var datosenvio = [];
 var router = express();
-router.get("/", function (req, res, next) {
+router.post("/", function (req, res, next) {
     // router.get("/", async function (req, res, next) {
-    console.log('vino a  ')
-    console.log('vino a ver  ', req.query.abr)
-    var StkRubroAbr = req.query.abr;
-    var q = [
-        'Select idStkRubro, StkRubroCodGrp, StkRubroDesc, StkItems.idStkItems,  StkGrupo.StkGrupoDesc as GrupoDesc, ',
-        'StkItemsDesc, BasesGenerales.Proveedores.ProveedoresDesc, StkRubroPresDes, StkRubroAncho, StkRubroPres, ',
-        'StkItemsMin, StkItemsMax, StkItemsCantidad, StkItemsCantDisp, StkRubroUM, ',
-        'date_format(StkRubroFecha, "%d-%m-%Y") as StkRubroFecha ',
-        'from StkRubro JOIN StkGrupo, BasesGenerales.Proveedores, StkMonedas, StkItems ',
-        'where StkRubroCodGrp = idStkGrupo ',
-        'and StkRubroProv = idProveedores ',
-        'and StkRubroTM = idStkMonedas ',
-        'and StkRubroCodGrp = idStkGrupo ',
-        "and StkItemsRubroAbr = '" + StkRubroAbr + "'",
-        "and StkRubroAbr = '" + StkRubroAbr + "'",
-        'order by StkRubroCodGrp, idStkRubro ',
-        // "Select * from StkItems where StkItemsRubroAbr = '" + StkRubroAbr + "'",
+    var infingreso = req.body.infingreso
+    var d = new Date();
+    finalDate = d.toISOString().split("T")[0];
+    // console.log('vino a sumaingreso ', infingreso[0].tingreso)
+    // console.log('vino a sumaingreso  ', req.body.infingreso)
 
-    ].join(" ");
+    var q = [" UPDATE BaseStock.StkItems SET ",
+        "StkItemsCantidad = StkItemsCantidad + ", infingreso[0].tingreso,
+        ", StkItemsCantDisp = StkItemsCantDisp + ", infingreso[0].tingreso,
+        ", StkItemsFAct = '", finalDate,
+        "' WHERE (idStkItems = ", infingreso[0].indiceitem, ") and  (StkItemsRubroAbr = '", infingreso[0].abrevrubro, "')"
+    ].join("");
+
+    var q1 = [" Select StkItemsCantidad,  StkItemsCantDisp,  ",
+        'date_format(StkItemsFAct, "%d-%m-%Y") as StkItemsFAct ',
+        " from BaseStock.StkItems ",
+        " WHERE (idStkItems = ", infingreso[0].indiceitem, ") and  (StkItemsRubroAbr = '", infingreso[0].abrevrubro, "')"
+    ].join("");
+
+
     conexion.query(q, function (err, result) {
         if (err) {
             console.log(err);
         } else {
-            res.json(result);
-            console.log('result  ', result)
+            datosenvio.push(result);
+
         }
+
+
+        conexion.query(q1, function (err, result) {
+            if (err) {
+                console.log(err);
+            } else {
+                datosenvio.push(result);
+            }
+            res.json(datosenvio);
+            datosenvio = [];
+        });
     });
+
 });
 
 module.exports = router;

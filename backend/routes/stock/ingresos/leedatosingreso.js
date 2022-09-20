@@ -14,14 +14,13 @@ conexion.connect(function (err) {
 var router = express();
 router.get("/", function (req, res, next) {
     // router.get("/", async function (req, res, next) {
-    console.log('vino a  ')
-    console.log('vino a ver  ', req.query.abr)
+
     var StkRubroAbr = req.query.abr;
     var q = [
         'Select idStkRubro, StkRubroCodGrp, StkRubroDesc, StkItems.idStkItems,  StkGrupo.StkGrupoDesc as GrupoDesc, ',
         'StkItemsDesc, BasesGenerales.Proveedores.ProveedoresDesc, StkRubroPresDes, StkRubroAncho, StkRubroPres, ',
         'StkItemsMin, StkItemsMax, StkItemsCantidad, StkItemsCantDisp, StkRubroUM, ',
-        'date_format(StkRubroFecha, "%d-%m-%Y") as StkRubroFecha ',
+        'date_format(StkItemsFAct, "%d-%m-%Y") as StkItemsFAct ',
         'from StkRubro JOIN StkGrupo, BasesGenerales.Proveedores, StkMonedas, StkItems ',
         'where StkRubroCodGrp = idStkGrupo ',
         'and StkRubroProv = idProveedores ',
@@ -38,7 +37,6 @@ router.get("/", function (req, res, next) {
             console.log(err);
         } else {
             res.json(result);
-            console.log('result  ', result)
         }
     });
 });

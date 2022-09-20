@@ -37,7 +37,8 @@ export function columnasdi() {
       // },
       {
         title: "Fecha ",
-        field: "StkRubroFecha",
+        field: "StkItemsFAct",
+        type: "date",
         editable: "never",
       },
       {

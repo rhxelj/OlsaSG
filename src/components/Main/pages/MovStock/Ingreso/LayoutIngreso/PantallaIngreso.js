@@ -35,9 +35,10 @@ export default function PantallaIngreso() {
     const textInput = useRef(null);
     const textInput1 = useRef(null);
     const textInput2 = useRef(null);
-    const [datoselegidos, setDatoselegidos] = useState('')
-    const [anexos, setAnexos] = useState({ anexos: false });
+
     let abrrrubro
+    let agregaingreso = ''
+
     async function leegrupos() {
         const result = await stkgrupoleer();
         setState({ ...state, stkgrupos: result });
@@ -57,7 +58,6 @@ export default function PantallaIngreso() {
         } else {
             setCanting(event.target.value)
         }
-        //   setState({ ...state, [id]: event.target.value });
 
     }
     async function handleChange(event) {
@@ -74,10 +74,7 @@ export default function PantallaIngreso() {
 
         }
     };
-    async function dataFetch() {
-        const data = await datosingreso(abrrrubro);
-        setData(data);
-    }
+
 
     useEffect(() => {
         if (state.idStkGrupo === "") {
@@ -89,32 +86,38 @@ export default function PantallaIngreso() {
 
     }, [state.idStkGrupo])
 
+
     const miraitem = (indicetabla) => {
         setIndicetabla(indicetabla)
         setCantpres(0)
         setCanting(0)
-        // setDatoselegidos(data[indicetabla].StkRubroPresDes +
-        //     ' ' + data[indicetabla].StkRubroPres +
-        //     ' ' + data[indicetabla].StkRubroUM +
-        //     ' ' + data[indicetabla].StkRubroAncho)
+
 
     }
 
-    // const informacion = () => {
-    //     <TextField value={data[0].ProveedoresDesc} />
-    // }
-    async function cargamercadería() {
 
+
+    async function botonok() {
         setState({ ...state, totaling: cantpres * canting });
-        //agregar mercadería en el grupo
-        console.log('data[0].StkRubroPresDes  ', data[indicetabla].StkRubroPresDes)
-        console.log('indicetabla  ', indicetabla)
-        console.log('StkItemsCantDisp   ', data[indicetabla].StkItemsCantDisp)
-        console.log('StkRubroAbr  ', state.StkRubroAbr)
-        console.log('idStkItems  ', data[indicetabla].idStkItems)
-        const agregaingreso = await sumaingreso(state.totaling, state.StkRubroAbr, data[indicetabla].idStkItems);
+        var infingreso = [{
+            tingreso: cantpres * canting,
+            abrevrubro: state.StkRubroAbr,
+            indiceitem: data[indicetabla].idStkItems
+        }]
+        agregaingreso = await sumaingreso(infingreso);
+        data[indicetabla].StkItemsCantDisp = agregaingreso.body[1][0].StkItemsCantDisp
+        data[indicetabla].StkItemsCantidad = agregaingreso.body[1][0].StkItemsCantidad
+        var it = indicetabla
+        it < data.length - 1 ?
+            it++
+            :
+            it--
+        setSelectedRow(it)
+        miraitem(it)
 
     }
+
+
     const textdata = [
         {
             id: "idStkGrupo",
@@ -157,26 +160,26 @@ export default function PantallaIngreso() {
         <div className={Estilos.contenedor}>
             <div className={Estilos.contenedor1}>
 
-                {textdata.map((data) => (
+                {textdata.map((datos) => (
                     <TextField
                         className={Estilos.selector}
-                        key={data.id}
-                        id={data.id}
+                        key={datos.id}
+                        id={datos.id}
                         size="small"
                         inputProps={{ maxLength: 3 }}
                         select
-                        label={data.label}
-                        value={data.value}
+                        label={datos.label}
+                        value={datos.value}
                         onChange={handleChange}
                         SelectProps={{ native: true }}
                         variant="outlined"
                         margin="dense"
                     >
-                        {data.mapeo}
+                        {datos.mapeo}
                     </TextField>
                 ))}
-
                 <MaterialTable
+                    id="tablaDatos"
                     title="Items de Rubro"
                     columns={columns}
                     data={data}
@@ -203,11 +206,9 @@ export default function PantallaIngreso() {
                 />
             </div>
 
-            {/* <Grid xs={3}> */}
             <div className={Estilos.contenedor2}>
                 {indicetabla !== -1 &&
                     <Card>
-
                         <CardContent className={Estilos.card1}>
                             <Grid container>
                                 La presentación de la mercadería es :
@@ -230,9 +231,8 @@ export default function PantallaIngreso() {
                                     onChange={cambioingreso}
                                     value={cantpres}
                                     autoFocus
-
-                                    onKeyPress={(e) => {
-                                        if (e.key === 'Enter') {
+                                    onKeyPress={(e1) => {
+                                        if (e1.key === 'Enter') {
                                             setTimeout(() => {
                                                 textInput1.current.focus();
                                             }, 100);
@@ -250,8 +250,8 @@ export default function PantallaIngreso() {
                                     id="canting"
                                     onChange={cambioingreso}
                                     value={canting}
-                                    onKeyPress={(e) => {
-                                        if (e.key === 'Enter') {
+                                    onKeyPress={(e2) => {
+                                        if (e2.key === 'Enter') {
                                             setTimeout(() => {
                                                 textInput2.current.focus();
                                             }, 100);
@@ -262,31 +262,29 @@ export default function PantallaIngreso() {
                             </Grid>
                             <Grid container spacing={3}>
                                 <Grid item xs>
-                                    <Button className={Estilos.boton} buttonRef={textInput2} onClick={cargamercadería}>OK</Button>
+                                    <Button className={Estilos.boton}
+                                        onClick={botonok}
+                                        buttonRef={textInput2}
+                                        onKeyPress={(e3) => {
+                                            if (e3.key === 'Enter') {
+                                                setTimeout(() => {
+                                                    textInput.current.focus();
+                                                }, 100);
+                                            }
+                                        }}
+                                    > TOTAL INGRESADO
+                                    </Button>
                                 </Grid>
                                 <Grid item xs>
-                                    <label>TOTAL INGRESADO : {state.totaling}</label>
+                                    <label >TOTAL INGRESADO : {cantpres * canting}</label>
                                 </Grid>
                             </Grid>
                         </CardContent>
                     </Card>}
-                {/* {indicetabla !== -1 &&
-                    <form>
-                        <label className={Estilos.label1}>La presentación de la mercadería es :
-                            {data[0].StkRubroPresDes} de : {data[0].StkRubroPres}  {data[0].StkRubroUM} </label>
-                        {data[0].StkRubroAncho !== 0 &&
-                            <label>por {data[0].StkRubroAncho} de ancho </label>}
-                        <br></br>
-                        <TextField id="filled-basic" label="Ingresaron : " variant="filled" />
-                        <label>  {data[0].StkRubroPresDes}/S {data[indicetabla].StkItemsDesc}</label>
-                        <TextField id="cantidad" label="por : " value={data[0].StkRubroPres} variant="filled" />
-                    </form>} */}
-            </div>
-            {/* </Grid>
-                </Grid>
-            </Grid> */}
 
-        </div>
+            </div>
+
+        </div >
     );
 }
 
