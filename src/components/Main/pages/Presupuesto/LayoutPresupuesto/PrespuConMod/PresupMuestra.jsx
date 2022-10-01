@@ -48,7 +48,7 @@ export default function PresupMuestra() {
 	const [parampresupuesto, setParamPresupuesto] = useState({
 		idpresupuesto: 0,
 	});
-
+	var vienedeot = true;
 	var fecha = new Date();
 	fecha.setDate(fecha.getDate() - 360);
 
@@ -192,7 +192,7 @@ export default function PresupMuestra() {
 						</React.Fragment>
 					),
 				}}
-				/>
+			/>
 
 			<PresupPreviewMue open={ppreview} handleClose={handleClosePreview} />
 
@@ -201,13 +201,13 @@ export default function PresupMuestra() {
 				datos={data}
 				open={imprimirTF.imprimir}
 				setOpen={setImprimirTF}
-				/>
+			/>
 
 			<TablaMuestraRenglon
 				open={open}
 				handleClose={handleClose}
 				Presup={parampresupuesto.idpresupuesto}
-				/> */}
+			/>
 		</Paper>
 	);
 }

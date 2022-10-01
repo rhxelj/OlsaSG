@@ -32,8 +32,6 @@ export default function TipoCliente() {
       <RadioGroup
         row
         size="small"
-        // label="Tipo de Cliente"
-        // aria-label="Tipo de Cliente"    
         name="tipoCliente"
         value={selectedValue}
         onChange={handleChange}
@@ -58,27 +56,6 @@ export default function TipoCliente() {
           />
         </Grid>
       </RadioGroup>
-      {/* </FormControl> */}
-      {/* <Grid container direction="column" xs={6}>
-        <Grid item spacing={3} xs={2}>
-          <Radio
-            checked={selectedValue === "mn"}
-            onChange={handleChange}
-            value="mn"
-            name="radio-button-mnmy"
-          />
-          Minorista
-        </Grid>
-        <Grid item spacing={3} xs={2}>
-          <Radio
-            checked={selectedValue === "my"}
-            onChange={handleChange}
-            value="my"
-            name="radio-button-mnmy"
-          />
-          Mayorista
-        </Grid>*/}
-      {/* </Grid> */}
     </>
   );
 }

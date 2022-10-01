@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
-import Estilos from '../../Estilos.module.css'
+import Estilos from './Ingreso.module.css'
 import MaterialTable from "material-table";
-
+import Dialog from "@material-ui/core/Dialog";
 import { tableIcons } from "../../../../../lib/material-table/tableIcons";
 import { localization } from "../../../../../lib/material-table/localization";
 
@@ -13,7 +13,6 @@ import { stkrubrolee } from './LeeRubro'
 import { stkgrupoleer } from './LeeGrupos'
 import { datosingreso } from "./DatosIngreso";
 import { sumaingreso } from "./SumaIngreso";
-
 import {
     Button,
     Grid,
@@ -24,7 +23,7 @@ import {
 import { useContext } from "react";
 import { MovStockPantContext } from "../../MovStockPant";
 
-export default function PantallaIngreso() {
+export default function PantallaIngreso(props) {
     const { state, setState } = useContext(MovStockPantContext);
     const [columns, setColumns] = useState([]);
     const [data, setData] = useState([])
@@ -185,41 +184,38 @@ export default function PantallaIngreso() {
                     data={data}
                     icons={tableIcons}
                     localization={localization}
-
-
+                    className={Estilos.contenedor1}
                     onRowClick={((evt, selectedRow) => {
                         setSelectedRow(selectedRow.tableData.id)
                         miraitem(selectedRow.tableData.id)
                         setTimeout(() => {
                             textInput.current.focus();
                         }, 100);
-                    }
-                    )
-                    }
+                    })}
 
                     options={{
                         rowStyle: rowData => ({
                             backgroundColor: (selectedRow === rowData.tableData.id) ? '#EEE' : '#FFF'
                         })
                     }}
-
                 />
+
             </div>
-
             <div className={Estilos.contenedor2}>
-                {indicetabla !== -1 &&
-                    <Card>
-                        <CardContent className={Estilos.card1}>
-                            <Grid container>
-                                La presentación de la mercadería es :
+                {indicetabla !== -1 ?
+                    (
+                        <Card>
+                            <CardContent
+                                className={Estilos.card1}>
+                                <Grid container>
+                                    La presentación de la mercadería es :
+                                    < br ></br>
+                                    {data[0].StkRubroPresDes} de  {data[0].StkRubroPres}  {data[0].StkRubroUM}
+                                    {(data[0].StkRubroAncho !== 0) && ' por ' + data[0].StkRubroAncho + ' ' + data[indicetabla].StkItemsDesc}
+                                </Grid>
                                 <br></br>
-                                {data[0].StkRubroPresDes} de  {data[0].StkRubroPres}  {data[0].StkRubroUM}
-                                {(data[0].StkRubroAncho !== 0) && ' por ' + data[0].StkRubroAncho + ' ' + data[indicetabla].StkItemsDesc}
 
-                            </Grid>
-                            <br></br>
-
-                            <Grid item xs={12} md={2} lg={12} >
+                                {/* <Grid item xs={12} md={2} lg={12} > */}
                                 <label> Ingresaron   </label>
                                 <TextField
                                     inputProps={{ maxLength: 4 }}
@@ -259,32 +255,32 @@ export default function PantallaIngreso() {
                                     }}
                                 />
 
-                            </Grid>
-                            <Grid container spacing={3}>
-                                <Grid item xs>
-                                    <Button className={Estilos.boton}
-                                        onClick={botonok}
-                                        buttonRef={textInput2}
-                                        onKeyPress={(e3) => {
-                                            if (e3.key === 'Enter') {
-                                                setTimeout(() => {
-                                                    textInput.current.focus();
-                                                }, 100);
-                                            }
-                                        }}
-                                    > TOTAL INGRESADO
-                                    </Button>
-                                </Grid>
-                                <Grid item xs>
-                                    <label >TOTAL INGRESADO : {cantpres * canting}</label>
-                                </Grid>
-                            </Grid>
-                        </CardContent>
-                    </Card>}
+                                {/* </Grid>
+                                <Grid container spacing={3}> */}
+                                {/* <Grid item xs> */}
+                                <Button className={Estilos.botonmerc}
+                                    onClick={botonok}
+                                    buttonRef={textInput2}
+                                    onKeyPress={(e3) => {
+                                        if (e3.key === 'Enter') {
+                                            setTimeout(() => {
+                                                textInput.current.focus();
+                                            }, 100);
+                                        }
+                                    }}
+                                > TOTAL INGRESADO
+                                </Button>
+                                {/* </Grid>
+                                    <Grid item xs> */}
+                                <label >TOTAL INGRESADO : {cantpres * canting}</label>
+                                {/* </Grid>
+                                </Grid> */}
+                            </CardContent>
+                        </Card>) : ("")}
 
             </div>
+        </div>
 
-        </div >
     );
 }
 
