@@ -11,7 +11,12 @@ import StkGrupo from "./pages/Stock/Grupos/StkGrupo.jsx";
 import StkUbFisica from "./pages/Stock/UbicacionFisica/StkUbFisica";
 import ListaPrecios from "./pages/ListaPrecios/ListaPrecios";
 import ModPrecios from "./pages/ListaPrecios/ModPrecios";
+
+
 import MovStockPant from "./pages/MovStock/MovStockPant.jsx";
+// import SalidaDisponible from "./pages/MovStock/LayoutMovStock/SalidaDisp/SalidaDisponible.js";
+// import PantallaIngreso from "./pages/MovStock/Ingreso/LayoutIngreso/PantallaIngreso.js";
+
 import StkMovEntrada from "./pages/Stock/Movimientos/Entrada/StkMovEntrada";
 // import StkMovSalida from "./pages/Stock/Movimientos/Salida/StkMovSalida";
 import StkMovSalida from "./pages/Stock/Movimientos/Salida/LayoutMovSalida/StkMovSalida";
@@ -74,7 +79,15 @@ const Main = () => (
       <Route path="/StkRubro" component={StkRubro} />
       <Route path="/StkGrupo" component={StkGrupo} />
       <Route path="/StkItems" component={StkItems} />
+
+
       <Route path="/MovStockPant" component={MovStockPant} />
+
+      {/* <Route path="/PantallaIngreso" component={PantallaIngreso} />
+      <Route path="/SalidaDisponible" component={SalidaDisponible} /> */}
+
+
+
       <Route path="/StkMovEntrada" component={StkMovEntrada} />
       <Route path="/StkUbFisica" component={StkUbFisica} />
       <Route path="/PresupConfTipo" component={PresupConfTipo} />

@@ -9,38 +9,41 @@
     font-weight: bold;
     size: 30mm;
     border-radius: 10px;
+
 }
 
 .contenedor {
-    width: 1655px;
+    justify-content: center;
+    width: 1855px;
     height: 720px;
     /* max-width: 1500px; */
-    margin: auto;
-    padding: 40px 0;
+    /* margin: auto; */
+    /* padding: 40px 40 40 40; */
     display: grid;
     grid-template-columns: 3fr 1fr;
-    background-color: antiquewhite;
+    background-color: rgb(247, 222, 168);
 
 }
 
 .contenedor1 {
-    width: 995px;
+    width: 1095px;
     /* max-width: 1200px;
     margin: auto;*/
-    padding: 40px 0;
-    background-color: rgb(243, 147, 21);
+    margin-left: 25px;
+    padding: 40px;
+    background-color: rgb(247, 222, 168);
 }
 
 .contenedor2 {
-    width: 655px;
-    background-color: rgb(155, 151, 204);
+    width: 755px;
+    background-color: rgb(247, 222, 168);
 
-    padding: 40px 0;
+    padding: 40px 20px;
 }
 
 .card1 {
 
-    border: rgb(35, 211, 0);
+    border: rgb(250, 208, 153);
     border-style: dashed;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 
@@ -52,32 +55,30 @@
     text-align-last: right;
     text-decoration: solid;
     border-radius: 5px;
-    background-color: rgb(227, 236, 240);
+    background-color: rgb(247, 234, 201);
     /* background: linear-gradient(10deg, #f4f5f7 20%, #95cce6 70%); */
     border-radius: 3;
     border: 0;
     color: white;
     height: 48;
     width: 10;
-    padding: 0 30px;
-    box-shadow: 0 3px 5px 2px rgba(8, 59, 226, 0.3);
+    padding: 80px 80px 80px 80px;
+    box-shadow: 0 3px 5px 2px rgba(248, 205, 124, 0.877);
 
 
 }
 
-.boton {
+.botonmerc {
     text-align-last: right;
     text-decoration: solid;
     border-radius: 5px;
-    background-color: rgb(227, 239, 241);
-    background: linear-gradient(10deg, #f4f5f7 20%, #95cce6 70%);
+    background-color: #faeaf6;
+    background: linear-gradient(10deg, #f1d8a2 20%, #f1b531 70%);
     border-radius: 3;
     border: 0;
     color: white;
     height: 48;
     width: 10;
-    padding: 0 30px;
-    box-shadow: 0 3px 5px 2px rgba(4, 52, 107, 0.3);
-
-
+    /* padding: 100px 100px 100px 100px; */
+    box-shadow: 0 3px 5px 2px rgba(206, 118, 4, 0.788);
 }

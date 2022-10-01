@@ -1,4 +1,5 @@
 export const initial_state = {
     ClientesDesc: '',
-    clientes: []
+    clientes: [],
+    otorigen: 'P'
 };

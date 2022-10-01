@@ -35,7 +35,6 @@ import FilaModMed from "../FilaModMed/FilaModMed";
 export default function FilaDos() {
   // Esto es para poder consumir los datos del CONTEXTAPI
   const { state, setState } = useContext(PresupPantContext);
-  // const [datosrenglon, setDatosRenglon] = useState([]);
   const { datosrenglon, setDatosRenglon } = useContext(PresupPantContext);
 
   // según el presupuesto elegido, lee la tabla y se decide que pide
