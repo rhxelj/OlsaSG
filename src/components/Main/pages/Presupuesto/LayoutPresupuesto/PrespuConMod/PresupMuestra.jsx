@@ -6,8 +6,9 @@ import TextField from "@material-ui/core/TextField";
 import WavesIcon from "@material-ui/icons/Waves";
 import { tableIcons } from "../../../../../lib/material-table/tableIcons";
 import { localization } from "../../../../../lib/material-table/localization";
-import { green, purple } from "@material-ui/core/colors";
+import { green, purple, yellow } from "@material-ui/core/colors";
 import VisibilityRoundedIcon from "@material-ui/icons/VisibilityRounded";
+import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
 import Estilos from "../../../../../Componentes/Boton.module.css";
@@ -19,7 +20,7 @@ import { presupColumns } from "./presupColumns";
 import { presupDatos } from "./presupDatos";
 import { presupDatosReng } from "./presupDatosReng";
 import { PresupPreviewMue } from "../PresupPreviewMue";
-
+import OrdTrabGenPres from "../../../OrdenTrabajo/LayoutOrdenTrabajo/OrdTrabOrigen/OrdTrabGenPres";
 import TablaMuestraRenglon from "./TablaMuestraRenglon";
 import Imprimir from "../../../Impresion/Imprimir/Imprimir";
 
@@ -35,11 +36,12 @@ const useStyles = makeStyles({
 	},
 });
 
-export default function PresupMuestra() {
+export default function PresupMuestra(props) {
 	const { setValor } = useContext(globalContext);
 	const classes = useStyles();
 	const [open, setOpen] = useState(false);
 	const [ppreview, setPPreview] = useState(false);
+	const [openordtrab, setOrdtrab] = useState(false);
 	const [imprimirTF, setImprimirTF] = useState({ imprimir: false });
 	const [columns, setColumns] = useState([]);
 	const [data, setData] = useState([]);
@@ -48,7 +50,7 @@ export default function PresupMuestra() {
 	const [parampresupuesto, setParamPresupuesto] = useState({
 		idpresupuesto: 0,
 	});
-	var vienedeot = true;
+	var vienedeot = props.origen;
 	var fecha = new Date();
 	fecha.setDate(fecha.getDate() - 360);
 
@@ -101,6 +103,20 @@ export default function PresupMuestra() {
 		setParamPresupuesto({ parampresupuesto, idpresupuesto: 1 });
 		setOpen(false);
 	};
+
+	const openOrdTrab = (event, idPresupEncab) => {
+		setParamPresupuesto({ parampresupuesto, idpresupuesto: idPresupEncab });
+		handleOpenOrdTrab();
+	};
+
+	const handleOpenOrdTrab = () => {
+		setOrdtrab(true);
+	};
+
+	const handleCloseOrdTrab = () => {
+		setOrdtrab(false);
+	};
+
 	var resultado = [{ error: 1 }];
 	/*manejo del preview de <presupuesto></presupuesto>*/
 	async function openPreview(event, idPresupEncab) {
@@ -157,92 +173,84 @@ export default function PresupMuestra() {
 					Busca Detalle
 				</Button>
 			</Grid>
-			<MaterialTable
-				columns={columns}
-				data={data}
-				icons={tableIcons}
-				localization={localization}
-				title=""
-				actions={[
-					{
-						icon: () => <WavesIcon />,
-						tooltip: "Ver detalles",
-						onClick: (event, rowData) =>
-							// setIdPresupuesto(rowData.idPresupEncab);
-							openApp(event, rowData.idPresupEncab),
-					},
-					{
-						icon: () => (
-							<VisibilityRoundedIcon style={{ color: purple[500] }} />
+			{vienedeot === "OT" ? (
+				<MaterialTable
+					columns={columns}
+					data={data}
+					icons={tableIcons}
+					localization={localization}
+					title=""
+					actions={[
+						{
+							icon: () => <ThumbUpIcon style={{ color: green[800] }} />,
+							onClick: (event, rowData) =>
+								openOrdTrab(event, rowData.idPresupEncab),
+						},
+					]}
+					components={{
+						Toolbar: (props) => (
+							<React.Fragment>
+								<MTableToolbar {...props} />
+							</React.Fragment>
 						),
-						onClick: (event, rowData) =>
-							openPreview(event, rowData.idPresupEncab),
-					},
-					{
-						icon: () => <tableIcons.Print style={{ color: green[500] }} />,
-						isFreeAction: true,
-						tooltip: "Imprimir",
-						onClick: () => setImprimirTF({ imprimir: true }),
-					},
-				]}
-				components={{
-					Toolbar: (props) => (
-						<React.Fragment>
-							<MTableToolbar {...props} />
-						</React.Fragment>
-					),
-				}}
-			/>
+					}}
+				/>
+			) : (
+				<MaterialTable
+					columns={columns}
+					data={data}
+					icons={tableIcons}
+					localization={localization}
+					title=""
+					actions={[
+						{
+							icon: () => <WavesIcon />,
+							tooltip: "Ver detalles",
+							onClick: (event, rowData) =>
+								openApp(event, rowData.idPresupEncab),
+						},
+						{
+							icon: () => (
+								<VisibilityRoundedIcon style={{ color: purple[500] }} />
+							),
+							onClick: (event, rowData) =>
+								openPreview(event, rowData.idPresupEncab),
+						},
 
+						{
+							icon: () => <tableIcons.Print style={{ color: green[500] }} />,
+							isFreeAction: true,
+							tooltip: "Imprimir",
+							onClick: () => setImprimirTF({ imprimir: true }),
+						},
+					]}
+					components={{
+						Toolbar: (props) => (
+							<React.Fragment>
+								<MTableToolbar {...props} />
+							</React.Fragment>
+						),
+					}}
+				/>
+			)}
 			<PresupPreviewMue open={ppreview} handleClose={handleClosePreview} />
-
 			<Imprimir
 				columns={columns}
 				datos={data}
 				open={imprimirTF.imprimir}
 				setOpen={setImprimirTF}
 			/>
-
 			<TablaMuestraRenglon
 				open={open}
 				handleClose={handleClose}
 				Presup={parampresupuesto.idpresupuesto}
 			/>
+			{openordtrab ? (
+				<OrdTrabGenPres Presup={parampresupuesto.idpresupuesto} />
+			) : (
+				<></>
+			)}
+			{/* <OrdTrabGenPres open={openordtrab} handleClose={handleCloseOrdTrab} /> */}
 		</Paper>
 	);
-}
-
-{
-	/* <DatePicker
-								selected={selectedDate}
-								// onSelect={handleDateSelect} //when day is clicked
-								format="dd/MM/yyyy"
-								margin="normal"
-								id="date-picker-inline"
-								label="Desde :"
-								variant="inline"
-								onChange={handleDateChange} //only when value has changed
-								KeyboardButtonProps={{
-									"aria-label": "change date",
-								}}
-							/> */
-}
-{
-	/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
-								<Grid container>
-									<KeyboardDatePicker
-										disableToolbar
-										variant="inline"
-										format="dd/MM/yyyy"
-										margin="normal"
-										id="date-picker-inline"
-										label="Desde :"
-										value={selectedDate}
-										onChange={handleDateChange}
-										KeyboardButtonProps={{
-											"aria-label": "change date",
-										}}
-									/>
-								</Grid>
-							</MuiPickersUtilsProvider> */
 }

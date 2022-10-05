@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 
 export const PresupPreviewMue = (props) => {
     const { open, handleClose } = props;
-    console.log('props  ', props)
+    console.log('props PresupPreviewMue ', props)
     // async function armanombre(Presup) {
     // if (Presup !== 0) {
     //     var nombrepresup = "Presupuesto\\ nro\\ " + Presup + "*.pdf";

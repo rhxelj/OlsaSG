@@ -29,7 +29,10 @@ import LibraryAddCheckIcon from '@material-ui/icons/LibraryAddCheck';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import HighlightOffSharpIcon from '@material-ui/icons/HighlightOffSharp';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-
+import TouchAppIcon from '@material-ui/icons/TouchApp';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import LocalAtmIcon from '@material-ui/icons/LocalAtm';
+import TableChartIcon from '@material-ui/icons/TableChart';
 
 export const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -62,4 +65,8 @@ export const tableIcons = {
   LibraryAddCheck: forwardRef((props, ref) => <LibraryAddCheckIcon {...props} ref={ref} />),
   GroupAdd: forwardRef((props, ref) => <GroupAddIcon {...props} ref={ref} />),
   MoreVert: forwardRef((props, ref) => <MoreVertIcon {...props} ref={ref} />),
+  TouchApp: forwardRef((props, ref) => <TouchAppIcon {...props} ref={ref} />),
+  ThumbUp: forwardRef((props, ref) => <ThumbUpIcon {...props} ref={ref} />),
+  LocalAtm: forwardRef((props, ref) => <LocalAtmIcon {...props} ref={ref} />),
+  TableChart: forwardRef((props, ref) => <TableChartIcon {...props} ref={ref} />),
 };

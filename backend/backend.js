@@ -154,6 +154,8 @@ var presupmodificamed = require("./routes/presupuesto/presupmodificamed");
 
 
 var presupencableer = require("./routes/presupuesto/presupencableer");
+var presupencableenro = require("./routes/presupuesto/presupencableenro");
+
 var presuprenglonleer = require("./routes/presupuesto/presuprenglonleer");
 var presupnombre = require("./routes/presupuesto/presupnombre");
 var presuprengleer = require("./routes/presupuesto/presuprengleer");
@@ -364,6 +366,7 @@ app.use("/presupmodificamed", presupmodificamed);
 
 
 app.use("/presupencableer", presupencableer);
+app.use("/presupencableenro", presupencableenro);
 app.use("/presuprenglonleer", presuprenglonleer);
 app.use("/presupnombre", presupnombre);
 app.use("/presuprengleer", presuprengleer);

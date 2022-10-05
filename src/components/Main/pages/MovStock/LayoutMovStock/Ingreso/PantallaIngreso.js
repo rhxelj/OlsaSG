@@ -227,6 +227,7 @@ export default function PantallaIngreso(props) {
                                     onChange={cambioingreso}
                                     value={cantpres}
                                     autoFocus
+
                                     onKeyPress={(e1) => {
                                         if (e1.key === 'Enter') {
                                             setTimeout(() => {

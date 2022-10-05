@@ -52,7 +52,7 @@ router.all("/", async function (req, res) {
     }
 
     req.body.DatosPresup.datos.map(renglon => {
-
+      console.log('renglon.dcalculo[0]  ', renglon.dcalculo[0]);
       var registro1 = {
         idPresupRenglon: i + 1,
         PresupRenglonNroPresup: nropresup,
@@ -62,7 +62,6 @@ router.all("/", async function (req, res) {
         PresupRenglonAncho: renglon.PresupAncho,
         PresupRenglonImpUnit: renglon.ImpUnitario,
         PresupRenglonImpItem: renglon.ImpItem,
-        // PresupRenglonParamInt: renglon.datoscalculos
         PresupRenglonParamInt: JSON.stringify(renglon.dcalculo[0])
       }
       conexion.query("INSERT INTO BasePresup.PresupRenglon SET ?", registro1,
