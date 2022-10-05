@@ -17,6 +17,8 @@ import PropBarra from '../../Styles/Header.module.css'
 import IconButton from '@material-ui/core/IconButton'
 import WidgetsTwoToneIcon from '@material-ui/icons/WidgetsTwoTone';
 import SendIcon from '@material-ui/icons/Send';
+import LocalAtmIcon from '@material-ui/icons/LocalAtm';
+import TableChartIcon from '@material-ui/icons/TableChart';
 
 
 /*  OJO!!!!! cuando agrego una opción en el menú 
@@ -100,9 +102,9 @@ function Header() {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
             onClick={handleClick}
-            startIcon={<AssignmentRoundedIcon />}
+            startIcon={<LocalAtmIcon />}
           >
-            Presup/Lista
+            Presup/Lista/OT.
           </Button>
           <Menu
             id="basic-menu"
@@ -128,7 +130,7 @@ function Header() {
             aria-haspopup="true"
             aria-expanded={open1 ? 'true' : undefined}
             onClick={handleClick1}
-            startIcon={<AssignmentRoundedIcon />}
+            startIcon={<WidgetsTwoToneIcon />}
           >
             Stock
           </Button>
@@ -164,7 +166,7 @@ function Header() {
             aria-haspopup="true"
             aria-expanded={open2 ? 'true' : undefined}
             onClick={handleClick2}
-            startIcon={<WidgetsTwoToneIcon />}
+            startIcon={<TableChartIcon />}
           >
             Tablas
           </Button>

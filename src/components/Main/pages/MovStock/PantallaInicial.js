@@ -39,14 +39,14 @@ export default function PantallaInicial() {
                         titleAccess="Agregar"
                     />
                 </Button>
-                <Button
+                {/* <Button
                     onClick={LlamaSD} color="primary">
                     <AssignmentReturnedIcon
                         style={{ color: red[500] }}
                         fontSize="large"
                         titleAccess="Agregar"
                     />
-                </Button>
+                </Button> */}
                 {pantingreso ?
                     (
                         <div>
