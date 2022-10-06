@@ -4,8 +4,9 @@ import IpServidor from "../../../VariablesDeEntorno";
 
 
 export const PresupNombre = (nombrepresup) => {
-    console.log('estoy en PresupNombre  ', nombrepresup)
+    console.log('estoy en PresupNombre nombrepresup ', nombrepresup)
     var nombrepresupue = "Presupuesto\\ nro\\ " + nombrepresup + "*.pdf";
+    console.log('estoy en PresupNombre  ', nombrepresupue)
     return new Promise(resolve => {
         setTimeout(() => {
             const url = IpServidor + "/presupnombre/?id=" + nombrepresupue
