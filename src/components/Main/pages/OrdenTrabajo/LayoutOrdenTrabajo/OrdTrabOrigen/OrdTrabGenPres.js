@@ -21,7 +21,7 @@ export default function OrdTrabGenPres(props) {
         console.log('result.length  ', result.length)
         var datospresup = JSON.parse(result[0].PresupRenglonParamInt)
         console.log('datospresup  ', datospresup)
-        console.log('datospresup StkRubroAbr ', datospresup[0].StkRubroAbr)
+        // console.log('datospresup StkRubroAbr ', datospresup[0].StkRubroAbr)
     }
 
     async function leerencab(presup) {

@@ -1,35 +1,58 @@
 
 // import carpetaimppresup from '../../PathEspeciales'
 // Lee Rubro por codigo de gupo
-import React from 'react';
+import React, { useState } from 'react';
 import { Dialog } from "@material-ui/core";
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
+import { Document, Page, pdfjs } from 'react-pdf';
+
 import MuiDialogTitle from '@material-ui/core/DialogTitle'
-import Typography from '@material-ui/core/Typography';
+import { tableIcons } from '../../../../lib/material-table/tableIcons'
+import Estilos from '../../../../../Styles/Boton.module.css'
 
 export const PresupPreviewMue = (props) => {
     const { open, handleClose } = props;
-    console.log('props PresupPreviewMue ', props)
-    // async function armanombre(Presup) {
-    // if (Presup !== 0) {
-    //     var nombrepresup = "Presupuesto\\ nro\\ " + Presup + "*.pdf";
-    //     resultado = await PresupNombre(nombrepresup);
-    //     Presup = 0
-    //     console.log('resultado  ', resultado)
-    //     // }
-    // }
+    const [cover, setCover] = useState("");
 
-    // function cierradialogo() {
-    //     setOpen({ preview: false });
-    // }
+    const inputStyles = {
+        formContainer: {
+            width: "400px",
+            margin: "0 auto",
+        },
+        container: {
+            display: "flex",
+            flexDirection: "column",
+            gap: "5px",
+            margin: "15px 0",
+            background: "linear-gradient(50deg, #f8cec8 10 %, #f8020e 80 %)",
 
-    // useEffect(() => {
-    //     console.log('Presup  ', Presup)
-    //     if (Presup !== 0) {
-    //         armanombre(Presup);
-    //     }
-    // }, [Presup]); // eslint-disable-line react-hooks/exhaustive-deps
+        },
+        title: {
+            fontSize: "16px",
+            textAlign: "left",
+        },
+        input: {
+            padding: "10px",
+            borderRadius: "5px",
+            fontSize: "16px",
+        },
+    };
+
+
+    pdfjs.GlobalWorkerOptions.workerSrc =
+        `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+
+
+    function handleOnChangeFile(e) {
+        const element = e.target;
+        var file = element.files[0];
+        var reader = new FileReader();
+        reader.onloadend = function () {
+            setCover(reader.result.toString());
+        };
+
+        reader.readAsDataURL(file);
+    }
+
 
 
     return (
@@ -38,28 +61,43 @@ export const PresupPreviewMue = (props) => {
             <Dialog
                 fullScreen
                 open={open}
-                onClose={handleClose}
             >
-                <MuiDialogTitle >
-                    <IconButton onClick={handleClose} color='primary' edge='start' size='small'>
-                        <CloseIcon />
-                        <Typography variant="subtitle2">Cierra Impresión</Typography>
-                    </IconButton>
+                <MuiDialogTitle>
+                    <button
+                        variant="contained"
+                        onClick={handleClose}
+                        className={Estilos.botoncierradialogo}
+                    >
+                        <div>
+                            <tableIcons.Close />
+                        </div>
+                        Cerrar
+                    </button>
+
+                    <b></b>
+                    <input type="file" name="cover" onChange={handleOnChangeFile} className={Estilos.inputabrir} fullWidth='true' />
+
+                    <div >
+                        {/* <div style={inputStyles.title}>Cover</div> */}
+
+                    </div>
+
 
                 </MuiDialogTitle>
-                {console.log('esta antes del object  ')}
-                <object
-                    data={require('../static/media/basics.pdf')}
-                    type="application/pdf"
-                    width='80%'
-                    height='80%'
-                    cache='false'
-                >
-                </object>
-                {console.log('esta fuera del object  ')}
+                {!!cover ?
+                    <object
+                        data={cover}
+                        type="application/pdf"
+                        width='100%'
+                        height='100%'
+                        cache='false'
+                    />
+                    : ""}
+
+
+
             </Dialog>
         </React.Fragment >
     );
 
 }
-

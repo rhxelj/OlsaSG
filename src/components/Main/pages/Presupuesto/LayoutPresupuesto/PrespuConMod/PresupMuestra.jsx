@@ -120,13 +120,14 @@ export default function PresupMuestra(props) {
 	var resultado = [{ error: 1 }];
 	/*manejo del preview de <presupuesto></presupuesto>*/
 	async function openPreview(event, idPresupEncab) {
-		setParamPresupuesto({ parampresupuesto, idpresupuesto: idPresupEncab });
-		resultado = await PresupNombre(idPresupEncab);
-		if (resultado === '""') {
-			handleClickPreview();
-		} else {
-			alert("el presupuesto no está en disco");
-		}
+		// setParamPresupuesto({ parampresupuesto, idpresupuesto: idPresupEncab });
+		// resultado = await PresupNombre(idPresupEncab);
+
+		// if (resultado === '""') {
+		handleClickPreview();
+		// } else {
+		// 	alert("el presupuesto no está en disco");
+		// }
 	}
 	const handleClickPreview = () => {
 		setPPreview(true);
@@ -213,6 +214,7 @@ export default function PresupMuestra(props) {
 							icon: () => (
 								<VisibilityRoundedIcon style={{ color: purple[500] }} />
 							),
+							isFreeAction: true,
 							onClick: (event, rowData) =>
 								openPreview(event, rowData.idPresupEncab),
 						},
@@ -250,7 +252,6 @@ export default function PresupMuestra(props) {
 			) : (
 				<></>
 			)}
-			{/* <OrdTrabGenPres open={openordtrab} handleClose={handleCloseOrdTrab} /> */}
 		</Paper>
 	);
 }

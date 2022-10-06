@@ -17,7 +17,7 @@ router.get("/", function (req, res, next) {
   var fecharecibida = req.query.id;
   var day = dateFormat(new Date(fecharecibida), "yyyy-mm-dd");
   // var q = ["Select * from BasePresup.PresupEncab order by PresupEncabFecha "].join(" ");
-  var q = ["Select * from BasePresup.PresupEncab where PresupEncabFecha >= '" + day + "' order by PresupEncabFecha asc"].join(" ");
+  var q = ["Select * from BasePresup.PresupEncab where PresupEncabFecha >= '" + day + "' order by PresupEncabFecha desc"].join(" ");
 
   conexion.query(q, function (err, result) {
     if (err) {
