@@ -18,6 +18,7 @@ export const initial_state = {
   //FilaEnrollables
   TamFaja: '2P',
   TamCristal: 'PVC05',
+  //FilaEnrollables - abanico -  Brazos extensibles
   AltoVolado: 20,
   SobranteMarco: 20,
   //cambio PAño
@@ -25,7 +26,28 @@ export const initial_state = {
   //Brazos extensibles
   TipoMecanismo: 'Manual',
   TamToldoEleg: '',
-
+  //Abanico
+  CantBrazos: 0,
+  LargoBrazo: 0,
+  VolDS: 'S',
+  FajaBrazo: [
+    {
+      value: 20,
+      label: '20 x 20'
+    },
+    {
+      value: 25,
+      label: '25 x 25'
+    },
+    {
+      value: 30,
+      label: '30 x 30'
+    },
+    {
+      value: 40,
+      label: '30 x 40'
+    }
+  ],
   //FilaTanques
   TipoMedidaEleg: 'CC',
   // ParedSN: 'SP',
@@ -135,9 +157,7 @@ export const initial_state = {
       title: "Descripción",
       field: "StkRubroDesc",
       width: 500,
-      // headerStyle: {
-      //   backgroundColor: '#039be5',
-      // }
+
 
     },
     {

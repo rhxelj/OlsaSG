@@ -30,6 +30,7 @@ import FilaAbolinada from "../FilaAbolinada/FilaAbolinada"
 import FilaComedero from "../FilaComedero/FilaComedero"
 import FilaCambPanio from "../FilaCambPanio/FilaCambPanio"
 import FilaModMed from "../FilaModMed/FilaModMed";
+import FilaAbanico from "../FilaAbanico/FilaAbanico";
 
 
 export default function FilaDos() {
@@ -122,6 +123,10 @@ export default function FilaDos() {
         tipomecanismo: state.TipoMecanismo,
         anchocomedero: state.AnchoComederoEleg,
         lonanuestraafuera: state.PreuspLNLF,
+        cantbrazos: state.CantBrazos,
+        largobrazo: state.LargoBrazo,
+        voladosd: state.VolDS,
+        fajabrazo: state.FajaBrazoEleg,
         tipopresup: presuptipo
       },
     ];
@@ -364,6 +369,7 @@ export default function FilaDos() {
         {presuptipo === "ABOLINADA" && <FilaAbolinada></FilaAbolinada>}
         {presuptipo === "COMEDERO" && <FilaComedero></FilaComedero>}
         {presuptipo === "CAMBIO PAÑO" && <FilaCambPanio></FilaCambPanio>}
+        {presuptipo === "TOLDO ABANICO" && <FilaAbanico></FilaAbanico>}
         {(presuptipo !== "UNIDAD" && rubrosn === "S" && presuptipo !== "CARGA DESCRIPCION") ? <FilaDetDesc></FilaDetDesc> : <></>}
         {(presuptipo === "CARGA DESCRIPCION") ? <FilaCargaDesc></FilaCargaDesc> : <></>}
         <IconButton
