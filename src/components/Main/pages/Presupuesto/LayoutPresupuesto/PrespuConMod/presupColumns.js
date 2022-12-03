@@ -5,7 +5,7 @@ export async function presupColumns() {
 
     const cliente = await ClientesLeerPresup();
 
-
+    /*  Failed prop type: Invalid prop `columns[0].type` of value `number` supplied to `MaterialTable`, expected one of ["string","boolean","numeric","date","datetime","time","currency"*/
 
     var objcliente = await cliente.reduce(function (acc, cur) {
         acc[cur.PresupEncabCliente] = cur.ClientesDesc;
@@ -21,11 +21,13 @@ function columnsFill(objcliente) {
                 title: "Presupuesto Nro",
                 field: "idPresupEncab",
                 editable: "never",
+                type: "numeric",
                 order: true,
             },
             {
                 title: "Cliente Temporal ",
                 field: "PresupEncabCliente",
+                type: "string",
                 native: true,
 
             },
@@ -46,17 +48,20 @@ function columnsFill(objcliente) {
             {
                 title: "MayMin",
                 field: "PresupEncabMayMin",
-                order: true,
+                type: "string",
+
             },
             {
                 title: "Total",
                 field: "PresupEncabTotal",
-                order: true,
+                type: "numeric",
+
             },
             {
                 title: "Explicación",
                 field: "PresupEncabExplic",
-                order: true,
+                type: "string",
+
             },
 
         ]);

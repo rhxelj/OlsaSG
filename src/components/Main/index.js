@@ -1,5 +1,5 @@
-import { Route, BrowserRouter as Router, } from "react-router-dom";
-
+import { Route } from "react-router-dom";
+// , BrowserRouter as Router,
 import React from 'react'
 import StkMonedas from "./pages/Monedas/StkMonedas.jsx";
 import Proveedores from "./pages/Stock/Proveedores/Proveedores.jsx";

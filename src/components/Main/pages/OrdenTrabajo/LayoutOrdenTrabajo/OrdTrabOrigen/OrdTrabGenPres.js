@@ -6,21 +6,23 @@ import { presupencableenro } from "../../../Presupuesto/LayoutPresupuesto/Prespu
 import { useContext } from "react";
 import { OrdenTrabajoPantContext } from "../../OrdenTrabajoPant";
 import { startOfDecade } from "date-fns";
-
+import TablaMuestraRenglon from "../../../Presupuesto/LayoutPresupuesto/PrespuConMod/TablaMuestraRenglon";
 
 export default function OrdTrabGenPres(props) {
     const { state, setState } = useContext(OrdenTrabajoPantContext);
     // const [datosencab, setDatosencab] = setState([])
     const [datosrenglon, setDatosrenglon] = useState([])
+    const [open, setOpen] = useState(open);
+    const [parampresupuesto, setParamPresupuesto] = useState({
+        idpresupuesto: 0,
+    });
     var presup = props.Presup
 
     async function leerenglones(presup) {
         const result = await presuprenglonleer(presup);
         setState({ ...state, datosreng: result })
         setDatosrenglon(result)
-        console.log('result.length  ', result.length)
-        var datospresup = JSON.parse(result[0].PresupRenglonParamInt)
-        console.log('datospresup  ', datospresup)
+        //var datospresup = JSON.parse(result[0].PresupRenglonParamInt)
         // console.log('datospresup StkRubroAbr ', datospresup[0].StkRubroAbr)
     }
 
@@ -34,12 +36,28 @@ export default function OrdTrabGenPres(props) {
         leerencab(presup);
     }, [presup]); // eslint-disable-line react-hooks/exhaustive-deps
 
+
+    const openApp = (event, idPresupEncab) => {
+        setParamPresupuesto({ parampresupuesto, idpresupuesto: idPresupEncab });
+        handleClickOpen();
+    };
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setParamPresupuesto({ parampresupuesto, idpresupuesto: 1 });
+        setOpen(false);
+    };
+
     return (<>
-        <h1>OrdeTrabGenPres </h1>
+        <h1>OrdeTrabGenPres viene</h1>
         <h2>{presup}</h2>
-        {console.log('state.datosencab  ', state.datosencab)}
-        {console.log('state.datosreng  ', state.datosreng)}
-
-
+        {/* traer el muestra renglones */}
+        <TablaMuestraRenglon
+            open={true}
+            handleClose={handleClose}
+            Presup={parampresupuesto.idpresupuesto}
+        />
     </>)
 }

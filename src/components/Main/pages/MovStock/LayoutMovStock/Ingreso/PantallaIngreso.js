@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import Estilos from './Ingreso.module.css'
 import MaterialTable from "material-table";
-import Dialog from "@material-ui/core/Dialog";
 import { tableIcons } from "../../../../../lib/material-table/tableIcons";
 import { localization } from "../../../../../lib/material-table/localization";
 
@@ -83,7 +82,7 @@ export default function PantallaIngreso(props) {
             leerubros(state.idStkGrupo);
         }
 
-    }, [state.idStkGrupo])
+    }, [state.idStkGrupo]) // eslint-disable-line react-hooks/exhaustive-deps
 
 
     const miraitem = (indicetabla) => {

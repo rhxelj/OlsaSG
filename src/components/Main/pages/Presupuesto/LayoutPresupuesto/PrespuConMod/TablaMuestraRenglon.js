@@ -6,13 +6,23 @@ import DialogContent from "@material-ui/core/DialogContent";
 import Slide from "@material-ui/core/Slide";
 import MaterialTable from "material-table";
 import BotonEstilo from '../../../../../../Styles/Boton.module.css'
+import DialogoEstilo from '../../../../../../Styles/Dialog.module.css'
 import { presuprenglonleer } from "./PresupRenglonLeer";
 
+
+import OrdTrabDatosPresup from "../../../OrdenTrabajo/LayoutOrdenTrabajo/OrdTrabOrigen/OrdTrabDatosPresup"
+import { initial_state } from "../../../OrdenTrabajo/Initial_State";
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
+
+
 export default function TablaMuestraRenglon(props) {
+    const [ppreview, setPPreview] = useState(false);
     const { open, handleClose, Presup } = props;
+    const [renglot, setRenglot] = useState([])
+
+    const [state, setState] = useState(initial_state)
     const [renglon, setRenglon] = useState({
         columns: [
             {
@@ -55,18 +65,37 @@ export default function TablaMuestraRenglon(props) {
     async function leerenglones(Presup) {
         const result = await presuprenglonleer(Presup);
         setRenglon({ ...renglon, datarenglon: result });
-
     }
+
+
+    function handleOnSelectionChange() {
+        var datosrenglon = renglon.datarenglon
+        setState({ ...state, opcionpresupeleg: datosrenglon });
+    }
+
+
+    async function ArmaOrdenTrabajo() {
+        var datotraido = state.opcionpresupeleg
+        setRenglot(datotraido)
+        handleClickPreview();
+    }
+    const handleClickPreview = () => {
+        setPPreview(true);
+    };
+
+    const handleClosePreview = () => {
+        setPPreview(false);
+    };
 
     useEffect(() => {
         leerenglones(Presup);
     }, [Presup]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
-
         <Dialog
             fullWidth={true}
-            // maxWidth={'xl'}
+            maxWidth={'xl'}
+            // className={DialogoEstilo.dialogo}
             open={open}
             TransitionComponent={Transition}
             keepMounted
@@ -74,21 +103,37 @@ export default function TablaMuestraRenglon(props) {
             aria-labelledby="alert-dialog-slide-title"
             aria-describedby="alert-dialog-slide-description"
         >
-            {/* <DialogTitle id="alert-dialog-slide-title">
-                Renglones de Presupuesto
-            </DialogTitle> */}
-            <DialogContent>
+
+            <DialogContent className={DialogoEstilo.dialogocontenido}>
+
                 <MaterialTable
+                    // tableLayout="auto"
                     icons={tableIcons}
                     localization={localization}
                     title=""
                     columns={renglon.columns}
                     data={renglon.datarenglon}
+                    onSelectionChange={handleOnSelectionChange}
+                    options={{
+                        selection: true,
+                    }}
+
+
                 ></MaterialTable>
+
             </DialogContent>
-            <button onClick={handleClose} className={BotonEstilo.botoncerrar}>
-                Cerrar
-            </button>
+            <div>
+                <button onClick={handleClose} className={BotonEstilo.botoncerrar}>
+                    Cerrar
+                </button>
+
+                <button onClick={ArmaOrdenTrabajo} className={BotonEstilo.botonabreot}>
+                    Orden de Trabajo
+                </button>
+            </div>
+
+            {ppreview &&
+                <OrdTrabDatosPresup DatosPresupEleg={renglot} open={ppreview} handleClose={handleClosePreview} />}
         </Dialog>
     );
 }

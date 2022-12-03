@@ -5,7 +5,7 @@ import { Grid } from "@material-ui/core";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 
-import OrdTrabDirecta from "./OrdTrabDirecta";
+import OrdTrabDirecta from "../../../a borrar/OrdTrabDirecta";
 import OrdTrabPresup from "./OrdTrabPresup";
 // Context
 import { useContext } from "react";
@@ -19,13 +19,13 @@ export default function OrdTrabOrigen() {
     const [ordtrabadirecta, setOrdtrabadirecta] = useState(false);
     const [ordtrabpresup, setOrdtrabpresup] = useState(false)
 
-    var origenorden = ''
+    // var origenorden = ''
 
     const handleChange = (event) => {
         setSelectedValue(event.target.value);
         setState({ ...state, otorigen: event.target.value });
         event.target.value === "D" ? setOrdtrabadirecta(!ordtrabadirecta) : setOrdtrabpresup(!ordtrabpresup)
-        origenorden = event.target.value
+        // origenorden = event.target.value
     };
 
 

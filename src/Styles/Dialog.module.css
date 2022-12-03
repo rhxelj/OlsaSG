@@ -1,4 +1,11 @@
 .dialogo {
 	padding: auto;
-	background-color: gold;
+	background-color: rgba(255, 217, 0, 0.514);
+	width: auto;
+}
+
+.dialogocontenido {
+
+	background-color: rgb(236, 242, 248);
+	width: auto;
 }

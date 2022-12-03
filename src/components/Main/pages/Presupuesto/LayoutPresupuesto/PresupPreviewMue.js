@@ -1,10 +1,10 @@
 
+
 // import carpetaimppresup from '../../PathEspeciales'
 // Lee Rubro por codigo de gupo
 import React, { useState } from 'react';
 import { Dialog } from "@material-ui/core";
-import { Document, Page, pdfjs } from 'react-pdf';
-
+import { pdfjs } from 'react-pdf';
 import MuiDialogTitle from '@material-ui/core/DialogTitle'
 import { tableIcons } from '../../../../lib/material-table/tableIcons'
 import Estilos from '../../../../../Styles/Boton.module.css'
@@ -12,30 +12,30 @@ import Estilos from '../../../../../Styles/Boton.module.css'
 export const PresupPreviewMue = (props) => {
     const { open, handleClose } = props;
     const [cover, setCover] = useState("");
+    const hiddenFileInput = React.useRef(null);
+    // const inputStyles = {
+    //     formContainer: {
+    //         width: "400px",
+    //         margin: "0 auto",
+    //     },
+    //     container: {
+    //         display: "flex",
+    //         flexDirection: "column",
+    //         gap: "5px",
+    //         margin: "15px 0",
+    //         background: "linear-gradient(50deg, #f8cec8 10 %, #f8020e 80 %)",
 
-    const inputStyles = {
-        formContainer: {
-            width: "400px",
-            margin: "0 auto",
-        },
-        container: {
-            display: "flex",
-            flexDirection: "column",
-            gap: "5px",
-            margin: "15px 0",
-            background: "linear-gradient(50deg, #f8cec8 10 %, #f8020e 80 %)",
-
-        },
-        title: {
-            fontSize: "16px",
-            textAlign: "left",
-        },
-        input: {
-            padding: "10px",
-            borderRadius: "5px",
-            fontSize: "16px",
-        },
-    };
+    //     },
+    //     title: {
+    //         fontSize: "16px",
+    //         textAlign: "left",
+    //     },
+    //     input: {
+    //         padding: "10px",
+    //         borderRadius: "5px",
+    //         fontSize: "16px",
+    //     },
+    // };
 
 
     pdfjs.GlobalWorkerOptions.workerSrc =
@@ -53,7 +53,9 @@ export const PresupPreviewMue = (props) => {
         reader.readAsDataURL(file);
     }
 
-
+    const handleClick = event => {
+        hiddenFileInput.current.click();
+    };
 
     return (
         <React.Fragment>
@@ -75,18 +77,30 @@ export const PresupPreviewMue = (props) => {
                     </button>
 
                     <b></b>
-                    <input type="file" name="cover" onChange={handleOnChangeFile} className={Estilos.inputabrir} fullWidth='true' />
 
-                    <div >
-                        {/* <div style={inputStyles.title}>Cover</div> */}
+                    <button
+                        onClick={handleClick}
+                        className={Estilos.botonabredialogo}>
+                        <div>
+                            <tableIcons.Search />
+                        </div>
+                        Buscar
+                    </button>
+                    <input
+                        type="file"
+                        name="cover"
+                        onChange={handleOnChangeFile}
+                        ref={hiddenFileInput}
+                        style={{ display: 'none' }} />
 
-                    </div>
+                    {/* </div> */}
 
 
                 </MuiDialogTitle>
                 {!!cover ?
                     <object
                         data={cover}
+                        alt="description of image"
                         type="application/pdf"
                         width='100%'
                         height='100%'

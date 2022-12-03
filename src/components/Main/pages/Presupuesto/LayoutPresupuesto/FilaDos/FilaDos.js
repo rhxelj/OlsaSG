@@ -280,10 +280,10 @@ export default function FilaDos() {
             value={state.PresupCantidad}
             onChange={handleChange}
             className={classes.textField}
-            onKeyPress={(event) => {
-              if (event.key === "Enter")
-                document.getElementById("idStkRubro").focus();
-            }}
+          // onKeyPress={(event) => {
+          //   if (event.key === "Enter")
+          //     document.getElementById("idStkRubro").focus();
+          // }}
           />
         </Grid>}
 

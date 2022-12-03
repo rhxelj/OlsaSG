@@ -12,23 +12,30 @@ conexion.connect(function (err) {
 });
 
 var router = express();
-router.get("/", function (req, res, next) {
+router.get("/", async function (req, res) {
   // router.get("/", async function (req, res, next) {
-  console.log('vino a  ')
-  console.log('vino a ver  ', req.query.abr)
+
   var StkRubroAbr = req.query.abr;
   var q = [
-    "Select * from StkItems where StkItemsRubroAbr = '" + StkRubroAbr + "'",
+    "Select StkItemsDesc, StkItemsCantDisp from StkItems where StkItemsRubroAbr = " + StkRubroAbr].join(" ");
 
-  ].join(" ");
+
   conexion.query(q, function (err, result) {
     if (err) {
-      console.log(err);
-    } else {
+      if (err.errno === 1064) {
+        result = 0
+        res.json(result);
+      }
+      else {
+        console.log('ingreso al error  ', result)
+        console.log(err);
+      }
+    }
+    else {
       res.json(result);
-      console.log('result  ', result)
+
     }
   });
-});
+})
 
 module.exports = router;

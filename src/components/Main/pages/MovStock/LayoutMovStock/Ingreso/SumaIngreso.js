@@ -1,7 +1,6 @@
 import request from "superagent";
 import IpServidor from "../../../VariablesDeEntorno";
 import CodigoError from "../../../../../lib/CodigoError";
-import { resolve } from "dns";
 // Lee Grupo
 export const sumaingreso = (infingreso) => {
   return new Promise(resolve => {

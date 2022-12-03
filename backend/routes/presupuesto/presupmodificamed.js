@@ -25,7 +25,9 @@ router.get("/", (req, res, next) => {
         console.log(err);
       }
 
-      var costooriginal = 0;
+      var costooriginal = 0.00;
+      var costodiflona = 0.00;
+      var costoMOTa = 0.00, costoMOTb = 0.00, costoMOTc = 0.00, costoMOTd = 0.00, costoMOTe = 0.00, costoMOTf = 0.00;
       var coeficiente = 0,
         cantidad = 0,
         metroscuad = 0,
@@ -265,41 +267,50 @@ router.get("/", (req, res, next) => {
               }
 
 
+
               if ((largorealn > largoreal) || (anchorealn > anchoreal)) {
-                costooriginal = costooriginaln - costooriginal
+                costodiflona = costooriginaln - costooriginal
               }
 
 
+              //esto calculamos el 10-11-2022 con Cecilia, con distintas ordenes de lonas ya modificadas, luego lo desmembré y funcionó
+              // if ((largorealn < largoreal) && (anchorealn < anchoreal)) {
+              //   costoMOTe = (valorhora / 60 * ((22 * largorealn) + (44 * anchorealn)))
+              // }
 
-              if (largorealn > largoreal) {
-                //alarga
-                //8 min x anchorealn
-                costooriginal = costooriginal + (valorhora / 60 * 8 * anchorealn)
-              }
+              // //es mas ancha y más larga
+              // if ((largorealn > largoreal) && (anchorealn > anchoreal)) {
+              //   costoMOTf = (valorhora / 60 * 22 * ((largoreal * 2) + (anchorealn * 2)))
+              // }
+
               if (largorealn < largoreal) {
-                //achica
-                //8 min x anchoreal
-                costooriginal = (valorhora / 60 * 8 * anchoreal)
+                costoMOTa = (valorhora / 60 * (15 * anchorealn))
               }
-              if (anchorealn > anchoreal) {
-                //ensancha
-                //24 min x largoreal
-                costooriginal = costooriginal + (valorhora / 60 * 24 * largoreal)
-              }
+
               if (anchorealn < anchoreal) {
-                //achica
-                //12 min x largoreal + anchorealn
-                costooriginal = (valorhora / 60 * 12 * (largoreal + anchorealn))
+                costoMOTb = (valorhora / 60 * (15 * largorealn))
               }
 
-              // costooriginal = costooriginal + (valorhora / 60 * 21 * anchoreal * 2)
+              if ((largorealn > largoreal)) {
+                costoMOTc = (valorhora / 60 * 16 * ((anchorealn * 2)))
+              }
 
+              if ((anchorealn > anchoreal)) {
+                costoMOTd = (valorhora / 60 * 16 * ((largoreal * 2)))
+                if (costoMOTc === 0) {
+                  costoMOTc = (valorhora / 60 * 16 * ((anchorealn * 2)))
+                }
+              }
+
+              costooriginal = costodiflona + costoMOTa + costoMOTb + costoMOTc + costoMOTd
               if (ivasn == 'CIVA') {
                 costooriginal = Math.ceil(costooriginal.toFixed(0) / 10) * 10
               }
               else {
                 costooriginal = Math.ceil(costooriginal.toFixed(0) / 1.21 / 10) * 10
               }
+
+
 
               datosenvio[0][0]['ImpUnitario'] = costooriginal
               datosenvio[0][0]['Detalle'] = detalle

@@ -141,6 +141,7 @@ export const initial_state = {
   dcalculoppresup: [],
   //condiciones de pago
   condpagoeleg: [],
+
   //FilaDos
   labellargo: 'Largo',
   labelancho: 'Ancho',

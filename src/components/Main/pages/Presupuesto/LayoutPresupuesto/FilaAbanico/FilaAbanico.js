@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { Grid, TextField } from "@material-ui/core";
+import swal from 'sweetalert';
+
+
 import useStyles from "../styles";
 
 // Context
@@ -12,16 +15,29 @@ import { PresupPantContext } from "../../PresupPant";
 export default function FilaAbanico(props) {
   const { state, setState } = useContext(PresupPantContext);
 
-
   const handleChange = (event) => {
     const id = event.target.id;
     setState({ ...state, [id]: event.target.value });
   };
 
-  // const tamcristal = (event) => {
-  //   setCristal(event.target.value);
-  //   setState({ ...state, TamCristal: event.target.value });
-  // };
+  const handleChangeLargo = (event) => {
+    const id = event.target.id;
+
+    var valor = event.target.value
+
+    if (valor < 1.26) { setState({ ...state, [id]: event.target.value }); }
+    else {
+      swal({
+        title: "Error",
+        text: "No puede ser mayor a 1.26",
+        icon: "error",
+        button: "OK",
+        dangerMode: true,
+      })
+    }
+
+  };
+
 
   const voladods = (event) => {
     setState({ ...state, VolDS: event.target.value });
@@ -52,8 +68,6 @@ export default function FilaAbanico(props) {
 
   return (
     <>
-
-
       <Grid item xs={1} >
         <TextField
           inputProps={{ maxLength: 3 }}
@@ -72,6 +86,7 @@ export default function FilaAbanico(props) {
       <Grid item xs={1} >
         <TextField
           inputProps={{ maxLength: 3 }}
+          //no más de 1.25
           size="small"
           variant="outlined"
           id="LargoBrazo"
@@ -80,8 +95,9 @@ export default function FilaAbanico(props) {
           label="Largo Brazos : "
           fullWidth
           value={state.LargoBrazo}
-          onChange={handleChange}
+          onChange={handleChangeLargo}
           className={classes.textField}
+          helperText='No mayor a 1.25'
         />
       </Grid>
       <Grid item xs={1}>
@@ -89,7 +105,6 @@ export default function FilaAbanico(props) {
           <TextField
             id={data.id}
             key={data.id}
-            // size="small"
             fullWidth
             select
             label={data.label}

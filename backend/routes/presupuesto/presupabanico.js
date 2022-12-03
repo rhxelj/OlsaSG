@@ -45,7 +45,6 @@ router.get('/', (req, res, next) => {
         ancho = datos.ancho * 1
         enteropanios = Math.trunc(ancho / 1.50)
 
-        console.log('datos.voladosd  ', datos.voladosd)
 
         if (datos.minmay == 'my') {
           coeficiente = result[0].coeficientemay
@@ -65,14 +64,14 @@ router.get('/', (req, res, next) => {
         telacubrecaños = ((((fajabrazo / 10 * 4) + 2) * (cantbrazos + 1)) / 100)
         telavolado = (altovolado / 100) + 0.15
         largoabanico = largoabanico1 + telacubrecaños + telavolado
-        telatapas = (largobrazo + 0.07 + (altovolado / 100))
+        telatapas = (largobrazo + 0.07)
+        // + (altovolado / 100)
         telatapas < 1.50 ? paniostapas = 1 : paniostapas = 2
         paniosfrente = Math.ceil(ancho / 1.5)
 
         telatapas = paniostapas * telatapas * 2
         telatotal = telatapas + (paniosfrente * largoabanico)
 
-        console.log('telatotal  ', telatotal)
 
         // tiempo de cortar paños (2 min / paño)
         minMOT1 = (paniostapas * 2 + paniosfrente) * 2
@@ -92,10 +91,6 @@ router.get('/', (req, res, next) => {
 
 
         MOTarmado = (minMOT1 + minMOT2 + minMOT3 + minMOT4 + minMOT5 + minMOT6) * valorMOTmin
-
-
-
-
 
         q = ['Select ',
           'StkRubroDesc, StkRubroAbr, ',

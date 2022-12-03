@@ -184,6 +184,9 @@ var imppresup = require("./routes/impresion/imppresup");
 //programas para backup
 var copiafact = require("./routes/procinternos/copiafact");
 
+// //programas para ordenes de trabajo
+var datosencabpresupeleg = require("./routes/ordentrabajo/datosencabpresupeleg")
+var otarmatabla = require("./routes/ordentrabajo/otarmatabla")
 
 const { RouterSharp } = require("@material-ui/icons");
 
@@ -398,6 +401,9 @@ app.use("/imppresup", imppresup);
 
 app.use("/copiafact", copiafact);
 
+//programas para ordenes de trabajo
+app.use("/datosencabpresupeleg", datosencabpresupeleg);
+app.use("/otarmatabla", otarmatabla);
 
 app.use("/", proveedoresleer);
 

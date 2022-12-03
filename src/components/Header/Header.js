@@ -5,7 +5,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import AssignmentRoundedIcon from '@material-ui/icons/AssignmentRounded';
+// import AssignmentRoundedIcon from '@material-ui/icons/AssignmentRounded';
 import { format } from "fecha";
 import { tableIcons } from "../lib/material-table/tableIcons";
 import Button from '@material-ui/core/Button';
@@ -16,7 +16,6 @@ import { clientestraeNuevos } from '../Main/pages/Clientes/ClientesTraeNuevos'
 import PropBarra from '../../Styles/Header.module.css'
 import IconButton from '@material-ui/core/IconButton'
 import WidgetsTwoToneIcon from '@material-ui/icons/WidgetsTwoTone';
-import SendIcon from '@material-ui/icons/Send';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import TableChartIcon from '@material-ui/icons/TableChart';
 
@@ -70,15 +69,6 @@ function Header() {
     setAnchorEl3(null);
   };
 
-  const [anchorEl4, setAnchorEl4] = React.useState(null);
-  const open4 = Boolean(anchorEl4);
-
-  const handleClick4 = (event) => {
-    setAnchorEl4(event.currentTarget);
-  };
-  const handleClose4 = () => {
-    setAnchorEl4(null);
-  };
   const diafecha = format(new Date(), "DD-MM-YYYY");
 
 

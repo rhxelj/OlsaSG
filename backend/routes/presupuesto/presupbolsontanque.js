@@ -36,6 +36,8 @@ router.get("/", (req, res) => {
       anchotela = 0.0;
       medida = 0;
       alto = 0.0;
+      altocalculo = 1.5;
+      altoconpared = 0.0;
       perimetro = 0.0;
       diametro = 0.0;
       diametroI = 0.0;
@@ -109,35 +111,43 @@ router.get("/", (req, res) => {
 
 
           detalle = detalle + ' con pared de ' + anchopared + ' mts. y un alto de ' + alto + ' mts. en : '
-          if (termbordeeleg === 'SF') {
-            alto = alto + anchopared + 0.3
-            if (alto <= 1.50) {
-              alto = 1.50
-            }
-          }
-          else {
-            alto = alto + anchopared
-          }
-
+          // console.log('termbordeeleg  ', termbordeeleg)
+          // console.log('alto  ', alto)
+          // if (termbordeeleg === 'SF') {
+          //   alto = alto + anchopared + 0.3
+          //   if (alto <= 1.50) {
+          //     alto = 1.50
+          //   }
+          // }
+          // else {
+          //   alto = alto + anchopared
+          // }
+          // console.log('alto  ', alto)
+          altoconpared = alto + anchopared
           if (StkRubroAbrP === 'POL19') {
-            if (alto > 1.50 && alto <= 2) {
-              alto = 2.00
+            if (altoconpared > 1.50 && altoconpared <= 2) {
+              altocalculo = 2.00
             }
             else {
-              if (alto > 2 && alto <= 3) {
-                alto = 3.00
+              if (altoconpared > 2 && altoconpared <= 3) {
+                altocalculo = 3.00
               }
               else {
-                if (alto > 3) {
-                  alto = alto.toFixed(0) + 0.5
+                if (altoconpared > 3) {
+                  altocalculo = altoconpared.toFixed(0) + 0.5
                 }
               }
             }
           }
-
+          else {
+            altocalculo = alto + anchopared + 0.3
+            if (alto <= 1.50) {
+              altocalculo = 1.50
+            }
+          }
 
           metroscuaddiam = (diametro * diametro).toFixed(0)
-          metroscuadper = (alto * perimetro).toFixed(0)
+          metroscuadper = (altocalculo * perimetro).toFixed(0)
 
           metroscuadtotal = metroscuaddiam * 1 + metroscuadper * 1
 
@@ -172,6 +182,7 @@ router.get("/", (req, res) => {
 
             if (alto > 1.50) {
               calpaños = (perimetro % anchotela)
+
               if (calpaños < .50) {
                 cantpaños = Math.trunc(perimetro / anchotela) + .5
               }
@@ -180,7 +191,7 @@ router.get("/", (req, res) => {
               }
               segcortarpp = (120 * cantpaños)
               segunirpp = (150 * alto * (cantpaños - 1))
-              metroscuadper = cantpaños * alto
+              metroscuadper = cantpaños * alto * anchotela
             }
             else {
               segcortarpp = segcortarpf

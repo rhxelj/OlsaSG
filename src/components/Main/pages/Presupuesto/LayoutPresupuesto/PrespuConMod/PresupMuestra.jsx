@@ -6,23 +6,21 @@ import TextField from "@material-ui/core/TextField";
 import WavesIcon from "@material-ui/icons/Waves";
 import { tableIcons } from "../../../../../lib/material-table/tableIcons";
 import { localization } from "../../../../../lib/material-table/localization";
-import { green, purple, yellow } from "@material-ui/core/colors";
+import { green, purple } from "@material-ui/core/colors";
 import VisibilityRoundedIcon from "@material-ui/icons/VisibilityRounded";
-import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
 import Estilos from "../../../../../Componentes/Boton.module.css";
 
 import Paper from "@material-ui/core/Paper";
 
-import { PresupNombre } from "./PresupNombre";
 import { presupColumns } from "./presupColumns";
 import { presupDatos } from "./presupDatos";
 import { presupDatosReng } from "./presupDatosReng";
 import { PresupPreviewMue } from "../PresupPreviewMue";
-import OrdTrabGenPres from "../../../OrdenTrabajo/LayoutOrdenTrabajo/OrdTrabOrigen/OrdTrabGenPres";
 import TablaMuestraRenglon from "./TablaMuestraRenglon";
 import Imprimir from "../../../Impresion/Imprimir/Imprimir";
+import { initial_state } from "../../../OrdenTrabajo/Initial_State";
 
 import { useContext } from "react";
 import { globalContext } from "../../../../../App";
@@ -38,10 +36,10 @@ const useStyles = makeStyles({
 
 export default function PresupMuestra(props) {
 	const { setValor } = useContext(globalContext);
+	const [state, setState] = useState(initial_state);
 	const classes = useStyles();
 	const [open, setOpen] = useState(false);
 	const [ppreview, setPPreview] = useState(false);
-	const [openordtrab, setOrdtrab] = useState(false);
 	const [imprimirTF, setImprimirTF] = useState({ imprimir: false });
 	const [columns, setColumns] = useState([]);
 	const [data, setData] = useState([]);
@@ -50,7 +48,6 @@ export default function PresupMuestra(props) {
 	const [parampresupuesto, setParamPresupuesto] = useState({
 		idpresupuesto: 0,
 	});
-	var vienedeot = props.origen;
 	var fecha = new Date();
 	fecha.setDate(fecha.getDate() - 360);
 
@@ -88,6 +85,7 @@ export default function PresupMuestra(props) {
 		columnsFetch();
 		//va a buscar datos para mostrar desde el inicio
 		dataFetch(selectedDate);
+		setSelectedDate(selectedDate);
 	}
 
 	const openApp = (event, idPresupEncab) => {
@@ -102,39 +100,23 @@ export default function PresupMuestra(props) {
 	const handleClose = () => {
 		setParamPresupuesto({ parampresupuesto, idpresupuesto: 1 });
 		setOpen(false);
+		setState();
 	};
 
-	const openOrdTrab = (event, idPresupEncab) => {
-		setParamPresupuesto({ parampresupuesto, idpresupuesto: idPresupEncab });
-		handleOpenOrdTrab();
-	};
+	// const openOrdTrab = (event, idPresupEncab) => {
+	// 	setParamPresupuesto({ parampresupuesto, idpresupuesto: idPresupEncab });
+	// 	handleOpenOrdTrab();
+	// };
 
-	const handleOpenOrdTrab = () => {
-		setOrdtrab(true);
-	};
-
-	const handleCloseOrdTrab = () => {
-		setOrdtrab(false);
-	};
-
-	var resultado = [{ error: 1 }];
 	/*manejo del preview de <presupuesto></presupuesto>*/
-	async function openPreview(event, idPresupEncab) {
-		// setParamPresupuesto({ parampresupuesto, idpresupuesto: idPresupEncab });
-		// resultado = await PresupNombre(idPresupEncab);
-
-		// if (resultado === '""') {
+	async function openPreview() {
 		handleClickPreview();
-		// } else {
-		// 	alert("el presupuesto no está en disco");
-		// }
 	}
 	const handleClickPreview = () => {
 		setPPreview(true);
 	};
 
 	const handleClosePreview = () => {
-		// initialFetch();
 		setPPreview(false);
 	};
 
@@ -174,67 +156,45 @@ export default function PresupMuestra(props) {
 					Busca Detalle
 				</Button>
 			</Grid>
-			{vienedeot === "OT" ? (
-				<MaterialTable
-					columns={columns}
-					data={data}
-					icons={tableIcons}
-					localization={localization}
-					title=""
-					actions={[
-						{
-							icon: () => <ThumbUpIcon style={{ color: green[800] }} />,
-							onClick: (event, rowData) =>
-								openOrdTrab(event, rowData.idPresupEncab),
-						},
-					]}
-					components={{
-						Toolbar: (props) => (
-							<React.Fragment>
-								<MTableToolbar {...props} />
-							</React.Fragment>
-						),
-					}}
-				/>
-			) : (
-				<MaterialTable
-					columns={columns}
-					data={data}
-					icons={tableIcons}
-					localization={localization}
-					title=""
-					actions={[
-						{
-							icon: () => <WavesIcon />,
-							tooltip: "Ver detalles",
-							onClick: (event, rowData) =>
-								openApp(event, rowData.idPresupEncab),
-						},
-						{
-							icon: () => (
-								<VisibilityRoundedIcon style={{ color: purple[500] }} />
-							),
-							isFreeAction: true,
-							onClick: (event, rowData) =>
-								openPreview(event, rowData.idPresupEncab),
-						},
 
-						{
-							icon: () => <tableIcons.Print style={{ color: green[500] }} />,
-							isFreeAction: true,
-							tooltip: "Imprimir",
-							onClick: () => setImprimirTF({ imprimir: true }),
-						},
-					]}
-					components={{
-						Toolbar: (props) => (
-							<React.Fragment>
-								<MTableToolbar {...props} />
-							</React.Fragment>
+			<MaterialTable
+				columns={columns}
+				data={data}
+				icons={tableIcons}
+				localization={localization}
+				title=""
+				actions={[
+					{
+						icon: () => <WavesIcon />,
+						tooltip: "Ver detalles",
+						onClick: (event, rowData) => openApp(event, rowData.idPresupEncab),
+					},
+					{
+						icon: () => (
+							<VisibilityRoundedIcon style={{ color: purple[500] }} />
 						),
-					}}
-				/>
-			)}
+						isFreeAction: true,
+						// onClick: (event, rowData) =>
+						// openPreview(event, rowData.idPresupEncab),
+						onClick: () => openPreview(),
+					},
+
+					{
+						icon: () => <tableIcons.Print style={{ color: green[500] }} />,
+						isFreeAction: true,
+						tooltip: "Imprimir",
+						onClick: () => setImprimirTF({ imprimir: true }),
+					},
+				]}
+				components={{
+					Toolbar: (props) => (
+						<React.Fragment>
+							<MTableToolbar {...props} />
+						</React.Fragment>
+					),
+				}}
+			/>
+			{/* )} */}
 			<PresupPreviewMue open={ppreview} handleClose={handleClosePreview} />
 			<Imprimir
 				columns={columns}
@@ -246,12 +206,8 @@ export default function PresupMuestra(props) {
 				open={open}
 				handleClose={handleClose}
 				Presup={parampresupuesto.idpresupuesto}
+				eligeOT={state.eligioOT}
 			/>
-			{openordtrab ? (
-				<OrdTrabGenPres Presup={parampresupuesto.idpresupuesto} />
-			) : (
-				<></>
-			)}
 		</Paper>
 	);
 }
