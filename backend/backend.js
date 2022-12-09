@@ -152,14 +152,13 @@ var presupponchorie = require("./routes/presupuesto/presupponchorie");
 var presupmodificamed = require("./routes/presupuesto/presupmodificamed");
 var presupabanico = require("./routes/presupuesto/presupabanico");
 
-
 var presupencableer = require("./routes/presupuesto/presupencableer");
 var presupencableenro = require("./routes/presupuesto/presupencableenro");
 
 var presuprenglonleer = require("./routes/presupuesto/presuprenglonleer");
 var presupnombre = require("./routes/presupuesto/presupnombre");
 var presuprengleer = require("./routes/presupuesto/presuprengleer");
-
+var presupborrar = require("./routes/presupuesto/presupborrar");
 
 var presupconftipoleer = require("./routes/presupuesto/presupconftipo/presupconftipoleer");
 var presupconftipoleerdesc = require("./routes/presupuesto/presupconftipo/presupconftipoleerdesc");
@@ -374,7 +373,7 @@ app.use("/presupencableenro", presupencableenro);
 app.use("/presuprenglonleer", presuprenglonleer);
 app.use("/presupnombre", presupnombre);
 app.use("/presuprengleer", presuprengleer);
-
+app.use("/presupborrar", presupborrar);
 
 
 app.use("/presupconftipoleer", presupconftipoleer);

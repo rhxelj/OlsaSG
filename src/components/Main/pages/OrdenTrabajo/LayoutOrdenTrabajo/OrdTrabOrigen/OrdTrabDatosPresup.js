@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Dialog from "@material-ui/core/Dialog";
 import MaterialTable, { MTableToolbar } from "material-table";
 import { localization } from "../../../../../lib/material-table/localization";
-//import { tableIcons } from "../../../Monedas/Constants";
 import { tableIcons } from "../../../../../lib/material-table/tableIcons";
 import { OrdTrabColumn } from "./OrdTrabColumn";
 import { DatosEncabPresupEleg } from './DatosEncabPresupEleg'
@@ -10,17 +9,21 @@ import { OrdTrabLeeItems } from "./OrdTrabLeeItems";
 import { TextField } from "@material-ui/core";
 import { initial_state } from "../../Initial_State";
 import Grid from "@material-ui/core/Grid";
+import estilosot from "../../../OrdenTrabajo/OrdenTrabajo.module.css"
 import CurrencyTextField from "@unicef/material-ui-currency-textfield";
 import {
     purple,
     teal,
+    orange
 } from "@material-ui/core/colors";
+
+
 export default function OrdTrabDatosPresup(props) {
     const { DatosPresupEleg, open, handleClose } = props;
     const [state, setState] = useState(initial_state)
     const [totalciva, setTotalCiva] = useState(0);
     const [totalsiva, setTotalSiva] = useState(0);
-
+    const [abrecolor, setAbreColor] = useState(false)
 
 
 
@@ -75,6 +78,7 @@ export default function OrdTrabDatosPresup(props) {
         setState({ ...state, datositems: result });
         indiceitem1 = materialelegido.ordtrabitem - 1
         setIndiceItem(indiceitem1)
+        abrecierracolor()
     }
 
     useEffect(() => {
@@ -88,6 +92,9 @@ export default function OrdTrabDatosPresup(props) {
         handleClose(false)
     };
 
+    const abrecierracolor = () => {
+        setAbreColor(!abrecolor)
+    };
     function sumar() {
         var tototciva = 0,
             tototsiva = 0,
@@ -123,7 +130,6 @@ export default function OrdTrabDatosPresup(props) {
         datotraido.map(() => {
             if (datotraido[i].tableData.checked === true) {
                 datoselegidosaux = JSON.parse(datotraido[i].PresupRenglonParamInt)
-                console.log('state.datositems.length  ', state.datositems.length)
                 // leeitemsrubro(datoselegidosaux.StkRubroAbr)
                 // console.log(' datositemsreng dd ', state.datositems)
                 // resultado = { ...inforden.datlonasenrollables, ...datoselegidosaux };
@@ -167,7 +173,10 @@ export default function OrdTrabDatosPresup(props) {
         setState({ ...state, [id]: event.target.value });
         if (id === 'StkItemsDesc') {
 
-            datosrenglon[indiceitem].colorselec = event.target.value
+            if (event.target.value) {
+                datosrenglon[indiceitem].colorselec = event.target.value
+                abrecierracolor()
+            }
         } else {
 
             datosrenglon[indiceitem].colorselec = ""
@@ -211,7 +220,7 @@ export default function OrdTrabDatosPresup(props) {
                     {datosencab !== undefined &&
                         datosencab.map((encabezado, index) => (
 
-                            <div
+                            <div className={estilosot.divestilo1}
                                 key={encabezado.idPresupEncab}>
                                 <TextField label="Nro Presup" value={encabezado.idPresupEncab} inputProps={{ maxLength: 8 }} />
                                 <TextField label="Fecha" value={encabezado.PresupEncabFecha} inputProps={{ maxLength: 10 }} />
@@ -225,69 +234,9 @@ export default function OrdTrabDatosPresup(props) {
 
                     }
 
-                    <MaterialTable
-                        title=""
-                        columns={columns}
-                        data={datosrenglon}
-                        icons={tableIcons}
-                        localization={localization}
 
-                        editable={{
-                            onRowUpdate: (newData, oldData) =>
-
-                                new Promise((resolve, reject) => {
-                                    setTimeout(() => {
-                                        const dataUpdate = [...datosrenglon];
-                                        const index = oldData.tableData.id;
-                                        dataUpdate[index] = newData;
-                                        setDatosRenglon([...dataUpdate]);
-                                        renglot1[index] = newData;
-                                        resolve();
-                                    }, 1000);
-                                }),
-                        }}
-                        // cellEditable={{
-                        //     // cellStyle: {},
-                        //     onCellEditApproved: (newValue, oldValue, rowData, columnDef) => {
-                        //         return new Promise((resolve, reject) => {
-                        //             console.log('newValue: ' + newValue);
-                        //             console.log('oldValue: ' + oldValue);
-                        //             console.log('rowData: ' + rowData);
-                        //             console.log('columnDef: ' + columnDef);
-                        //             setTimeout(resolve, 1000);
-                        //         });
-                        //     }
-                        // }}
-                        actions={[
-                            {
-                                icon: () => (
-                                    <tableIcons.AddShoppingCart style={{ color: teal[500] }} />
-                                ),
-                                tooltip: "Suma",
-                                isFreeAction: true,
-                                onClick: () => sumar(),
-                            },
-                            {
-                                icon: () => (
-                                    <tableIcons.Attachment style={{ color: purple[700] }} />
-                                ),
-                                tooltip: "Anexos",
-                                onClick: (event, rowData) => (
-                                    eligecolor(event, rowData)
-                                    // {console.log('rowData  ', rowData)}
-                                )
-                            }]}
-                        components={{
-                            Toolbar: (props) => (
-                                <div>
-                                    <MTableToolbar {...props} />
-                                </div>
-                            ),
-                        }}
-                    />
-
-                    <div>
-                        <Grid container>
+                    <div className={estilosot.divestilo2}>
+                        <Grid container >
                             <Grid item xs={2}>
                                 <CurrencyTextField
                                     size="small"
@@ -328,36 +277,105 @@ export default function OrdTrabDatosPresup(props) {
                                     onChange={handleChange}
                                 />
                             </Grid>
-                            <Grid item xs={2}>
-                                {textdata !== undefined &&
-                                    textdata.map((data) => (
-                                        <TextField
-                                            key={data.id}
-                                            id={data.id}
-                                            size="small"
-                                            inputProps={{ maxLength: 3 }}
-                                            select
-                                            label={data.label}
-                                            value={data.value}
-                                            onChange={handleChange}
-                                            SelectProps={{ native: true }}
-                                            variant="outlined"
-                                            margin="dense"
-                                        >
-                                            {data.mapeo}
-                                        </TextField>
-                                    ))}
-                            </Grid>
 
                         </Grid>
 
                     </div>
 
 
+                    <MaterialTable
+                        title=""
+                        columns={columns}
+                        data={datosrenglon}
+                        icons={tableIcons}
+                        localization={localization}
+                        options={{
+                            search: false
+                        }}
+                        // editable={{
+                        //     onRowUpdate: (newData, oldData) =>
+
+                        //         new Promise((resolve, reject) => {
+                        //             setTimeout(() => {
+                        //                 const dataUpdate = [...datosrenglon];
+                        //                 const index = oldData.tableData.id;
+                        //                 dataUpdate[index] = newData;
+                        //                 setDatosRenglon([...dataUpdate]);
+                        //                 renglot1[index] = newData;
+                        //                 resolve();
+                        //             }, 1000);
+                        //         }),
+                        // }}
+                        cellEditable={{
+                            // cellStyle: {},
+                            onCellEditApproved: (newValue, oldValue, rowData, columnDef) => {
+                                return new Promise((resolve, reject) => {
+                                    console.log('newValue: ' + newValue);
+                                    setTimeout(resolve, 4000);
+                                });
+                            }
+                        }}
+                        actions={[
+                            {
+                                icon: () => (
+                                    <tableIcons.AddShoppingCart style={{ color: teal[500] }} />
+                                ),
+                                tooltip: "Suma",
+                                isFreeAction: true,
+                                onClick: () => sumar(),
+                            },
+                            {
+                                icon: () => (
+                                    <tableIcons.Palette
+                                        style={{ color: orange[500], fontSize: 40 }} />
+                                ),
+                                tooltip: "Colores",
+                                onClick: (event, rowData) => (
+                                    eligecolor(event, rowData)
+                                    // {console.log('rowData  ', rowData)}
+                                )
+                            }]}
+                    // components={{
+                    //     Toolbar: (props) => (
+                    //         <div>
+                    //             <MTableToolbar {...props} />
+                    //         </div>
+                    //     ),
+                    // }}
+                    />
 
 
-                </form>
-            </Dialog>
+                    <Dialog
+                        maxWidth={'xl'}
+                        open={abrecolor}
+                        onClose={abrecierracolor}
+
+                    >
+                        {!!textdata &&
+                            textdata.map((data) => (
+                                <TextField
+                                    key={data.id}
+                                    id={data.id}
+                                    size="small"
+                                    inputProps={{ maxLength: 3 }}
+                                    select
+                                    label={data.label}
+                                    value={data.value}
+                                    onChange={handleChange}
+                                    SelectProps={{ native: true }}
+                                    variant="outlined"
+                                    margin="dense"
+                                >
+                                    {data.mapeo}
+                                </TextField>
+                            ))}
+                        {/* </Grid> */}
+                    </Dialog>
+
+
+
+                </form >
+            </Dialog >
         </div >
     )
     // return new Promise(resolve => {

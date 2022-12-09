@@ -12,7 +12,6 @@ export const presuprenglonleer = (Presup) => {
             .then(res => {
 
                 const renglones = JSON.parse(res.text);
-
                 resolve(renglones);
 
             })

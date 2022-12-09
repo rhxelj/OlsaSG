@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { localization } from "../../../lib/material-table/localization";
 import '../../../../Styles/TableHeader.css'
 import MaterialTable from "material-table";
+import PropTypes from 'prop-types';
 import { tableIcons } from "../../../lib/material-table/tableIcons";
 import { leelistaprecios } from "./LeeListaPrecios";
 import Imprimir from "../Impresion/Imprimir/Imprimir";
-
 import TablaMuestraStock from "./TablaMuestraStock";
 import WavesIcon from "@material-ui/icons/Waves";
 import AutorenewIcon from '@material-ui/icons/Autorenew';
@@ -139,6 +139,7 @@ export default function ListaPrecios() {
           exportButton: true,
           grouping: true,
         }}
+
       // components={{
       //   Toolbar: (props) => (
       //     <React.Fragment>
@@ -153,6 +154,7 @@ export default function ListaPrecios() {
       //     </React.Fragment>
       //   ),
       // }}
+
       />
       <Imprimir
         columns={lista.columns}

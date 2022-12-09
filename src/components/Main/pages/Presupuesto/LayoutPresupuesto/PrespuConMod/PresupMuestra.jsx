@@ -18,6 +18,7 @@ import { presupColumns } from "./presupColumns";
 import { presupDatos } from "./presupDatos";
 import { presupDatosReng } from "./presupDatosReng";
 import { PresupPreviewMue } from "../PresupPreviewMue";
+import { onRowDelete } from "./onRowDelete";
 import TablaMuestraRenglon from "./TablaMuestraRenglon";
 import Imprimir from "../../../Impresion/Imprimir/Imprimir";
 import { initial_state } from "../../../OrdenTrabajo/Initial_State";
@@ -43,14 +44,13 @@ export default function PresupMuestra(props) {
 	const [imprimirTF, setImprimirTF] = useState({ imprimir: false });
 	const [columns, setColumns] = useState([]);
 	const [data, setData] = useState([]);
-	const [fechasel, setFechasel] = useState();
 	const [detbusca, setDetbusca] = useState("");
 	const [parampresupuesto, setParamPresupuesto] = useState({
 		idpresupuesto: 0,
 	});
 	var fecha = new Date();
 	fecha.setDate(fecha.getDate() - 360);
-
+	const [fechasel, setFechasel] = useState(fecha.getDate() - 360);
 	const [selectedDate, setSelectedDate] = useState(fecha);
 
 	const handleChangeFB = (event1) => {
@@ -81,6 +81,11 @@ export default function PresupMuestra(props) {
 		setData(data);
 	}
 
+	// async function borrapresup(date) {
+	// 	console.log("date  ", date);
+	// 	// const data = await presupDatos(date);
+	// 	// setData(data);
+	// }
 	async function initialFetch() {
 		columnsFetch();
 		//va a buscar datos para mostrar desde el inicio
@@ -99,8 +104,8 @@ export default function PresupMuestra(props) {
 
 	const handleClose = () => {
 		setParamPresupuesto({ parampresupuesto, idpresupuesto: 1 });
-		setOpen(false);
-		setState();
+		// setState();
+		setOpen(!open);
 	};
 
 	// const openOrdTrab = (event, idPresupEncab) => {
@@ -163,6 +168,10 @@ export default function PresupMuestra(props) {
 				icons={tableIcons}
 				localization={localization}
 				title=""
+				editable={{
+					onRowDelete: (oldData) =>
+						onRowDelete(oldData).then(() => dataFetch(selectedDate)),
+				}}
 				actions={[
 					{
 						icon: () => <WavesIcon />,
