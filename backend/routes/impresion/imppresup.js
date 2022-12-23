@@ -193,10 +193,6 @@ router.post("/", function (req, res, next) {
             ],
         },
         content: [
-            {
-                text: '',
-                style: 'textoD',
-            },
 
             {
                 text: 'Bahía Blanca, ' + Fecha,
@@ -230,8 +226,8 @@ router.post("/", function (req, res, next) {
             },
 
             {
-                text: 'Cotización Nro. : ' + Presupuestonro,
-                style: 'textoD',
+                text: 'La aceptación de esta cotización Nro. : ' + Presupuestonro + ', incluye las condiciones al pie de la misma',
+                style: 'textoCI',
             },
             {
                 text: ' ',
@@ -321,8 +317,16 @@ router.post("/", function (req, res, next) {
                 fontSize: 8
             },
             textoCI: {
+                fontSize: 12,
+                alignment: 'center',
+                color: 'red',
+                bold: true,
+            },
+            textoCP: {
                 fontSize: 14,
                 alignment: 'center',
+                color: 'red',
+                bold: true,
             },
             textoD: {
                 fontSize: 12,

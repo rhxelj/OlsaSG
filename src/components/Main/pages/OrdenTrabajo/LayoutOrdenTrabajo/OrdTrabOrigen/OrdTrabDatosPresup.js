@@ -1,33 +1,44 @@
 import React, { useState, useEffect } from "react";
 import Dialog from "@material-ui/core/Dialog";
-import MaterialTable, { MTableToolbar } from "material-table";
+import MaterialTable from "material-table";
 import { localization } from "../../../../../lib/material-table/localization";
 import { tableIcons } from "../../../../../lib/material-table/tableIcons";
 import { OrdTrabColumn } from "./OrdTrabColumn";
 import { DatosEncabPresupEleg } from './DatosEncabPresupEleg'
 import { OrdTrabLeeItems } from "./OrdTrabLeeItems";
-import { TextField } from "@material-ui/core";
+import { Button, TextField } from "@material-ui/core";
 import { initial_state } from "../../Initial_State";
 import Grid from "@material-ui/core/Grid";
 import estilosot from "../../../OrdenTrabajo/OrdenTrabajo.module.css"
 import CurrencyTextField from "@unicef/material-ui-currency-textfield";
+import { makeStyles } from "@material-ui/core/styles";
 import {
-    purple,
     teal,
     orange
 } from "@material-ui/core/colors";
+import { datoslonas } from "../FilasDatos/DatosLonas";
 
-
+const useStyles = makeStyles({
+    root: {
+        width: "100%",
+    },
+    container: {
+        maxHeight: 440,
+    },
+});
 export default function OrdTrabDatosPresup(props) {
     const { DatosPresupEleg, open, handleClose } = props;
     const [state, setState] = useState(initial_state)
     const [totalciva, setTotalCiva] = useState(0);
     const [totalsiva, setTotalSiva] = useState(0);
     const [abrecolor, setAbreColor] = useState(false)
+    const [abredetalles, setAbreDetalles] = useState(false)
 
 
+    const [generaot, setGeneraOt] = useState(false)
+    const classes = useStyles();
 
-    // const [renglot, setRenglot] = useState([ordtrabcantidad]);
+
     const [columns, setColumns] = useState([]);
     var datotraido = DatosPresupEleg
     var i = 0, j = 0
@@ -35,28 +46,14 @@ export default function OrdTrabDatosPresup(props) {
     var renglot1 = []
     const [datosrenglon, setDatosRenglon] = useState(renglot1)
     const [datosencab, setDatosEncab] = useState()
-    // const [datositemsreng, setDatosItemsReng] = useState([])
     var datoselegidosaux = []
-    // const [datoselegidos, setDatosElegidos] = useState(datoselegidosaux)
-
-    // const [nuevodatoselegidos, setNuevoDatosElegidos] = useState({
-    //     tipopresup: '',
-    //     cantidad: 1,
-    // })
     var indiceitem1 = 0
-
-
-
-    // const [titulos, setTitulos] = useState(arreglotitulos)
-    // var arreglotitulos = []
     var tabladatelegint = []
-    // const [tabladateleg, setTablaDatEleg] = useState(tabladatelegint)
+    const [tabladetalles, setTablaDetalles] = useState(tabladatelegint)
     const [indiceitem, setIndiceItem] = useState(0)
-
-
     async function columnsFetch() {
+        const col = await OrdTrabColumn(renglot1);
 
-        const col = await OrdTrabColumn(state.datositems);
         setColumns(() => col);
     }
 
@@ -65,14 +62,6 @@ export default function OrdTrabDatosPresup(props) {
         setDatosEncab(result)
     }
 
-    // async function leeitemsrubro(StkRubroAbr) {
-    //     const result = await OrdTrabLeeItems(StkRubroAbr);
-    //     setState({ ...state, datositems: result });
-    // }
-
-    // async function armatabla(datoselegidos) {
-    //     const result = await OrdTabArmaTabla(datoselegidos);
-    // }
     async function eligecolor(event, materialelegido) {
         const result = await OrdTrabLeeItems(materialelegido.ordtrabmaterial);
         setState({ ...state, datositems: result });
@@ -95,6 +84,10 @@ export default function OrdTrabDatosPresup(props) {
     const abrecierracolor = () => {
         setAbreColor(!abrecolor)
     };
+
+    const abrecierradetalles = () => {
+        setAbreDetalles(!abredetalles)
+    };
     function sumar() {
         var tototciva = 0,
             tototsiva = 0,
@@ -106,34 +99,18 @@ export default function OrdTrabDatosPresup(props) {
         }
         setTotalCiva(tototciva);
         setTotalSiva(tototsiva);
-        // var l = renglot1.length + 1
-        // renglot1[l] =
-        // {
-        //     "ordtrabcantidad": '',
-        //     "ordtrabdescripcion": 'TOTAL',
-        //     "ordtrablargo": '____________',
-        //     "ordtrabancho": '____________',
-        //     "ordtrabimpsiva": tototsiva,
-        //     "ordtrabimpciva": tototciva,
 
-
-        // }
-        // setDatosRenglon([...datosrenglon, renglot1[l]]);
     }
 
-    // var indice = 0
     const preparadatos = () => {
-        var
-            // resultado = [],
-            // l = 0,
-            impsiva = 0.00
+        var impsiva = 0.00
         datotraido.map(() => {
             if (datotraido[i].tableData.checked === true) {
                 datoselegidosaux = JSON.parse(datotraido[i].PresupRenglonParamInt)
                 // leeitemsrubro(datoselegidosaux.StkRubroAbr)
                 // console.log(' datositemsreng dd ', state.datositems)
                 // resultado = { ...inforden.datlonasenrollables, ...datoselegidosaux };
-
+                console.log('datoselegidosaux  ', datoselegidosaux)
                 if (datoselegidosaux.ivasn === 'CIVA') {
                     impsiva = datotraido[i].PresupRenglonImpItem * 1 / 1.21
                 }
@@ -149,30 +126,30 @@ export default function OrdTrabDatosPresup(props) {
                     "colorselec": '',
                     "ordtrablargo": datotraido[i].PresupRenglonLargo * 1,
                     "ordtrabancho": datotraido[i].PresupRenglonAncho * 1,
+                    "ordtrabimpitemsiva": datotraido[i].PresupRenglonImpUnit * 1 / 1.21,
+                    "ordtrabimpitemciva": datotraido[i].PresupRenglonImpUnit * 1,
                     "ordtrabimpsiva": impsiva,
                     "ordtrabimpciva": datotraido[i].PresupRenglonImpItem * 1,
                     "ordtrabmaterial": datoselegidosaux.StkRubroAbr,
+                    // "ordtrabtipopresup": datoselegidosaux.tipopresup,
+                    "ordtrabparametros": datoselegidosaux,
                 }
 
                 tabladatelegint.push(datoselegidosaux)
                 j++
+
             }
-
-
             i++
 
         })
-        // setTablaDatEleg(tabladatelegint)
-        // setTitulos(arreglotitulos)
-        // setNuevoDatosElegidos(resultado)
 
+        setTablaDetalles(tabladatelegint)
     }
 
     const handleChange = (event) => {
         const id = event.target.id;
         setState({ ...state, [id]: event.target.value });
         if (id === 'StkItemsDesc') {
-
             if (event.target.value) {
                 datosrenglon[indiceitem].colorselec = event.target.value
                 abrecierracolor()
@@ -183,11 +160,54 @@ export default function OrdTrabDatosPresup(props) {
         }
     };
 
+    const actualizadatos = (newData, id) => {
+        var datosnuevos = Object.values(newData);
+        var datosoriginales = Object.values(datosrenglon[id]);
+
+        var i = 0
+        for (i; i <= datosoriginales.length - 2; i++) {
+
+            if (datosoriginales[i] !== datosnuevos[i]) {
+                if (i === 1) {
+                    newData.ordtrabimpsiva = datosoriginales[6] * datosnuevos[1]
+                    newData.ordtrabimpciva = datosoriginales[7] * datosnuevos[1]
+
+                }
+                if (i === 7) {
+                    newData.ordtrabimpitemsiva = datosnuevos[7] / 1.21
+                    newData.ordtrabimpsiva = newData.ordtrabimpitemsiva * datosnuevos[1]
+                    newData.ordtrabimpciva = datosnuevos[7] * datosnuevos[1]
+                }
+                if (i === 9) {
+                    newData.ordtrabimpitemciva = datosnuevos[9] / datosnuevos[1]
+                    newData.ordtrabimpitemsiva = newData.ordtrabimpitemciva / 1.21
+                    newData.ordtrabimpsiva = newData.ordtrabimpitemsiva * datosnuevos[1]
+                    newData.ordtrabimpciva = newData.ordtrabimpitemciva * datosnuevos[1]
+                }
+
+            }
+        }
+    }
+
+    const generaorden = () => {
+        console.log('datosrenglon generaorden ', datosrenglon)
+        console.log('datosencab  ', datosencab)
+        // setGeneraOt(!generaot)
+        datoslonas.datlonasenrollables[0].ancho = tabladetalles[0].ancho
+        datoslonas.datlonasenrollables[0].altovolado = tabladetalles[0].altovolado
+        datoslonas.datlonasenrollables[0].sobrantemarco = tabladetalles[0].sobrantemarco
+
+
+
+        console.log('tabladetalles    ', tabladetalles)
+        console.log('datoslonas.datlonasenrollables  ', datoslonas.datlonasenrollables)
+        abrecierradetalles()
+    }
 
     const textdata = [
         {
             id: "StkItemsDesc",
-            label: "Rubro",
+            label: "Color",
             value: state.StkItemsDesc,
             mapeo: (
                 <>
@@ -203,7 +223,7 @@ export default function OrdTrabDatosPresup(props) {
         },
     ];
     return (
-        <div>
+        <div className={classes.root}>
             <Dialog
                 fullWidth={true}
                 maxWidth={'xl'}
@@ -277,44 +297,41 @@ export default function OrdTrabDatosPresup(props) {
                                     onChange={handleChange}
                                 />
                             </Grid>
-
+                            <Grid item xs={2}>
+                                <Button
+                                    onClick={generaorden}
+                                >Genera</Button>
+                            </Grid>
                         </Grid>
 
                     </div>
-
-
                     <MaterialTable
                         title=""
                         columns={columns}
                         data={datosrenglon}
                         icons={tableIcons}
                         localization={localization}
+
                         options={{
                             search: false
                         }}
-                        // editable={{
-                        //     onRowUpdate: (newData, oldData) =>
+                        editable={{
 
-                        //         new Promise((resolve, reject) => {
-                        //             setTimeout(() => {
-                        //                 const dataUpdate = [...datosrenglon];
-                        //                 const index = oldData.tableData.id;
-                        //                 dataUpdate[index] = newData;
-                        //                 setDatosRenglon([...dataUpdate]);
-                        //                 renglot1[index] = newData;
-                        //                 resolve();
-                        //             }, 1000);
-                        //         }),
-                        // }}
-                        cellEditable={{
-                            // cellStyle: {},
-                            onCellEditApproved: (newValue, oldValue, rowData, columnDef) => {
-                                return new Promise((resolve, reject) => {
-                                    console.log('newValue: ' + newValue);
-                                    setTimeout(resolve, 4000);
-                                });
-                            }
+                            onRowUpdate: (newData, oldData) =>
+
+                                new Promise((resolve, reject) => {
+                                    setTimeout(() => {
+                                        actualizadatos(newData, oldData.tableData.id)
+                                        const dataUpdate = [...datosrenglon];
+                                        const index = oldData.tableData.id;
+                                        dataUpdate[index] = newData;
+                                        setDatosRenglon([...dataUpdate]);
+                                        renglot1[index] = newData;
+                                        resolve();
+                                    }, 1000);
+                                }),
                         }}
+
                         actions={[
                             {
                                 icon: () => (
@@ -332,19 +349,13 @@ export default function OrdTrabDatosPresup(props) {
                                 tooltip: "Colores",
                                 onClick: (event, rowData) => (
                                     eligecolor(event, rowData)
-                                    // {console.log('rowData  ', rowData)}
                                 )
-                            }]}
-                    // components={{
-                    //     Toolbar: (props) => (
-                    //         <div>
-                    //             <MTableToolbar {...props} />
-                    //         </div>
-                    //     ),
-                    // }}
+                            }
+
+
+                        ]}
+
                     />
-
-
                     <Dialog
                         maxWidth={'xl'}
                         open={abrecolor}
@@ -371,124 +382,28 @@ export default function OrdTrabDatosPresup(props) {
                             ))}
                         {/* </Grid> */}
                     </Dialog>
+                    <Dialog
+                        maxWidth={'xl'}
+                        open={abredetalles}
+                        onClose={abrecierradetalles}
 
+                    >
+                        {console.log('datoslonas.datoslonasenro  ', datoslonas.datlonasenrollables)}
+                        <MaterialTable
+                            title=""
+                            columns={datoslonas.cdatlonasenrollables}
+                            data={datoslonas.datlonasenrollables}
+                            icons={tableIcons}
+                            localization={localization}
+                        ></MaterialTable>
 
-
+                    </Dialog>
                 </form >
             </Dialog >
         </div >
     )
-    // return new Promise(resolve => {
-    //     const url = IpServidor + '/datospresupeleg/?id=' + datotraido;
 
-    //     request
-    //         .get(url)
-    //         .set('Content-Type', 'application/json')
-    //         .then(res => {
-    //             const datosordentrabajo = JSON.parse(res.text)
-    //             resolve(datosordentrabajo);
-    //         })
-    // });
 
 };
 
 
-// if (datosencab !== undefined) {
-//     datosencab.map((encabezado) => {
-
-//         console.log('encabezado  ', encabezado)
-//         // console.log( datosencab[0].idPresupEncab )
-//         // console.log( datosencab[0].PresupEncabFecha )
-//         // console.log( datosencab[0].PresupEncabCliente )
-//         // console.log( datosencab[0].PresupEncabMayMin )
-//         // console.log( datosencab[0].PresupEncabTotal )
-//         // console.log( datosencab[0].PresupEncabExplic )
-//     })
-// }
-
-// setDatosRenglon([datosrenglon,
-//     'a']
-// )
-// console.log('renglot1  ', renglot1)
-
-// async function dataFetch() {
-//     console.log('renglond  ', renglot1)
-// }
-
-// datosencab.map((encabezado) => (
-//     <div style={{ height: 250, width: '100%' }}>
-//         <DataGrid
-//             columns={[{ field: 'idPresupEncab', minWidth: 150 }, { field: 'PresupEncabFecha' }]}
-//             rows={encabezado}
-//         />
-//     </div>))
-
-
-// {datosnecesarios !== undefined &&
-//                     <div>
-//                     {console.log('state.datos datosnecesarios ', datosnecesarios)}
-//                     <TextField value={datoselegidos.StkRubroAbr
-//                     }></TextField>
-//                         {console.log('renglot1  ', renglot1)}
-//                     </div>}
-
-
-
-// console.log( datosencab[0].idPresupEncab )
-// console.log( datosencab[0].PresupEncabFecha )
-// console.log( datosencab[0].PresupEncabCliente )
-// console.log( datosencab[0].PresupEncabMayMin )
-// console.log( datosencab[0].PresupEncabTotal )
-// console.log( datosencab[0].PresupEncabExplic )
-
-// const datoscargados = Object.assign(inforden.datlonasenrollables, datoselegidosaux);
-
-// const object = datoscargados;
-// for (const property in object) {
-//     console.log(`${property}: ${object[property]}`);
-
-// }
-
-// datoselegidosarr.push(datoselegidosaux)
-
-//   resultado = { ...inforden.datlonasenrollables, ...datoselegidosaux };
-
-// titulos.map((tittabla, index) => (
-
-
-// function showProps(obj, objName) {
-//     var result = ``;
-//     for (var i in obj) {
-//         // obj.hasOwnProperty() se usa para filtrar propiedades de la cadena de prototipos del objeto
-//         if (obj.hasOwnProperty(i)) {
-//             result += `${objName}.${i} = ${obj[i]}\n`;
-//         }
-//     }
-//     return result;
-// }
-
-// {titulos !== undefined &&
-//                         < div >
-//                             <MaterialTable
-//                                 title=""
-//                                 columns={titulos}
-//                                 data={tabladateleg}
-//                                 icons={tableIcons}
-//                                 localization={localization}
-
-//                                 editable={{
-//                                     onRowUpdate: (newData, oldData) =>
-//                                         new Promise((resolve, reject) => {
-//                                             setTimeout(() => {
-//                                                 const dataUpdate = [...tabladateleg];
-//                                                 const index = oldData.tableData.id;
-//                                                 dataUpdate[index] = newData;
-//                                                 setTablaDatEleg([...dataUpdate]);
-//                                                 tabladatelegint[index] = newData;
-//                                                 resolve();
-//                                             }, 1000);
-//                                         }),
-//                                 }}
-//                             />
-//                         </div>
-//                     } 

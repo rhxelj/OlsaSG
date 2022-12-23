@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import useStyles from "../styles";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Radio from "@material-ui/core/Radio";
 
 import { TextField } from "@material-ui/core";
 import IconButton from '@material-ui/core/IconButton';
@@ -39,6 +42,7 @@ export default function FilaDos() {
   const { datosrenglon, setDatosRenglon } = useContext(PresupPantContext);
 
   // según el presupuesto elegido, lee la tabla y se decide que pide
+  const [selectedValue, setSelectedValue] = React.useState("REC");
   if (state.DatosPresupEleg.length !== 0) {
     var largo = state.DatosPresupEleg[0].PresupConfTipoLargo;
     var ancho = state.DatosPresupEleg[0].PresupConfTipoAncho;
@@ -61,6 +65,9 @@ export default function FilaDos() {
     }
     if (presuptipo === "CARGA DESCRIPCION") {
       state.labellargo = 'Importe'
+    }
+    if (presuptipo === "CAMBIO PISO PILETA") {
+      state.labellargo = 'Largo/Diametro'
     }
     if (presuptipo === "CAMBIO PAÑO") {
       state.labelancho = 'Ancho Lona'
@@ -357,6 +364,7 @@ export default function FilaDos() {
             className={classes.textField}
           />
         </Grid>}
+
       <Grid container item xs={12}>
         {/* < FilaConf disable={!(presuptipo === "CONFECCIONADA")}></FilaConf> */}
         {presuptipo === "CONFECCIONADA" && <FilaConf></FilaConf>}
@@ -370,8 +378,9 @@ export default function FilaDos() {
         {presuptipo === "COMEDERO" && <FilaComedero></FilaComedero>}
         {presuptipo === "CAMBIO PAÑO" && <FilaCambPanio></FilaCambPanio>}
         {presuptipo === "TOLDO ABANICO" && <FilaAbanico></FilaAbanico>}
-        {(presuptipo !== "UNIDAD" && rubrosn === "S" && presuptipo !== "CARGA DESCRIPCION") ? <FilaDetDesc></FilaDetDesc> : <></>}
+        {/* {(presuptipo !== "UNIDAD" && rubrosn === "S" && presuptipo !== "CARGA DESCRIPCION") ? <FilaDetDesc></FilaDetDesc> : <></>} */}
         {(presuptipo === "CARGA DESCRIPCION") ? <FilaCargaDesc></FilaCargaDesc> : <></>}
+        {(presuptipo !== "UNIDAD" && rubrosn === "S") ? <FilaDetDesc presuptipo={presuptipo}></FilaDetDesc> : <></>}
         <IconButton
           onClick={() => agregar()}
           color="primary" >

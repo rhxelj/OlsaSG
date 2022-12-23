@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import MaterialTable, { MTableToolbar } from "material-table";
+// import MaterialTable, { MTableToolbar } from "@material-table/core";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import WavesIcon from "@material-ui/icons/Waves";
@@ -50,7 +51,8 @@ export default function PresupMuestra(props) {
 	});
 	var fecha = new Date();
 	fecha.setDate(fecha.getDate() - 360);
-	const [fechasel, setFechasel] = useState(fecha.getDate() - 360);
+	//	const [fechasel, setFechasel] = useState(fecha.getDate() - 360);
+	const [fechasel, setFechasel] = useState(fecha);
 	const [selectedDate, setSelectedDate] = useState(fecha);
 
 	const handleChangeFB = (event1) => {

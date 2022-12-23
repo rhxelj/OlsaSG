@@ -6,20 +6,7 @@ import { TextField } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 export default function FilaCargaDesc() {
     const { state, setState } = useContext(PresupPantContext);
-    // const [DescripPresup, setDescripPresup] = React.useState('')
-    //  const [selectedValue, setSelectedValue] = React.useState("");
 
-
-
-    // const handleChange3 = (event) => {
-    //     setDescripPresup(event.target.value);
-    //     setState({ ...state, DescripPresup: event.target.value });
-    // };
-
-    // const handleChange4 = (event) => {
-    //     //   setSelectedValue(event.target.value);
-    //     setState({ ...state, DetallePresup: event.target.value });
-    // };
 
     const handleChange5 = (event) => {
         setState({ ...state, DetalleRenglon: event.target.value });
@@ -37,10 +24,10 @@ export default function FilaCargaDesc() {
                     variant="outlined"
                     id="DetalleRenglon"
                     margin="dense"
-                    label="Agrega en Renglón "
+                    label="Descripción "
                     fullWidth
                     value={state.DetalleRenglon}
-                    helperText='Se agrega a la descripción'
+                    helperText='Descripción del trabajo'
                     onChange={handleChange5}
                     className={classes.textField}
                 />

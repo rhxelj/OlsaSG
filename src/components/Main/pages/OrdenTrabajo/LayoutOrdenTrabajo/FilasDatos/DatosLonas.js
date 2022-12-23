@@ -16,7 +16,7 @@ export const datoslonas = {
     cdatlonasenrollables: [
         { title: "TipoPrespuesto", field: 'tipopresup', },
         { title: "Cantidad", field: 'cantidad', },
-        { title: "Ancho", field: 'ancho', },
+        { title: "Ancho", field: 'datlonasenrollables.ancho', },
         { title: "Largo", field: 'largo', },
         { title: "Faja Superior", field: 'tamfaja', },
         { title: "Cristal", field: 'tamcristal', },

@@ -73,6 +73,7 @@ router.get("/", (req, res) => {
       termbordeeleg = datosrec[0].termbordeeleg;
       medida = datosrec[0].medida * 1;
       alto = datosrec[0].alto * 1;
+      alto = alto + 0.3
       anchopared = datosrec[0].anchopared * 1 / 100;
 
       buscaancho = ['Select StkRubroAncho  as AnchoTela  from BaseStock.StkRubro where StkRubro.StkRubroAbr = "', StkRubroAbrP, '" '].join('')
@@ -110,7 +111,7 @@ router.get("/", (req, res) => {
           }
 
 
-          detalle = detalle + ' con pared de ' + anchopared + ' mts. y un alto de ' + alto + ' mts. en : '
+          detalle = detalle + ' con pared de ' + anchopared + ' mts. y un alto de ' + (alto * 1).toFixed(2) + ' mts. en : '
           // console.log('termbordeeleg  ', termbordeeleg)
           // console.log('alto  ', alto)
           // if (termbordeeleg === 'SF') {
