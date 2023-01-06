@@ -1,4 +1,4 @@
-export const initial_state = {
+export const inicial_state = {
     ClientesDesc: '',
     clientes: [],
     otorigen: 'P',

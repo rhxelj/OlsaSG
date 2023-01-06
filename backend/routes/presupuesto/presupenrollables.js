@@ -40,127 +40,140 @@ router.get('/', (req, res, next) => {
         largo = datos.largo * 1
         ancho = datos.ancho * 1 + 0.12
         altovolado = datos.altovolado * 1
-        enteropanios = Math.trunc(ancho / 1.50)
 
 
-        if (datos.minmay == 'my') {
-          coeficiente = result[0].coeficientemay
-          coefMOT = result[0].coefMOTmay
-          ivasn = 'CIVA'
-        }
-        else {
-          coeficiente = result[0].coeficientemin
-          coefMOT = result[0].coefMOTmin
-        }
+        q2 = ['Select StkRubroAncho as anchotela from BaseStock.StkRubro where StkRubro.StkRubroAbr = "' + StkRubroAbrP + '" '].join(' ')
 
-        valorMOTmin = result[0].costoMOT * coefMOT / 60
-
-        decimalpanios = (ancho / 1.5) - enteropanios
-        if (decimalpanios < 0.5) {
-          panios = enteropanios + 0.50
-        }
-        else {
-          panios = enteropanios + 1
-        }
-
-
-        if (altovolado == 0) {
-          MOTarmado = ancho * 40 * valorMOTmin
-          largo = largo + 0.44
-        }
-        else {
-          MOTarmado = ancho * 60 * valorMOTmin
-          largo = largo + 0.44 + (altovolado / 100)
-        }
-
-
-
-        if (tamcristal != 'NOPVC') {
-
-          largocristal = (datos.ancho * 1 - (datos.sobrantemarco * 2 / 100))
-          valorcristal = ['Select ',
-            ' StkRubroAbr, StkRubroAncho, ',
-            '((StkRubroCosto * StkMonedasCotizacion * ', coeficiente,
-            ' * ', largocristal,
-            ' ) + (( ', largocristal, ' * 2 ) + ((StkRubroAncho - 0.03 ) * 2))  * 7 * ', valorMOTmin,
-            ') ',
-            ' as ArmadoCristal, ',
-            'StkRubroCosto, ',
-            'StkMonedasCotizacion ',
-            'from BaseStock.StkRubro JOIN  BaseStock.StkMonedas ',
-            'where StkRubro.StkRubroAbr = "', tamcristal, '" ',
-            'and StkRubro.StkRubroTM = idStkMonedas '
-          ].join('')
-
-
-          conexion.query(
-            valorcristal,
-            function (err, resultcristal) {
-              if (err) {
-                console.log('error en mysql')
-                console.log(err)
-              }
-              else {
-                datosenvio.push(resultcristal);
-              }
-            });
-        }
-
-        q = ['Select ',
-          'StkRubroDesc, StkRubroAbr, ',
-          '((StkRubroCosto * StkMonedasCotizacion * ', coeficiente,
-          ' * ', panios,
-          ' * ', largo, ')',
-          '+ ', MOTarmado, ')',
-          ' as ImpUnitario, ',
-          'StkRubroCosto, ',
-          'StkMonedasCotizacion ',
-          'from BaseStock.StkRubro JOIN  BaseStock.StkMonedas ',
-          'where StkRubro.StkRubroAbr = "', StkRubroAbrP, '" ',
-          'and StkRubro.StkRubroTM = idStkMonedas '
-        ].join('')
-
-        if (detallep == '') {
-          detalle = "Lona enrollable "
-        }
-        else {
-          detalle = detallep + ''
-        }
-        conexion.query(
-          q,
-          function (err, result) {
+        conexion.query(q2,
+          function (err, result2) {
             if (err) {
-              console.log('error en mysql')
-              console.log(err)
+              console.log(err);
+            }
+            var anchotela = result2[0].anchotela
+
+
+            enteropanios = Math.trunc(ancho / anchotela)
+
+
+            if (datos.minmay == 'my') {
+              coeficiente = result[0].coeficientemay
+              coefMOT = result[0].coefMOTmay
+              ivasn = 'CIVA'
             }
             else {
-              if (tamcristal != 'NOPVC') {
-                result[0].Detalle = detalle + " con Cristal de " + datosenvio[0][0].StkRubroAncho + " con marco de " + datos.sobrantemarco + " cm. en los costados, y volado de " + altovolado + " cm. en : "
-                result[0].ImpUnitario = result[0].ImpUnitario + datosenvio[0][0].ArmadoCristal
-              }
-              else {
-                if (altovolado != 0) {
-                  result[0].Detalle = detalle + " con volado de " + altovolado + " cm. en : "
-                }
-                else { result[0].Detalle = detalle + " en : " }
-              }
-              if (ivasn == 'CIVA') {
-                result[0].ImpUnitario = Math.ceil(result[0].ImpUnitario.toFixed(0) / 10) * 10
-              }
-              else {
-                result[0].ImpUnitario = Math.ceil(result[0].ImpUnitario.toFixed(0) / 1.21 / 10) * 10
-              }
-              result[0].Largo = (datos.largo * 1).toFixed(2)
-              result[0].Ancho = (datos.ancho * 1).toFixed(2)
-              datosenvio = []
-              datosenvio.push(result)
-
-              i++
-              if (i === totalreg) {
-                res.json(datosenvio)
-                datosenvio = []
-              }
+              coeficiente = result[0].coeficientemin
+              coefMOT = result[0].coefMOTmin
             }
+
+            valorMOTmin = result[0].costoMOT * coefMOT / 60
+
+            decimalpanios = (ancho / anchotela) - enteropanios
+            if (decimalpanios < 0.5) {
+              panios = enteropanios + 0.50
+            }
+            else {
+              panios = enteropanios + 1
+            }
+
+
+            if (altovolado == 0) {
+              MOTarmado = ancho * 40 * valorMOTmin
+              largo = largo + 0.44
+            }
+            else {
+              MOTarmado = ancho * 60 * valorMOTmin
+              largo = largo + 0.44 + (altovolado / 100)
+            }
+
+
+
+            if (tamcristal != 'NOPVC') {
+
+              largocristal = (datos.ancho * 1 - (datos.sobrantemarco * 2 / 100))
+              valorcristal = ['Select ',
+                ' StkRubroAbr, StkRubroAncho, ',
+                '((StkRubroCosto * StkMonedasCotizacion * ', coeficiente,
+                ' * ', largocristal,
+                ' ) + (( ', largocristal, ' * 2 ) + ((StkRubroAncho - 0.03 ) * 2))  * 7 * ', valorMOTmin,
+                ') ',
+                ' as ArmadoCristal, ',
+                'StkRubroCosto, ',
+                'StkMonedasCotizacion ',
+                'from BaseStock.StkRubro JOIN  BaseStock.StkMonedas ',
+                'where StkRubro.StkRubroAbr = "', tamcristal, '" ',
+                'and StkRubro.StkRubroTM = idStkMonedas '
+              ].join('')
+
+
+              conexion.query(
+                valorcristal,
+                function (err, resultcristal) {
+                  if (err) {
+                    console.log('error en mysql')
+                    console.log(err)
+                  }
+                  else {
+                    datosenvio.push(resultcristal);
+                  }
+                });
+            }
+
+            q = ['Select ',
+              'StkRubroDesc, StkRubroAbr, ',
+              '((StkRubroCosto * StkMonedasCotizacion * ', coeficiente,
+              ' * ', panios,
+              ' * ', largo, ')',
+              '+ ', MOTarmado, ')',
+              ' as ImpUnitario, ',
+              'StkRubroCosto, ',
+              'StkMonedasCotizacion ',
+              'from BaseStock.StkRubro JOIN  BaseStock.StkMonedas ',
+              'where StkRubro.StkRubroAbr = "', StkRubroAbrP, '" ',
+              'and StkRubro.StkRubroTM = idStkMonedas '
+            ].join('')
+
+            if (detallep == '') {
+              detalle = "Lona enrollable "
+            }
+            else {
+              detalle = detallep + ''
+            }
+            conexion.query(
+              q,
+              function (err, result) {
+                if (err) {
+                  console.log('error en mysql')
+                  console.log(err)
+                }
+                else {
+                  if (tamcristal != 'NOPVC') {
+                    result[0].Detalle = detalle + " con Cristal de " + datosenvio[0][0].StkRubroAncho + " con marco de " + datos.sobrantemarco + " cm. en los costados, y volado de " + altovolado + " cm. en : "
+                    result[0].ImpUnitario = result[0].ImpUnitario + datosenvio[0][0].ArmadoCristal
+                  }
+                  else {
+                    if (altovolado != 0) {
+                      result[0].Detalle = detalle + " con volado de " + altovolado + " cm. en : "
+                    }
+                    else { result[0].Detalle = detalle + " en : " }
+                  }
+                  if (ivasn == 'CIVA') {
+                    result[0].ImpUnitario = Math.ceil(result[0].ImpUnitario.toFixed(0) / 10) * 10
+                  }
+                  else {
+                    result[0].ImpUnitario = Math.ceil(result[0].ImpUnitario.toFixed(0) / 1.21 / 10) * 10
+                  }
+                  result[0].Largo = (datos.largo * 1).toFixed(2)
+                  result[0].Ancho = (datos.ancho * 1).toFixed(2)
+                  datosenvio = []
+                  datosenvio.push(result)
+
+                  i++
+                  if (i === totalreg) {
+                    res.json(datosenvio)
+                    datosenvio = []
+                  }
+                }
+              })
           })
       })
     })

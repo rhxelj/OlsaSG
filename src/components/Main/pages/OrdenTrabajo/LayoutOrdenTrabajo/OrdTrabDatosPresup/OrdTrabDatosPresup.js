@@ -3,20 +3,25 @@ import Dialog from "@material-ui/core/Dialog";
 import MaterialTable from "material-table";
 import { localization } from "../../../../../lib/material-table/localization";
 import { tableIcons } from "../../../../../lib/material-table/tableIcons";
-import { OrdTrabColumn } from "./OrdTrabColumn";
-import { DatosEncabPresupEleg } from './DatosEncabPresupEleg'
-import { OrdTrabLeeItems } from "./OrdTrabLeeItems";
+import { OrdTrabColumn } from "../OrdTrabOrigen/OrdTrabColumn";
+import { DatosEncabPresupEleg } from '../OrdTrabOrigen/DatosEncabPresupEleg'
+import { OrdTrabLeeItems } from "../OrdTrabOrigen/OrdTrabLeeItems";
 import { Button, TextField } from "@material-ui/core";
 import { initial_state } from "../../Initial_State";
+// import { datoslonas } from "../FilasDatos/DatosLonas";
 import Grid from "@material-ui/core/Grid";
 import estilosot from "../../../OrdenTrabajo/OrdenTrabajo.module.css"
 import CurrencyTextField from "@unicef/material-ui-currency-textfield";
 import { makeStyles } from "@material-ui/core/styles";
 import {
+    blue,
     teal,
     orange
 } from "@material-ui/core/colors";
-import { datoslonas } from "../FilasDatos/DatosLonas";
+import OrdTrabGeneraOrden from "../OrdTrabGeneraOrden/OrdTrabGeneraOrden";
+import { useContext } from "react";
+import { OrdenTrabajoPantContext } from "../../OrdenTrabajoPant";
+
 
 const useStyles = makeStyles({
     root: {
@@ -26,7 +31,12 @@ const useStyles = makeStyles({
         maxHeight: 440,
     },
 });
+
+
+
+
 export default function OrdTrabDatosPresup(props) {
+    // const { state, setState } = useContext(OrdenTrabajoPantContext);
     const { DatosPresupEleg, open, handleClose } = props;
     const [state, setState] = useState(initial_state)
     const [totalciva, setTotalCiva] = useState(0);
@@ -35,7 +45,6 @@ export default function OrdTrabDatosPresup(props) {
     const [abredetalles, setAbreDetalles] = useState(false)
 
 
-    const [generaot, setGeneraOt] = useState(false)
     const classes = useStyles();
 
 
@@ -50,7 +59,10 @@ export default function OrdTrabDatosPresup(props) {
     var indiceitem1 = 0
     var tabladatelegint = []
     const [tabladetalles, setTablaDetalles] = useState(tabladatelegint)
+    const [tabladetallesitem, setTablaDetallesItem] = useState(0)
+    const [detallerenglon, setDetalleRenglon] = useState([])
     const [indiceitem, setIndiceItem] = useState(0)
+
     async function columnsFetch() {
         const col = await OrdTrabColumn(renglot1);
 
@@ -87,6 +99,7 @@ export default function OrdTrabDatosPresup(props) {
 
     const abrecierradetalles = () => {
         setAbreDetalles(!abredetalles)
+        // console.log('state.nuevascolumnas  ', state.nuevascolumnas)
     };
     function sumar() {
         var tototciva = 0,
@@ -108,9 +121,7 @@ export default function OrdTrabDatosPresup(props) {
             if (datotraido[i].tableData.checked === true) {
                 datoselegidosaux = JSON.parse(datotraido[i].PresupRenglonParamInt)
                 // leeitemsrubro(datoselegidosaux.StkRubroAbr)
-                // console.log(' datositemsreng dd ', state.datositems)
                 // resultado = { ...inforden.datlonasenrollables, ...datoselegidosaux };
-                console.log('datoselegidosaux  ', datoselegidosaux)
                 if (datoselegidosaux.ivasn === 'CIVA') {
                     impsiva = datotraido[i].PresupRenglonImpItem * 1 / 1.21
                 }
@@ -188,22 +199,33 @@ export default function OrdTrabDatosPresup(props) {
             }
         }
     }
-
-    const generaorden = () => {
-        console.log('datosrenglon generaorden ', datosrenglon)
-        console.log('datosencab  ', datosencab)
-        // setGeneraOt(!generaot)
-        datoslonas.datlonasenrollables[0].ancho = tabladetalles[0].ancho
-        datoslonas.datlonasenrollables[0].altovolado = tabladetalles[0].altovolado
-        datoslonas.datlonasenrollables[0].sobrantemarco = tabladetalles[0].sobrantemarco
+    // const generaorden = (event, detallerengloneleg) => {
+    //     setTablaDetallesItem(detallerengloneleg.tableData.id)
+    //     setDetalleRenglon(detallerengloneleg)
 
 
+    //     //setState({ ...state, nuevascolumnas: columtabladef[0] });
 
-        console.log('tabladetalles    ', tabladetalles)
-        console.log('datoslonas.datlonasenrollables  ', datoslonas.datlonasenrollables)
-        abrecierradetalles()
+    //     setColumns(datoslonas.cdatlonasconfeccion);
+    //     //  console.log('columtabladef en ordtrabdatos  ', columtabladef)
+    //     //     setAbreDetalles(!abredetalles)
+    // }
+
+    const generaorden = (event, detallerengloneleg) => {
+        setTablaDetallesItem(detallerengloneleg.tableData.id)
+        setDetalleRenglon(detallerengloneleg)
+        //  console.log('columtabladef en ordtrabdatos  ', columtabladef)
+        setAbreDetalles(!abredetalles)
     }
 
+
+    // const generaorden = () => {
+
+
+    //     setAbreDetalles(!abredetalles)
+    // }
+    // const togglePanel = (rowData) => {
+    // }
     const textdata = [
         {
             id: "StkItemsDesc",
@@ -227,9 +249,7 @@ export default function OrdTrabDatosPresup(props) {
             <Dialog
                 fullWidth={true}
                 maxWidth={'xl'}
-                // className={DialogoEstilo.dialogo}
                 open={open}
-                // TransitionComponent={Transition}
                 keepMounted
                 onClose={handleClose1}
                 aria-labelledby="alert-dialog-slide-title"
@@ -297,65 +317,84 @@ export default function OrdTrabDatosPresup(props) {
                                     onChange={handleChange}
                                 />
                             </Grid>
-                            <Grid item xs={2}>
+                            {/* <Grid item xs={2}>
                                 <Button
                                     onClick={generaorden}
                                 >Genera</Button>
-                            </Grid>
+                            </Grid> */}
                         </Grid>
 
                     </div>
-                    <MaterialTable
-                        title=""
-                        columns={columns}
-                        data={datosrenglon}
-                        icons={tableIcons}
-                        localization={localization}
+                    <Grid>
+                        <MaterialTable
+                            title=""
+                            columns={columns}
+                            data={datosrenglon}
+                            icons={tableIcons}
+                            localization={localization}
 
-                        options={{
-                            search: false
-                        }}
-                        editable={{
+                            options={{
+                                search: false
+                            }}
+                            editable={{
 
-                            onRowUpdate: (newData, oldData) =>
+                                onRowUpdate: (newData, oldData) =>
 
-                                new Promise((resolve, reject) => {
-                                    setTimeout(() => {
-                                        actualizadatos(newData, oldData.tableData.id)
-                                        const dataUpdate = [...datosrenglon];
-                                        const index = oldData.tableData.id;
-                                        dataUpdate[index] = newData;
-                                        setDatosRenglon([...dataUpdate]);
-                                        renglot1[index] = newData;
-                                        resolve();
-                                    }, 1000);
-                                }),
-                        }}
+                                    new Promise((resolve, reject) => {
+                                        setTimeout(() => {
+                                            actualizadatos(newData, oldData.tableData.id)
+                                            const dataUpdate = [...datosrenglon];
+                                            const index = oldData.tableData.id;
+                                            dataUpdate[index] = newData;
+                                            setDatosRenglon([...dataUpdate]);
+                                            renglot1[index] = newData;
+                                            resolve();
+                                        }, 1000);
+                                    }),
+                            }}
 
-                        actions={[
-                            {
-                                icon: () => (
-                                    <tableIcons.AddShoppingCart style={{ color: teal[500] }} />
-                                ),
-                                tooltip: "Suma",
-                                isFreeAction: true,
-                                onClick: () => sumar(),
-                            },
-                            {
-                                icon: () => (
-                                    <tableIcons.Palette
-                                        style={{ color: orange[500], fontSize: 40 }} />
-                                ),
-                                tooltip: "Colores",
-                                onClick: (event, rowData) => (
-                                    eligecolor(event, rowData)
-                                )
-                            }
+                            actions={[
+                                {
+                                    icon: () => (
+                                        <tableIcons.AddShoppingCart style={{ color: teal[500] }} />
+                                    ),
+                                    tooltip: "Suma",
+                                    isFreeAction: true,
+                                    onClick: () => sumar(),
+                                },
+                                {
+                                    icon: () => (
+                                        <tableIcons.Palette
+                                            style={{ color: orange[500], fontSize: 40 }} />
+                                    ),
+                                    tooltip: "Colores",
+                                    onClick: (event, rowData) => (
+                                        eligecolor(event, rowData)
+                                    )
+                                },
+                                {
+                                    icon: () => (
+                                        <tableIcons.PlaylistAdd
+                                            style={{ color: blue[500], fontSize: 40 }} />
+                                    ),
+                                    tooltip: "Detalles",
+                                    onClick: (event, rowData) => (
+                                        generaorden(event, rowData)
+                                    )
+                                },
+                            ]}
+                        // detailPanel={rowData => {
+                        //     return (
+                        //         <div>
+                        //             {generaorden()}
 
+                        //         </div>
+                        //     )
+                        // }}
+                        // onRowClick={(event, rowData, togglePanel) => togglePanel()}
 
-                        ]}
-
-                    />
+                        />
+                    </Grid>
                     <Dialog
                         maxWidth={'xl'}
                         open={abrecolor}
@@ -380,24 +419,19 @@ export default function OrdTrabDatosPresup(props) {
                                     {data.mapeo}
                                 </TextField>
                             ))}
-                        {/* </Grid> */}
                     </Dialog>
-                    <Dialog
-                        maxWidth={'xl'}
-                        open={abredetalles}
-                        onClose={abrecierradetalles}
+                    {detallerenglon &&
+                        <OrdTrabGeneraOrden
 
-                    >
-                        {console.log('datoslonas.datoslonasenro  ', datoslonas.datlonasenrollables)}
-                        <MaterialTable
-                            title=""
-                            columns={datoslonas.cdatlonasenrollables}
-                            data={datoslonas.datlonasenrollables}
-                            icons={tableIcons}
-                            localization={localization}
-                        ></MaterialTable>
+                            open={abredetalles}
+                            handleClose={abrecierradetalles}
+                            Detalles={tabladetalles}
+                            idTablaDetalles={tabladetallesitem}
+                        // Detalles={detallerenglon}
 
-                    </Dialog>
+                        ></OrdTrabGeneraOrden>
+                    }
+
                 </form >
             </Dialog >
         </div >

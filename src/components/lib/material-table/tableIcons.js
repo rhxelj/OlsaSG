@@ -34,6 +34,7 @@ import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import TableChartIcon from '@material-ui/icons/TableChart';
 import PaletteIcon from '@material-ui/icons/Palette';
+import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 
 
 export const tableIcons = {
@@ -72,4 +73,5 @@ export const tableIcons = {
   LocalAtm: forwardRef((props, ref) => <LocalAtmIcon {...props} ref={ref} />),
   TableChart: forwardRef((props, ref) => <TableChartIcon {...props} ref={ref} />),
   Palette: forwardRef((props, ref) => <PaletteIcon {...props} ref={ref} />),
+  PlaylistAdd: forwardRef((props, ref) => <PlaylistAddIcon {...props} ref={ref} />),
 };

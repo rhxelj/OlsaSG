@@ -23,9 +23,12 @@ import { onRowDelete } from "./onRowDelete";
 import TablaMuestraRenglon from "./TablaMuestraRenglon";
 import Imprimir from "../../../Impresion/Imprimir/Imprimir";
 import { initial_state } from "../../../OrdenTrabajo/Initial_State";
-
 import { useContext } from "react";
 import { globalContext } from "../../../../../App";
+
+// import { useContext } from "react";
+// import { globalContext } from "../../../../../App";
+// import { OrdenTrabajoPantContext } from "../../../OrdenTrabajo/OrdenTrabajoPant";
 
 const useStyles = makeStyles({
 	root: {
@@ -35,10 +38,11 @@ const useStyles = makeStyles({
 		maxHeight: 440,
 	},
 });
-
+//usar custom hooks
 export default function PresupMuestra(props) {
-	const { setValor } = useContext(globalContext);
 	const [state, setState] = useState(initial_state);
+	const { setValor } = useContext(globalContext);
+	// const [state, setState] = useContext(OrdenTrabajoPantContext);
 	const classes = useStyles();
 	const [open, setOpen] = useState(false);
 	const [ppreview, setPPreview] = useState(false);

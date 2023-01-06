@@ -9,9 +9,12 @@ import BotonEstilo from '../../../../../../Styles/Boton.module.css'
 import DialogoEstilo from '../../../../../../Styles/Dialog.module.css'
 import { presuprenglonleer } from "./PresupRenglonLeer";
 
-
-import OrdTrabDatosPresup from "../../../OrdenTrabajo/LayoutOrdenTrabajo/OrdTrabOrigen/OrdTrabDatosPresup"
+import MinMay from "../../../OrdenTrabajo/LayoutOrdenTrabajo/MinMay/MinMay";
+import OrdTrabDatosPresup from "../../../OrdenTrabajo/LayoutOrdenTrabajo/OrdTrabDatosPresup/OrdTrabDatosPresup"
 import { initial_state } from "../../../OrdenTrabajo/Initial_State";
+// import { useContext } from "react";
+// import { OrdenTrabajoPantContext } from "../../../OrdenTrabajo/OrdenTrabajoPant";
+
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -23,6 +26,7 @@ export default function TablaMuestraRenglon(props) {
     const [renglot, setRenglot] = useState([])
 
     const [state, setState] = useState(initial_state)
+    // console.log('state en tablamuestrarenglon  ', state)
     const [renglon, setRenglon] = useState({
         columns: [
             {
@@ -133,6 +137,7 @@ export default function TablaMuestraRenglon(props) {
             </div>
 
             {ppreview &&
+                // < MinMay DatosPresupEleg={renglot} />}
                 <OrdTrabDatosPresup DatosPresupEleg={renglot} open={ppreview} handleClose={handleClosePreview} />}
         </Dialog>
     );

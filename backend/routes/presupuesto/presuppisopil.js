@@ -15,7 +15,7 @@ var datosenvio = []
 var router = express();
 router.get('/', (req, res, next) => {
     var q, i = 0
-    var coeficiente = 0, cantidad = 0.00, StkRubroAbrP = '', largo = 0, ancho = 0, valorMOTmup = 0.00, impunion = 0.00, impcorte = 0.00, coefMOT = 0.00, impsol = 0.00, cuadred = 'REC', cantpa = 0
+    var coeficiente = 0, cantidad = 0.00, StkRubroAbrP = '', largo = 0, ancho = 0, valorMOTmup = 0.00, impunion = 0.00, impcorte = 0.00, coefMOT = 0.00, impsol = 0.00, cuadred = 'REC', cantpa = 0, anchopimp = 0
     q = ['select * from BasePresup.PresupParam'].join(' ')
     conexion.query(q,
         function (err, result) {
@@ -32,12 +32,16 @@ router.get('/', (req, res, next) => {
                 detallep = datos.detallep
                 StkRubroAbrP = datos.StkRubroAbr;
                 ivasn = datos.ivasn;
-                largo = datos.largo
-                ancho = datos.ancho
+                largo = datos.largo * 1
+                ancho = datos.ancho * 1
 
                 if (ancho === 0) {
-                    ancho = datos.largo * 1
+                    anchopimp = datos.largo * 1
                     cuadred = "RED"
+                }
+                else {
+                    anchopimp = ancho
+                    cuadred = "REC"
                 }
 
                 if (datos.minmay == 'my') {
@@ -65,52 +69,64 @@ router.get('/', (req, res, next) => {
                         // if (datos.minmay == 'my' || StkRubroAbrP == 'PLURI') {
 
 
-                        var numero = (ancho / anchotela);
-                        var enteros = Math.floor((ancho / anchotela));
+                        var numero = (largo / anchotela);
+                        var enteros = Math.floor((largo / anchotela));
                         var decimales = numero - enteros;
 
-
-                        if (decimales === 0)
+                        if (decimales === 0) {
                             cantpa = enteros
+                        }
                         else {
                             if (decimales < 0.50) {
                                 cantpa = enteros + 0.50
                             }
                             else {
-                                cantpa = enteros++
+                                cantpa = enteros + 1
                             }
                         }
 
 
+
+
                         valorMOTmup = result[0].costoMOT * coefMOT / 60 / 60 * result[0].segsolpu
                         valorMOTcorte = result[0].costoMOT * coefMOT / 60 / 60 * result[0].segpurecorte
-
-                        if ((ancho * 1 - Math.trunc(ancho)) > 0) {
-                            impunion = ((((Math.trunc(ancho))) * largo + (anchotela / 2))) * valorMOTmup
-                            impcorte = (ancho + 1) * valorMOTcorte
-
+                        if (decimales > 0) {
+                            impunion = (cantpa * largo + (anchotela / 2)) * valorMOTmup
+                            impcorte = (largo + 1) * valorMOTcorte
                         }
                         else {
-                            impunion = ((ancho - 1) * largo) * valorMOTmup
-                            impcorte = ancho * valorMOTcorte
+                            impunion = ((cantpa - 1) * largo) * valorMOTmup
+                            impcorte = largo * valorMOTcorte
                         }
+
+                        // if ((ancho * 1 - Math.trunc(ancho)) > 0) {
+                        //     impunion = ((((Math.trunc(ancho))) * largo + (anchotela / 2))) * valorMOTmup
+                        //     impcorte = (ancho + 1) * valorMOTcorte
+
+                        // }
+                        // else {
+                        //     impunion = ((ancho - 1) * largo) * valorMOTmup
+                        //     impcorte = ancho * valorMOTcorte
+                        // }
 
                         if (cuadred === 'REC') {
-                            impsol = (result[0].costoMOT * coefMOT / 60) * (largo * 2 + ancho * 2) * 5
+                            impsol = (result[0].costoMOT * coefMOT / 60 * 5) * (largo * 2 + ancho * 2)
 
                         }
                         else {
-                            impsol = (result[0].costoMOT * coefMOT / 60 * 9) * largo * 3.1416
+                            impsol = (result[0].costoMOT * coefMOT / 60 * 9) * ancho * 3.1416
                         }
                         importeMOTtotal = impunion + impcorte + impsol
-
+                        console.log('importeMOTtotal  ', importeMOTtotal)
+                        console.log('cantpa  ', cantpa)
+                        console.log('largo  ', largo)
 
 
                         q = ['Select',
                             'StkRubroDesc, StkRubroAbr, ',
                             '(((StkRubroCosto * StkMonedasCotizacion * ', coeficiente, ')',
                             ' * ', cantpa,
-                            ' * ', largo, ' ) + ' + importeMOTtotal + ') as ImpUnitario, ',
+                            ' * ', anchopimp, ' ) + ' + importeMOTtotal + ') as ImpUnitario, ',
                             'StkRubroAncho as Ancho, ',
                             'StkRubroCosto,',
                             'StkMonedasCotizacion ',
@@ -118,7 +134,7 @@ router.get('/', (req, res, next) => {
                             'where StkRubro.StkRubroAbr = "' + StkRubroAbrP + '" ',
                             'and StkRubro.StkRubroTM = idStkMonedas '
                         ].join(' ')
-                        console.log('q en casi final  ', q)
+
                         conexion.query(
                             q,
                             function (err, result) {
@@ -152,7 +168,7 @@ router.get('/', (req, res, next) => {
                                     }
                                     // result[0].Detalle = "Paños Unidos ( " + callargo.toFixed(2) + ' x ' + anchoreal + " ) en : "
                                     result[0].Detalle = detalle
-                                    result[0].Largo = largo
+                                    result[0].Largo = 0
                                     result[0].Ancho = 0
                                     result[0].MDesc = 'S'
                                     datosenvio.push(result)

@@ -282,9 +282,8 @@ router.get("/", (req, res, next) => {
               // if ((largorealn > largoreal) && (anchorealn > anchoreal)) {
               //   costoMOTf = (valorhora / 60 * 22 * ((largoreal * 2) + (anchorealn * 2)))
               // }
-
               if (largorealn < largoreal) {
-                costoMOTa = (valorhora / 60 * (15 * anchorealn))
+                costoMOTa = (valorhora / 60 * (15 * anchorealn * 2))
               }
 
               if (anchorealn < anchoreal) {

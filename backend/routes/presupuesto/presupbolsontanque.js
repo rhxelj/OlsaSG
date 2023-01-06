@@ -73,7 +73,7 @@ router.get("/", (req, res) => {
       termbordeeleg = datosrec[0].termbordeeleg;
       medida = datosrec[0].medida * 1;
       alto = datosrec[0].alto * 1;
-      alto = alto + 0.3
+      alto = alto + 0.4
       anchopared = datosrec[0].anchopared * 1 / 100;
 
       buscaancho = ['Select StkRubroAncho  as AnchoTela  from BaseStock.StkRubro where StkRubro.StkRubroAbr = "', StkRubroAbrP, '" '].join('')

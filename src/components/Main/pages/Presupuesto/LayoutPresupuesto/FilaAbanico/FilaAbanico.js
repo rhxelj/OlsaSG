@@ -14,7 +14,6 @@ import { PresupPantContext } from "../../PresupPant";
 
 export default function FilaAbanico(props) {
   const { state, setState } = useContext(PresupPantContext);
-
   const handleChange = (event) => {
     const id = event.target.id;
     setState({ ...state, [id]: event.target.value });
