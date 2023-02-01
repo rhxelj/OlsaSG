@@ -167,48 +167,51 @@ export default function PresupMuestra(props) {
 					Busca Detalle
 				</Button>
 			</Grid>
+			<Grid>
+				<MaterialTable
+					columns={columns}
+					data={data}
+					icons={tableIcons}
+					localization={localization}
+					title=""
+					editable={{
+						onRowDelete: (oldData) =>
+							onRowDelete(oldData).then(() => dataFetch(selectedDate)),
+					}}
+					actions={[
+						{
+							icon: () => <WavesIcon />,
+							tooltip: "Ver detalles",
+							onClick: (event, rowData) =>
+								openApp(event, rowData.idPresupEncab),
+						},
+						{
+							icon: () => (
+								<VisibilityRoundedIcon style={{ color: purple[500] }} />
+							),
+							isFreeAction: true,
+							// onClick: (event, rowData) =>
+							// openPreview(event, rowData.idPresupEncab),
+							onClick: () => openPreview(),
+						},
 
-			<MaterialTable
-				columns={columns}
-				data={data}
-				icons={tableIcons}
-				localization={localization}
-				title=""
-				editable={{
-					onRowDelete: (oldData) =>
-						onRowDelete(oldData).then(() => dataFetch(selectedDate)),
-				}}
-				actions={[
-					{
-						icon: () => <WavesIcon />,
-						tooltip: "Ver detalles",
-						onClick: (event, rowData) => openApp(event, rowData.idPresupEncab),
-					},
-					{
-						icon: () => (
-							<VisibilityRoundedIcon style={{ color: purple[500] }} />
+						{
+							icon: () => <tableIcons.Print style={{ color: green[500] }} />,
+							isFreeAction: true,
+							tooltip: "Imprimir",
+							onClick: () => setImprimirTF({ imprimir: true }),
+						},
+					]}
+					components={{
+						Toolbar: (props) => (
+							<React.Fragment>
+								{console.log("props  ", props)}
+								<MTableToolbar {...props} />
+							</React.Fragment>
 						),
-						isFreeAction: true,
-						// onClick: (event, rowData) =>
-						// openPreview(event, rowData.idPresupEncab),
-						onClick: () => openPreview(),
-					},
-
-					{
-						icon: () => <tableIcons.Print style={{ color: green[500] }} />,
-						isFreeAction: true,
-						tooltip: "Imprimir",
-						onClick: () => setImprimirTF({ imprimir: true }),
-					},
-				]}
-				components={{
-					Toolbar: (props) => (
-						<React.Fragment>
-							<MTableToolbar {...props} />
-						</React.Fragment>
-					),
-				}}
-			/>
+					}}
+				/>
+			</Grid>
 			{/* )} */}
 			<PresupPreviewMue open={ppreview} handleClose={handleClosePreview} />
 			<Imprimir

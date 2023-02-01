@@ -17,7 +17,7 @@ router.get("/", async function (req, res) {
 
   var StkRubroAbr = req.query.abr;
   var q = [
-    "Select StkItemsDesc, StkItemsCantDisp from StkItems where StkItemsRubroAbr = " + StkRubroAbr].join(" ");
+    "Select idStkItems, StkItemsDesc, StkItemsCantDisp from StkItems where StkItemsRubroAbr = " + StkRubroAbr].join(" ");
 
 
   conexion.query(q, function (err, result) {

@@ -12,6 +12,7 @@ const useStyles = makeStyles(theme => ({
   text: {
     color: theme.palette.secondary
   }
+
 }));
 
 export default useStyles;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { initial_state } from "./Initial_State";
-import OrdTrabOrigen from "./LayoutOrdenTrabajo/OrdTrabOrigen/OrdTrabOrigen";
-import OrdTrabDatosPresup from "./LayoutOrdenTrabajo/OrdTrabDatosPresup/OrdTrabDatosPresup";
+import OrdTrabOrigen from "./LayoutOrdenTrabajo/OrdTrabOrigen";
+import OrdTrabDatosPresup from "./LayoutOrdenTrabajo/OrdTrabDatosPresup";
 
 import { Grid } from "@material-ui/core";
 import { useContext } from "react";
@@ -12,6 +12,7 @@ export const OrdenTrabajoPantContext = React.createContext();
 var OrdenTrabajoPant = () => {
 	const { setValor } = useContext(globalContext);
 	const [state, setState] = useState(initial_state);
+
 	useEffect(() => {
 		setValor("Orden de Trabajo");
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -25,6 +26,7 @@ var OrdenTrabajoPant = () => {
 					}}
 				>
 					<OrdTrabOrigen />
+
 					<OrdTrabDatosPresup />
 				</OrdenTrabajoPantContext.Provider>
 			</Grid>

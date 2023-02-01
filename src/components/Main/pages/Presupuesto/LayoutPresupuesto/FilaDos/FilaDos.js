@@ -241,7 +241,7 @@ export default function FilaDos() {
         <>
           <option></option>
           {state.stkrubro.map((option) => (
-            <option key={option.StkRubroAbr} value={option.StkRubroAbr}>
+            <option key={option.idStkItems} value={option.StkRubroAbr}>
               {option.StkRubroDesc}
             </option>
           ))}

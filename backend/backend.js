@@ -84,6 +84,7 @@ var stkrubroleerdesc = require("./routes/stock/rubros/stkrubroleerdesc");
 var stkrubroleerconf = require("./routes/stock/rubros/stkrubroleerconf");
 var stkrubroleerTBR = require("./routes/stock/rubros/stkrubroleerTBR");
 var stkrubroleerprov = require("./routes/stock/rubros/stkrubroleerprov");
+var stkrubroleerconfgrp = require("./routes/stock/rubros/stkrubroleerconfgrp");
 
 
 var stkitemsleer = require("./routes/stock/items/stkitemsleer");
@@ -305,6 +306,8 @@ app.use("/stkrubroleerdesc", stkrubroleerdesc);
 app.use("/stkrubroleerconf", stkrubroleerconf);
 app.use("/stkrubroleerTBR", stkrubroleerTBR);
 app.use("/stkrubroleerprov", stkrubroleerprov);
+app.use("/stkrubroleerconfgrp", stkrubroleerconfgrp);
+
 
 app.use("/stkitemsleer", stkitemsleer);
 app.use("/stkitemsagregar", stkitemsagregar);

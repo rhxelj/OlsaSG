@@ -7,19 +7,19 @@ import { OrdTrabColumn } from "../OrdTrabOrigen/OrdTrabColumn";
 import { DatosEncabPresupEleg } from '../OrdTrabOrigen/DatosEncabPresupEleg'
 import { OrdTrabLeeItems } from "../OrdTrabOrigen/OrdTrabLeeItems";
 import { Button, TextField } from "@material-ui/core";
-// import { initial_state } from "../../Initial_State";
+import { initial_state } from "../../Initial_State";
 // import { datoslonas } from "../FilasDatos/DatosLonas";
 import Grid from "@material-ui/core/Grid";
 import estilosot from "../../../OrdenTrabajo/OrdenTrabajo.module.css"
 import CurrencyTextField from "@unicef/material-ui-currency-textfield";
+import { useSumar } from "../../hooks/useSumar";
 import { makeStyles } from "@material-ui/core/styles";
 import {
     blue,
     teal,
     orange
 } from "@material-ui/core/colors";
-// import OrdTrabGeneraOrden from "./OrdTrabGeneraOrden";
-
+import OrdTrabGeneraOrden from "../OrdTrabGeneraOrden/OrdTrabGeneraOrden";
 import { useContext } from "react";
 import { OrdenTrabajoPantContext } from "../../OrdenTrabajoPant";
 
@@ -37,9 +37,9 @@ const useStyles = makeStyles({
 
 
 export default function OrdTrabDatosPresup(props) {
-    const { state, setState } = useContext(OrdenTrabajoPantContext);
+    // const { state, setState } = useContext(OrdenTrabajoPantContext);
     const { DatosPresupEleg, open, handleClose } = props;
-    // const [state, setState] = useState(initial_state)
+    const [state, setState] = useState(initial_state)
     const [totalciva, setTotalCiva] = useState(0);
     const [totalsiva, setTotalSiva] = useState(0);
     const [abrecolor, setAbreColor] = useState(false)
@@ -51,6 +51,7 @@ export default function OrdTrabDatosPresup(props) {
 
     const [columns, setColumns] = useState([]);
     var datotraido = DatosPresupEleg
+
     var i = 0, j = 0
     var idPresupuesto = datotraido[0].PresupRenglonNroPresup
     var renglot1 = []
@@ -66,7 +67,6 @@ export default function OrdTrabDatosPresup(props) {
 
     async function columnsFetch() {
         const col = await OrdTrabColumn(renglot1);
-
         setColumns(() => col);
     }
 
@@ -100,21 +100,8 @@ export default function OrdTrabDatosPresup(props) {
 
     const abrecierradetalles = () => {
         setAbreDetalles(!abredetalles)
-        // console.log('state.nuevascolumnas  ', state.nuevascolumnas)
     };
-    function sumar() {
-        var tototciva = 0,
-            tototsiva = 0,
-            i = 0;
-        while (i < datosrenglon.length) {
-            tototciva = tototciva * 1 + datosrenglon[i].ordtrabimpciva * 1;
-            tototsiva = tototsiva * 1 + datosrenglon[i].ordtrabimpsiva * 1;
-            i++;
-        }
-        setTotalCiva(tototciva);
-        setTotalSiva(tototsiva);
 
-    }
 
     const preparadatos = () => {
         var impsiva = 0.00
@@ -200,31 +187,16 @@ export default function OrdTrabDatosPresup(props) {
             }
         }
     }
-    // const generaorden = (event, detallerengloneleg) => {
-    //     setTablaDetallesItem(detallerengloneleg.tableData.id)
-    //     setDetalleRenglon(detallerengloneleg)
+
+    const generaorden = (event, detallerengloneleg) => {
+        setTablaDetallesItem(detallerengloneleg.tableData.id)
+        setDetalleRenglon(detallerengloneleg)
+        //  console.log('columtabladef en ordtrabdatos  ', columtabladef)
+        setAbreDetalles(!abredetalles)
+    }
 
 
-    //     //setState({ ...state, nuevascolumnas: columtabladef[0] });
 
-    //     setColumns(datoslonas.cdatlonasconfeccion);
-    //     //  console.log('columtabladef en ordtrabdatos  ', columtabladef)
-    //     //     setAbreDetalles(!abredetalles)
-    // }
-
-    // const generaorden = (event, detallerengloneleg) => {
-    //     setTablaDetallesItem(detallerengloneleg.tableData.id)
-    //     setDetalleRenglon(detallerengloneleg)
-    //     //  console.log('columtabladef en ordtrabdatos  ', columtabladef)
-    //     setAbreDetalles(!abredetalles)
-    // }
-    // const generaorden = () => {
-
-
-    //     setAbreDetalles(!abredetalles)
-    // }
-    // const togglePanel = (rowData) => {
-    // }
     const textdata = [
         {
             id: "StkItemsDesc",
@@ -246,7 +218,7 @@ export default function OrdTrabDatosPresup(props) {
     return (
         <div className={classes.root}>
             <Dialog
-                fullWidth={true}
+                fullWidth={false}
                 maxWidth={'xl'}
                 open={open}
                 keepMounted
@@ -359,7 +331,12 @@ export default function OrdTrabDatosPresup(props) {
                                     ),
                                     tooltip: "Suma",
                                     isFreeAction: true,
-                                    onClick: () => sumar(),
+                                    onClick: () => {
+                                        const { tototciva, tototsiva } = useSumar(datosrenglon)
+                                        setTotalCiva(tototciva);
+                                        setTotalSiva(tototsiva);
+                                    }
+
                                 },
                                 {
                                     icon: () => (
@@ -371,25 +348,36 @@ export default function OrdTrabDatosPresup(props) {
                                         eligecolor(event, rowData)
                                     )
                                 },
-                                // {
-                                //     icon: () => (
-                                //         <tableIcons.PlaylistAdd
-                                //             style={{ color: blue[500], fontSize: 40 }} />
-                                //     ),
-                                //     tooltip: "Detalles",
-                                //     onClick: (event, rowData) => (
-                                //         generaorden(event, rowData)
-                                //     )
-                                // },
+                                {
+                                    icon: () => (
+                                        <tableIcons.PlaylistAdd
+                                            style={{ color: blue[500], fontSize: 40 }} />
+                                    ),
+                                    tooltip: "Detalles",
+                                    onClick: (event, rowData) => (
+                                        generaorden(event, rowData)
+                                    )
+                                },
                             ]}
-                        // detailPanel={rowData => {
-                        //     return (
-                        //         <div>
-                        //             {generaorden()}
+                        // detailPanel={[
+                        //     {
+                        //         tooltip: 'Show Name',
+                        //         render: rowData => {
+                        //             return (
+                        //                 <div
+                        //                     style={{
+                        //                         fontSize: 100,
+                        //                         textAlign: 'center',
+                        //                         color: 'white',
+                        //                         backgroundColor: '#43A047',
+                        //                     }}
+                        //                 >
+                        //                     {generaorden1(rowData)}
+                        //                 </div>
+                        //             )
+                        //         },
+                        //     }]}
 
-                        //         </div>
-                        //     )
-                        // }}
                         // onRowClick={(event, rowData, togglePanel) => togglePanel()}
 
                         />
@@ -419,7 +407,7 @@ export default function OrdTrabDatosPresup(props) {
                                 </TextField>
                             ))}
                     </Dialog>
-                    {/* {detallerenglon &&
+                    {detallerenglon &&
                         <OrdTrabGeneraOrden
 
                             open={abredetalles}
@@ -429,7 +417,7 @@ export default function OrdTrabDatosPresup(props) {
                         // Detalles={detallerenglon}
 
                         ></OrdTrabGeneraOrden>
-                    } */}
+                    }
 
                 </form >
             </Dialog >

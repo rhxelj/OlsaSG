@@ -107,39 +107,35 @@ export default function OrdTrabGeneraOrden(props) {
 
     return (
         <>
-            <Dialog
-                width="100%"
-                height="315"
-                maxWidth={'xl'}
-                // className={DialogoEstilo.dialogo}
+            {/* <Dialog
+                width="30%"
+                height="115"
+                maxWidth={'ml'}
                 open={open}
-                // TransitionComponent={Transition}
                 keepMounted
                 onClose={handleClose}
-            // aria-labelledby="alert-dialog-slide-title"
-            // aria-describedby="alert-dialog-slide-description"
-            >
+            > */}
 
-                {Detalles.map((detalmap, index) => (
-                    <div>
-                        {buscadatos(Detalles, detalmap, index)}
-                        {cambcolum &&
+            {Detalles.map((detalmap, index) => (
+                <div>
+                    {buscadatos(Detalles, detalmap, index)}
+                    {cambcolum &&
 
-                            <MaterialTable
-                                title=""
-                                columns={columtabladef}
-                                data={datostabladef}
-                                icons={tableIcons}
-                                localization={localization}
+                        <MaterialTable
+                            title=""
+                            columns={columtabladef}
+                            data={datostabladef}
+                            icons={tableIcons}
+                            localization={localization}
 
 
-                            ></MaterialTable>
+                        ></MaterialTable>
 
-                        }
-                        <div> {!columtabladef}</div>
-                    </div>
-                ))}
-                {/* <MaterialTable
+                    }
+                    <div> {!columtabladef}</div>
+                </div>
+            ))}
+            {/* <MaterialTable
                     title=""
                     columns={datoslonas.cdatlonasconfeccion}
                     data={Detalles}
@@ -164,7 +160,7 @@ export default function OrdTrabGeneraOrden(props) {
                 ></MaterialTable> */}
 
 
-                {/* <MaterialTable
+            {/* <MaterialTable
                     title=""
                     columns={datoslonas.cdatlonasconfeccion}
                     data={datoslonas.datlonasconfeccion}
@@ -172,7 +168,7 @@ export default function OrdTrabGeneraOrden(props) {
                     icons={tableIcons}
                     localization={localization}
                 ></MaterialTable> */}
-            </Dialog>
+            {/* </Dialog> */}
             {/* <Dialog
                 maxWidth={'xl'}
                 open={abrecolor}

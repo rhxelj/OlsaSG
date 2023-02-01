@@ -1,3 +1,20 @@
+import React, { useState, useEffect } from "react";
+
+import { stkrubroleeconfgrp } from "../../../Stock/Rubros/StkRubroLeeConfGrp"
+
+var cuallee = 'D'
+var StkRubroCodGrp = 'SOG'
+async function stkrubroleerconf(cuallee, StkRubroCodGrp) {
+    const result = await stkrubroleeconfgrp(cuallee, StkRubroCodGrp);
+    console.log('result  ', result)
+}
+
+// useEffect(() => {
+//     stkrubroleerconf(cuallee, StkRubroCodGrp)
+
+// }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+// export const datoslonas = (objstkgrupos) => {
 export const datoslonas = {
     datlonasenrollables:
         [{
@@ -11,7 +28,8 @@ export const datoslonas = {
             altovolado: 0,
             sobrantemarco: 0,
             datositems: '',
-            color: ''
+            color: '',
+            StkRubroAbr: ''
         }]
     ,
     cdatlonasenrollables: [
@@ -25,6 +43,7 @@ export const datoslonas = {
         { title: "Alto Volado", field: 'altovolado', },
         { title: "Marco de", field: 'sobrantemarco', },
         { title: "Color", field: 'color', },
+        { title: "Soga tipo", field: 'StkRubroAbr', }
     ],
     datlonasconfeccion:
         [{
@@ -32,7 +51,7 @@ export const datoslonas = {
             // cantidad: 1,
             // ancho: 0,
             // largo: 0,
-            tipoconf: "cs",
+            tipoconf: "",
             tipoojale: 0,
             StkRubroAbr: '',
             lchicotes: 1.5,
@@ -47,7 +66,7 @@ export const datoslonas = {
         // { title: "Cantidad", field: 'cantidad', },
         // { title: "Ancho", field: 'ancho', },
         // { title: "Largo", field: 'largo', },
-        { title: "Dobladillo", field: 'tipoconf', },
+        { title: "Dobladillo", field: 'tipoconf', lookup: { 'cs': 'c/s', 'ss': 's/s' }, },
         { title: "Ojales", field: 'tipoojale', },
         { title: "Material", field: 'StkRubroAbr', },
         { title: "Largo Chicotes", field: 'lchicotes', },

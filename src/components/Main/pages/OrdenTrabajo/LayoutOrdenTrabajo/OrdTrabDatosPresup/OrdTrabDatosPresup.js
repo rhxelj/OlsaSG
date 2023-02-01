@@ -12,6 +12,9 @@ import { initial_state } from "../../Initial_State";
 import Grid from "@material-ui/core/Grid";
 import estilosot from "../../../OrdenTrabajo/OrdenTrabajo.module.css"
 import CurrencyTextField from "@unicef/material-ui-currency-textfield";
+
+// import { fade, withStyles, useTheme } from '@material-ui/core/styles';
+// import { alpha } from '@material-ui/core/styles'
 import { makeStyles } from "@material-ui/core/styles";
 import {
     blue,
@@ -19,8 +22,8 @@ import {
     orange
 } from "@material-ui/core/colors";
 import OrdTrabGeneraOrden from "../OrdTrabGeneraOrden/OrdTrabGeneraOrden";
-import { useContext } from "react";
-import { OrdenTrabajoPantContext } from "../../OrdenTrabajoPant";
+
+
 
 
 const useStyles = makeStyles({
@@ -33,10 +36,9 @@ const useStyles = makeStyles({
 });
 
 
-
-
 export default function OrdTrabDatosPresup(props) {
     // const { state, setState } = useContext(OrdenTrabajoPantContext);
+
     const { DatosPresupEleg, open, handleClose } = props;
     const [state, setState] = useState(initial_state)
     const [totalciva, setTotalCiva] = useState(0);
@@ -59,10 +61,11 @@ export default function OrdTrabDatosPresup(props) {
     var indiceitem1 = 0
     var tabladatelegint = []
     const [tabladetalles, setTablaDetalles] = useState(tabladatelegint)
-    const [tabladetallesitem, setTablaDetallesItem] = useState(0)
-    const [detallerenglon, setDetalleRenglon] = useState([])
+    // const [tabladetallesitem, setTablaDetallesItem] = useState(0)
+    // const [detallerenglon, setDetalleRenglon] = useState([])
     const [indiceitem, setIndiceItem] = useState(0)
-
+    var tabladetallesitem = 0
+    var detallerenglon = []
     async function columnsFetch() {
         const col = await OrdTrabColumn(renglot1);
 
@@ -199,33 +202,14 @@ export default function OrdTrabDatosPresup(props) {
             }
         }
     }
-    // const generaorden = (event, detallerengloneleg) => {
-    //     setTablaDetallesItem(detallerengloneleg.tableData.id)
-    //     setDetalleRenglon(detallerengloneleg)
 
-
-    //     //setState({ ...state, nuevascolumnas: columtabladef[0] });
-
-    //     setColumns(datoslonas.cdatlonasconfeccion);
-    //     //  console.log('columtabladef en ordtrabdatos  ', columtabladef)
-    //     //     setAbreDetalles(!abredetalles)
-    // }
-
-    const generaorden = (event, detallerengloneleg) => {
-        setTablaDetallesItem(detallerengloneleg.tableData.id)
-        setDetalleRenglon(detallerengloneleg)
-        //  console.log('columtabladef en ordtrabdatos  ', columtabladef)
-        setAbreDetalles(!abredetalles)
+    const generaorden = (detallerengloneleg) => {
+        tabladetallesitem = detallerengloneleg.ordtrabitem - 1
+        detallerenglon = detallerengloneleg
     }
 
 
-    // const generaorden = () => {
 
-
-    //     setAbreDetalles(!abredetalles)
-    // }
-    // const togglePanel = (rowData) => {
-    // }
     const textdata = [
         {
             id: "StkItemsDesc",
@@ -317,15 +301,10 @@ export default function OrdTrabDatosPresup(props) {
                                     onChange={handleChange}
                                 />
                             </Grid>
-                            {/* <Grid item xs={2}>
-                                <Button
-                                    onClick={generaorden}
-                                >Genera</Button>
-                            </Grid> */}
                         </Grid>
 
                     </div>
-                    <Grid>
+                    <Grid >
                         <MaterialTable
                             title=""
                             columns={columns}
@@ -372,26 +351,24 @@ export default function OrdTrabDatosPresup(props) {
                                         eligecolor(event, rowData)
                                     )
                                 },
-                                {
-                                    icon: () => (
-                                        <tableIcons.PlaylistAdd
-                                            style={{ color: blue[500], fontSize: 40 }} />
-                                    ),
-                                    tooltip: "Detalles",
-                                    onClick: (event, rowData) => (
-                                        generaorden(event, rowData)
-                                    )
-                                },
                             ]}
-                        // detailPanel={rowData => {
-                        //     return (
-                        //         <div>
-                        //             {generaorden()}
-
-                        //         </div>
-                        //     )
-                        // }}
-                        // onRowClick={(event, rowData, togglePanel) => togglePanel()}
+                            detailPanel={[
+                                {
+                                    tooltip: 'Muestra datos',
+                                    render: rowData => {
+                                        return (
+                                            <div >
+                                                {generaorden(rowData)}
+                                                {detallerenglon &&
+                                                    <OrdTrabGeneraOrden
+                                                        Detalles={tabladetalles[tabladetallesitem]}
+                                                    // idTablaDetalles={tabladetallesitem}
+                                                    ></OrdTrabGeneraOrden>
+                                                }
+                                            </div>
+                                        )
+                                    },
+                                }]}
 
                         />
                     </Grid>
@@ -420,17 +397,7 @@ export default function OrdTrabDatosPresup(props) {
                                 </TextField>
                             ))}
                     </Dialog>
-                    {detallerenglon &&
-                        <OrdTrabGeneraOrden
 
-                            open={abredetalles}
-                            handleClose={abrecierradetalles}
-                            Detalles={tabladetalles}
-                            idTablaDetalles={tabladetallesitem}
-                        // Detalles={detallerenglon}
-
-                        ></OrdTrabGeneraOrden>
-                    }
 
                 </form >
             </Dialog >
@@ -441,3 +408,26 @@ export default function OrdTrabDatosPresup(props) {
 };
 
 
+/*    // const generaorden = (event, detallerengloneleg) => {
+    //     setTablaDetallesItem(detallerengloneleg.tableData.id)
+    //     setDetalleRenglon(detallerengloneleg)
+
+
+    //     //setState({ ...state, nuevascolumnas: columtabladef[0] });
+
+    //     setColumns(datoslonas.cdatlonasconfeccion);
+    //     //  console.log('columtabladef en ordtrabdatos  ', columtabladef)
+    //     //     setAbreDetalles(!abredetalles)
+    // }
+    // const generaorden = (event, detallerengloneleg) => {
+    const generaorden = (detallerengloneleg) => {
+        // setTablaDetallesItem(detallerengloneleg.ordtrabitem - 1)
+        tabladetallesitem = detallerengloneleg.ordtrabitem - 1
+        // setTablaDetallesItem(detallerengloneleg.tableData.id)
+        // setDetalleRenglon(detallerengloneleg)
+        detallerenglon = detallerengloneleg
+        //  console.log('columtabladef en ordtrabdatos  ', columtabladef)
+        //   setAbreDetalles(!abredetalles)
+    }
+
+*/

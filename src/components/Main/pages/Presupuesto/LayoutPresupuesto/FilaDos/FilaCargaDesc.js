@@ -13,6 +13,7 @@ export default function FilaCargaDesc() {
         //para que no salga Ancho y Largo en la tabla del presupuesto cuando se carga por descripción
         // setState({ ...state, DescripPresup: '------' });
     };
+
     const classes = useStyles();
     return (
         <>
@@ -27,7 +28,8 @@ export default function FilaCargaDesc() {
                     label="Descripción "
                     fullWidth
                     value={state.DetalleRenglon}
-                    helperText='Descripción del trabajo'
+                    placeholder='no permite los signos % +'
+                    helperText='Descripción del trabajo (no permite los signos % +)'
                     onChange={handleChange5}
                     className={classes.textField}
                 />

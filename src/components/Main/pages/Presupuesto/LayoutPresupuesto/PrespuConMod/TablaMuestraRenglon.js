@@ -12,8 +12,6 @@ import { presuprenglonleer } from "./PresupRenglonLeer";
 import MinMay from "../../../OrdenTrabajo/LayoutOrdenTrabajo/MinMay/MinMay";
 import OrdTrabDatosPresup from "../../../OrdenTrabajo/LayoutOrdenTrabajo/OrdTrabDatosPresup/OrdTrabDatosPresup"
 import { initial_state } from "../../../OrdenTrabajo/Initial_State";
-// import { useContext } from "react";
-// import { OrdenTrabajoPantContext } from "../../../OrdenTrabajo/OrdenTrabajoPant";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -96,6 +94,7 @@ export default function TablaMuestraRenglon(props) {
     }, [Presup]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
+
         <Dialog
             fullWidth={true}
             maxWidth={'xl'}
@@ -139,6 +138,7 @@ export default function TablaMuestraRenglon(props) {
             {ppreview &&
                 // < MinMay DatosPresupEleg={renglot} />}
                 <OrdTrabDatosPresup DatosPresupEleg={renglot} open={ppreview} handleClose={handleClosePreview} />}
+
         </Dialog>
     );
 }
