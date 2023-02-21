@@ -11,6 +11,7 @@ export function modificarItems(props) {
       StkItemsRubro,
       StkItemsRubroAbr,
       StkItemsDesc,
+      StkItemsOTD,
       StkItemsCantidad,
       StkItemsCantDisp,
       // StkItemsFAct,
@@ -32,6 +33,7 @@ export function modificarItems(props) {
       .send({
         StkItemsRubroAbr: StkItemsRubroAbr,
         StkItemsDesc: StkItemsDesc,
+        StkItemsOTD: StkItemsOTD,
         StkItemsCantidad: StkItemsCantidad,
         StkItemsCantDisp: StkItemsCantDisp,
         StkItemsMin: StkItemsMin,

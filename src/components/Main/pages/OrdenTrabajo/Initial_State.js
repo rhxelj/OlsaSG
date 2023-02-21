@@ -10,14 +10,17 @@ export const initial_state = {
     eligioOT: false,
     totalciva: 0,
     totalsiva: 0,
+    totalordciva: 0,
+    totalordsiva: 0,
     nrofact: 0,
     impsenia: 0,
     datositems: [],
     StkItemsDesc: '',
-    nuevascolumnas: [],
+    rubrosconf: [],
+    nuevacolumnas: [],
+    itemsrubros: [],
 
-
-    // StkRubroAbr: "",
+    StkRubroAbr: "",
 
     // alto: 0,
     // altovolado: 0,

@@ -29,6 +29,7 @@ router.post("/", async function (req, res) {
     StkItemsRubro: req.body.StkItemsRubro,
     StkItemsRubroAbr: req.body.StkItemsRubroAbr,
     StkItemsDesc: ItemDescripcion,
+    StkItemsOTD: req.body.StkItemsOTD,
     StkItemsCantidad: 0,
     StkItemsCantDisp: 0,
     StkItemsFAct: finalDate,

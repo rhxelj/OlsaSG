@@ -39,6 +39,12 @@ function columnsFill(objstkrubro) {
         order: true,
       },
       {
+        title: "Detalle Ord.Trab. S/N",
+        field: "StkItemsOTD",
+        tipo: "texto",
+        order: true,
+      },
+      {
         title: "Cantidad",
         field: "StkItemsCantidad",
         tipo: "numero",

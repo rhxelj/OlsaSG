@@ -28,6 +28,7 @@ router.post("/", async function (req, res) {
     StkItemsRubroAbr: req.body.StkItemsRubroAbr,
     // StkItemsDesc: req.body.StkItemsDesc.toUpperCase(),
     StkItemsDesc: '',
+    StkItemsOTD: req.body.StkItemsOTD,
     // StkItemsCantidad: req.body.StkItemsCantidad,
     // StkItemsCantDisp: req.body.StkItemsCantidad,
     StkItemsCantidad: 0,

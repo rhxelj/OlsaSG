@@ -18,7 +18,7 @@ router.get('/', (req, res, next) => {
 
   var q, i = 0
   var coeficiente = 0, cantidad = 0, StkRubroAbrP = '', largo = 0.00, ancho = 0.00
-  var enteropanios = 0, decimalpanios = 0.00, altovolado = 0.00
+  var enteropanios = 0, decimalpanios = 0.00, altovolado = 0.00, fajade = ''
 
   q = ['select * from BasePresup.PresupParam'].join(' ')
 
@@ -33,13 +33,19 @@ router.get('/', (req, res, next) => {
 
       datosrec.map(datos => {
         //  cantidad = datos.cantidad;
+
         tamcristal = datos.tamcristal
         StkRubroAbrP = datos.StkRubroAbr;
         detallep = datos.detallep
         ivasn = datos.ivasn;
-        largo = datos.largo * 1
         ancho = datos.ancho * 1 + 0.12
         altovolado = datos.altovolado * 1
+        largo = datos.largo * 1
+
+        if (datos.tamfaja === '25P') {
+          fajade = ' c/faja p/2"1/2 '
+          largo = largo + 0.10
+        } else { fajade = ' c/faja p/2" ' }
 
 
         q2 = ['Select StkRubroAncho as anchotela from BaseStock.StkRubro where StkRubro.StkRubroAbr = "' + StkRubroAbrP + '" '].join(' ')
@@ -147,7 +153,7 @@ router.get('/', (req, res, next) => {
                 }
                 else {
                   if (tamcristal != 'NOPVC') {
-                    result[0].Detalle = detalle + " con Cristal de " + datosenvio[0][0].StkRubroAncho + " con marco de " + datos.sobrantemarco + " cm. en los costados, y volado de " + altovolado + " cm. en : "
+                    result[0].Detalle = detalle + fajade + ", Cristal de " + datosenvio[0][0].StkRubroAncho + ", marco de " + datos.sobrantemarco + " cm. en los costados, y volado de " + altovolado + " cm. en : "
                     result[0].ImpUnitario = result[0].ImpUnitario + datosenvio[0][0].ArmadoCristal
                   }
                   else {

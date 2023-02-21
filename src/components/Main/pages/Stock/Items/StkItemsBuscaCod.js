@@ -17,7 +17,6 @@ export function stkItemsBuscaCod(props) {
       .set("Content-Type", "application/json")
       .then((datosenv) => {
         const codigoitems = JSON.parse(datosenv.text);
-        console.log('codigoitems  ', codigoitems)
         stkItemsAgregar(props, codigoitems);
       });
 

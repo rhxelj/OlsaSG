@@ -25,6 +25,7 @@ router.post("/", async function (req, res, next) {
   var StkItemsRubro = req.query.StkItemsRubro;
   var StkItemsRubroAbr = req.body.StkItemsRubroAbr;
   var StkItemsDesc = req.body.StkItemsDesc;
+  var StkItemsOTD = req.body.StkItemsOTD
   var StkItemsCantidad = req.body.StkItemsCantidad;
   var StkItemsCantDisp = req.body.StkItemsCantDisp;
   var StkItemsFAct = finalDate;
@@ -35,6 +36,8 @@ router.post("/", async function (req, res, next) {
   var q = [
     'UPDATE StkItems SET StkItemsDesc = "',
     StkItemsDesc,
+    '", StkItemsOTD = "',
+    StkItemsOTD,
     '", StkItemsRubroAbr = "',
     StkItemsRubroAbr,
     '", StkItemsCantidad = ',

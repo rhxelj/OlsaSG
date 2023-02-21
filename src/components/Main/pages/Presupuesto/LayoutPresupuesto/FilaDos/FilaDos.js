@@ -307,6 +307,7 @@ export default function FilaDos() {
           fullWidth
           margin="dense"
           value={state.PresupLargo}
+          // value={() => (state.PresupLargo === 0 && largo != 'N')}
           onChange={handleChange}
           className={classes.textField}
         />

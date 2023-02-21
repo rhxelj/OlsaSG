@@ -15,9 +15,9 @@ export default function OrdTrabGeneraOrden() {
 
     const { tabladetalles, setTablaDetalles } = useContext(OrdenTrabajoPantContext);
     const { tabladetallesitem } = useContext(OrdenTrabajoPantContext);
-    // const { nuevascolumnas, setNuevasColumnas } = useContext(OrdenTrabajoPantContext);
     const [datostabladef, setDatosTabladef] = useState([tabladetalles[tabladetallesitem]])
     const [columtabladef, setColumtabladef] = useState([]);
+
 
 
     async function buscadatos() {
@@ -25,7 +25,7 @@ export default function OrdTrabGeneraOrden() {
         if (datostabladef[0].tipopresup === "CONFECCIONADA") {
             const col = await OTConfeccionCol();
             setColumtabladef(() => col);
-            // setNuevasColumnas(() => col);
+
 
             // columtabladef = (datoslonas.cdatlonasconfeccion)
         }
@@ -33,12 +33,13 @@ export default function OrdTrabGeneraOrden() {
 
             const col = await OTEnrollableCol(datostabladef[0].StkRubroAbr);
             setColumtabladef(() => col);
-            // setNuevasColumnas(() => col);
+
 
             // columtabladef = (datoslonas.cdatlonasenrollables)
         }
 
     }
+
     async function initialFetch() {
         buscadatos(); //lleno columns con los datos obtenidos
 

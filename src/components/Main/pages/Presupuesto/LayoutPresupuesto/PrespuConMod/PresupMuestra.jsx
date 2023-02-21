@@ -87,11 +87,6 @@ export default function PresupMuestra(props) {
 		setData(data);
 	}
 
-	// async function borrapresup(date) {
-	// 	console.log("date  ", date);
-	// 	// const data = await presupDatos(date);
-	// 	// setData(data);
-	// }
 	async function initialFetch() {
 		columnsFetch();
 		//va a buscar datos para mostrar desde el inicio
@@ -205,7 +200,6 @@ export default function PresupMuestra(props) {
 					components={{
 						Toolbar: (props) => (
 							<React.Fragment>
-								{console.log("props  ", props)}
 								<MTableToolbar {...props} />
 							</React.Fragment>
 						),

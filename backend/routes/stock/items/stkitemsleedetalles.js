@@ -19,7 +19,7 @@ router.get("/", async function (req, res, next) {
   var now = new Date();
   var q = [
     "select idStkItems, StkItemsGrupo, StkItemsRubroAbr,  StkGrupo.StkGrupoDesc,",
-    "StkItemsRubro, StkRubro.StkRubroDesc, StkItemsDesc, StkItemsCantidad, StkItemsCantDisp,",
+    "StkItemsRubro, StkRubro.StkRubroDesc, StkItemsDesc,  StkItemsOTD, StkItemsCantidad, StkItemsCantDisp,",
     ' date_format(StkItemsFAct, "%d-%m-%Y") as StkItemsFAct,  ',
     ' StkItemsMin, StkItemsMax ',
     // ' StkItemsFAct, StkItemsMin, StkItemsMax ',

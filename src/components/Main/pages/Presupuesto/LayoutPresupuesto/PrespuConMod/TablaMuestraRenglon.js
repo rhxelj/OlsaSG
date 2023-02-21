@@ -24,7 +24,6 @@ export default function TablaMuestraRenglon(props) {
     const [renglot, setRenglot] = useState([])
 
     const [state, setState] = useState(initial_state)
-    // console.log('state en tablamuestrarenglon  ', state)
     const [renglon, setRenglon] = useState({
         columns: [
             {
@@ -119,6 +118,14 @@ export default function TablaMuestraRenglon(props) {
                     onSelectionChange={handleOnSelectionChange}
                     options={{
                         selection: true,
+                        search: false
+                    }}
+                    components={{
+                        Toolbar: (props) => (
+                            <div>
+                                <h2>En Confecciones elegir un item por material y color</h2>
+                            </div>
+                        ),
                     }}
 
 

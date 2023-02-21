@@ -6,7 +6,7 @@ import { stkrubroleecodgrupored } from "../Rubros/StkRubroLeeCodGrupoRed";
 
 export async function itemsColumns() {
   const stkGrupos = await leeStkGrupo(); //llamo a leer grupo
-  var objstkgrupo = await stkGrupos.reduce(function(acc, cur, i) {
+  var objstkgrupo = await stkGrupos.reduce(function (acc, cur, i) {
     acc[cur.idStkGrupo] = cur.StkGrupoDesc;
     console.log("acc => ", acc);
     console.log("cur => ", cur);
@@ -26,7 +26,7 @@ export async function itemsColumns() {
 // }, [rowData]);
 
 function columnsFill(objstkgrupo) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     resolve([
       {
         title: "Items(ID)",
@@ -70,6 +70,12 @@ function columnsFill(objstkgrupo) {
       {
         title: "Descripción",
         field: "StkItemsDesc",
+        tipo: "texto",
+        order: true,
+      },
+      {
+        title: "Detalle Ord.Trab. S/N",
+        field: "StkItemsOTD",
         tipo: "texto",
         order: true,
       },

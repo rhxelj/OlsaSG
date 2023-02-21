@@ -8,6 +8,7 @@ export function stkItemsAgregar(newData, codigonuevo) {
     const {
       StkItemsRubroAbr,
       StkItemsDesc,
+      StkItemsOTD,
       StkItemsCantidad,
       StkItemsFAct,
       StkItemsMin,
@@ -29,6 +30,7 @@ export function stkItemsAgregar(newData, codigonuevo) {
       .send({ StkItemsRubro: StkItemsRubro })
       .send({ StkItemsRubroAbr: StkItemsRubroAbr })
       .send({ StkItemsDesc: StkItemsDesc })
+      .send({ StkItemsOTD: StkItemsOTD })
       .send({ StkItemsCantidad: StkItemsCantidad })
       .send({ StkItemsFAct: StkItemsFAct })
       .send({ StkItemsMin: StkItemsMin })

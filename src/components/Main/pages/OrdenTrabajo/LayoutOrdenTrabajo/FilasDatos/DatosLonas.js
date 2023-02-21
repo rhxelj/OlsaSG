@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from "react";
+import { useBuscaDatos } from "../../hooks/useBuscaDatos";
+// import { stkrubroleeconfgrp } from "../../../Stock/Rubros/StkRubroLeeConfGrp"
 
-import { stkrubroleeconfgrp } from "../../../Stock/Rubros/StkRubroLeeConfGrp"
-
-var cuallee = 'D'
-var StkRubroCodGrp = 'SOG'
-async function stkrubroleerconf(cuallee, StkRubroCodGrp) {
-    const result = await stkrubroleeconfgrp(cuallee, StkRubroCodGrp);
-    console.log('result  ', result)
-}
-
+// var cuallee = 'D'
+// var StkRubroCodGrp = 'SOG'
+// async function stkrubroleerconf(cuallee, StkRubroCodGrp) {
+//     const result = await stkrubroleeconfgrp(cuallee, StkRubroCodGrp);
+//     console.log('result  ', result)
+// }
+// stkrubroleerconf(cuallee, StkRubroCodGrp)
 // useEffect(() => {
 //     stkrubroleerconf(cuallee, StkRubroCodGrp)
 
 // }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 // export const datoslonas = (objstkgrupos) => {
+
+// const tipodobl = { 'cs': 'c/s', 'ss': 's/s' }
 export const datoslonas = {
     datlonasenrollables:
         [{
@@ -66,7 +68,8 @@ export const datoslonas = {
         // { title: "Cantidad", field: 'cantidad', },
         // { title: "Ancho", field: 'ancho', },
         // { title: "Largo", field: 'largo', },
-        { title: "Dobladillo", field: 'tipoconf', lookup: { 'cs': 'c/s', 'ss': 's/s' }, },
+        //lookup: tipodobl, 
+        { title: "Dobladillo", field: 'tipoconf', },
         { title: "Ojales", field: 'tipoojale', },
         { title: "Material", field: 'StkRubroAbr', },
         { title: "Largo Chicotes", field: 'lchicotes', },

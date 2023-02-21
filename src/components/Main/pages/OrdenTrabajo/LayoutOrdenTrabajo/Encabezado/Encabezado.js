@@ -47,7 +47,6 @@ export default function Encabezado() {
   ];
   return (
     <>
-      {console.log('esta en return de encabezado')}
       <Grid item >
         {textdata.map(data => (
           <TextField
