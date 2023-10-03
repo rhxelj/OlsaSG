@@ -1,159 +1,244 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
 import Typography from "@material-ui/core/Typography";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
-import Collapse from "@material-ui/core/Collapse";
-import ListSubheader from "@material-ui/core/ListSubheader";
-import { movimientos, tablas } from "./menues";
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import AssignmentRoundedIcon from '@material-ui/icons/AssignmentRounded';
+import { format } from "fecha";
+import { tableIcons } from "../lib/material-table/tableIcons";
+import Button from '@material-ui/core/Button';
+import { useContext, useEffect } from "react";
+import { globalContext } from "../App";
 
-const initial_state = {
-  open: false,
-  menutablas: null,
-  menutablas1: null,
-  menumov: null,
-  top: false,
-  left: false,
-  bottom: false,
-  right: false,
-  setSelectedIndex: 0,
-  showComponent: false
-};
+import { clientestraeNuevos } from '../Main/pages/Clientes/ClientesTraeNuevos'
+import PropBarra from '../../Styles/Header.module.css'
+import IconButton from '@material-ui/core/IconButton'
+import WidgetsTwoToneIcon from '@material-ui/icons/WidgetsTwoTone';
+import SendIcon from '@material-ui/icons/Send';
+import LocalAtmIcon from '@material-ui/icons/LocalAtm';
+import TableChartIcon from '@material-ui/icons/TableChart';
+
+
+/*  OJO!!!!! cuando agrego una opción en el menú 
+  no olvidar agregarla en 
+/home/sandra/SistOLSA/OlsaSG/src/components/Main/index.js*/
+
 function Header() {
-  const [state, setState] = useState(initial_state);
 
-  const { abrir_movimientos, abrir_tablas } = state;
-
-  const toggleDrawer = (side, open) => event => {
-    if (
-      event &&
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-
-    setState({
-      ...state,
-      [side]: open,
-      abrir_movimientos: false, //activo esto si quiero cerrar los menues cuando hago una selecccion
-      abrir_tablas: false //activo esto si quiero cerrar los menues cuando hago una selecccion
-    });
+  const { valor } = useContext(globalContext);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
   };
 
-  const getToggleState = stateToToggle => {
-    setState(prevState => ({
-      ...state,
-      [stateToToggle]: !prevState[stateToToggle]
-    }));
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
-  const handleClose = prop => event => {
-    setState({ ...state, [prop]: null });
+  const [anchorEl1, setAnchorEl1] = React.useState(null);
+  const open1 = Boolean(anchorEl1);
+
+  const handleClick1 = (event) => {
+    setAnchorEl1(event.currentTarget);
+  };
+  const handleClose1 = () => {
+    setAnchorEl1(null);
   };
 
-  function newMethod(abrir_movimientos, abrir_tablas) {
-    return (
-      <SwipeableDrawer
-        open={state.left}
-        onClose={toggleDrawer("left", false)}
-        onOpen={toggleDrawer("left", true)}
-      >
-        <div
-          id="division"
-          role="presentation"
-          // onClick={toggleDrawer("left", false)}
-          onKeyDown={toggleDrawer("left", false)}
-        >
-          <List
-            color="blue"
-            component="nav"
-            aria-labelledby="nested-list-subheader"
-            subheader={
-              <ListSubheader component="div" id="nested-list-subheader">
-                OlsaSG
-              </ListSubheader>
-            }
-          >
-            <ListItem
-              button
-              onClick={() => getToggleState("abrir_movimientos")}
-            >
-              <ListItemText primary="Movimientos" />
-              {abrir_movimientos ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
 
-            <Collapse in={abrir_movimientos} timeout="20">
-              <List component="div" disablePadding>
-                {movimientos.map(({ link, primary }) => (
-                  <ListItem
-                    onClick={toggleDrawer("left", false)}
-                    key={primary}
-                    button
-                    component={Link}
-                    to={link}
-                  >
-                    <ListItemText primary={primary} />
-                  </ListItem>
-                ))}
-              </List>
-            </Collapse>
+  const [anchorEl2, setAnchorEl2] = React.useState(null);
+  const open2 = Boolean(anchorEl2);
 
-            <ListItem button onClick={() => getToggleState("abrir_tablas")}>
-              <ListItemText primary="Tablas" />
-              {abrir_tablas ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
+  const handleClick2 = (event) => {
+    setAnchorEl2(event.currentTarget);
+  };
+  const handleClose2 = () => {
+    setAnchorEl2(null);
+  };
 
-            <Collapse in={abrir_tablas} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                {tablas.map(({ link, primary }) => (
-                  <ListItem
-                    onClick={toggleDrawer("left", false)}
-                    key={primary}
-                    button
-                    component={Link}
-                    to={link}
-                  >
-                    <ListItemText primary={primary} />
-                  </ListItem>
-                ))}
-              </List>
-            </Collapse>
-          </List>
-        </div>
-      </SwipeableDrawer>
-    );
-  }
+
+  const [anchorEl3, setAnchorEl3] = React.useState(null);
+  const open3 = Boolean(anchorEl3);
+
+  const handleClick3 = (event) => {
+    setAnchorEl3(event.currentTarget);
+  };
+  const handleClose3 = () => {
+    setAnchorEl3(null);
+  };
+
+  const [anchorEl4, setAnchorEl4] = React.useState(null);
+  const open4 = Boolean(anchorEl4);
+
+  const handleClick4 = (event) => {
+    setAnchorEl4(event.currentTarget);
+  };
+  const handleClose4 = () => {
+    setAnchorEl4(null);
+  };
+  const diafecha = format(new Date(), "DD-MM-YYYY");
+
+
+  // const [state, setState] = useState(initial_state);
+  useEffect(() => {
+    clientestraeNuevos()
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
+
     <div>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            // onClick={this.toggleDrawer("left", true)}
+      <AppBar position="static"
+      >
+        <Toolbar className={PropBarra.barraherr} >
+
+
+          <Button
+            className={PropBarra.botonmenu}
+            id="basic-button"
+            aria-controls="basic-menu"
+            aria-haspopup="true"
+            aria-expanded={open ? 'true' : undefined}
+            onClick={handleClick}
+            startIcon={<LocalAtmIcon />}
           >
-            <MenuIcon onClick={toggleDrawer("left", true)}></MenuIcon>
-          </IconButton>
-          <Typography variant="h6" color="inherit">
-            OlsaSG
+            Presup/Lista/OT.
+          </Button>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}
+          >
+
+            <MenuItem className={PropBarra.botonitem} component={Link} to="/PresupPant" onClick={handleClose}>Presupuesto</MenuItem>
+            <MenuItem className={PropBarra.botonitem} component={Link} to="/ListaPrecios" onClick={handleClose}>Lista de Precios</MenuItem>
+            <MenuItem className={PropBarra.botonitem} component={Link} to="/OrdenTrabajoPant" onClick={handleClose}>Orden de Trabajo</MenuItem>
+            <MenuItem className={PropBarra.botonitem} component={Link} to="/PresupMuestra" onClick={handleClose}>Muestra Presupuesto</MenuItem>
+            <MenuItem className={PropBarra.botonitem} component={Link} to="/ModPrecios" onClick={handleClose}>Modifica Precios</MenuItem>
+          </Menu>
+
+          <Button
+            className={PropBarra.botonmenu}
+            id="basic-button"
+            aria-controls="basic-menu"
+            aria-haspopup="true"
+            aria-expanded={open1 ? 'true' : undefined}
+            onClick={handleClick1}
+            startIcon={<WidgetsTwoToneIcon />}
+          >
+            Stock
+          </Button>
+
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl1}
+            open={open1}
+            onClose={handleClose1}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}
+          >
+
+            <MenuItem
+              className={PropBarra.botonitem}
+              component={Link}
+              to="/MovStockPant"
+              onClick={handleClose1}>Movimiento Stock</MenuItem>
+
+            {/* <MenuItem
+              className={PropBarra.botonitem}
+              component={Link}
+              to="/ModPrecios"
+              onClick={handleClose1}>Modifica Precios</MenuItem> */}
+
+          </Menu>
+
+          <Button
+            className={PropBarra.botonmenu}
+            id="basic-button"
+            aria-controls="basic-menu"
+            aria-haspopup="true"
+            aria-expanded={open2 ? 'true' : undefined}
+            onClick={handleClick2}
+            startIcon={<TableChartIcon />}
+          >
+            Tablas
+          </Button>
+
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl2}
+            open={open2}
+            onClose={handleClose2}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}
+          >
+            <div >
+              <MenuItem component={Link} className={PropBarra.botonitem} to="/Proveedores" onClick={handleClose2}>Proveedores</MenuItem>
+              <MenuItem component={Link} className={PropBarra.botonitem} to="/Clientes" onClick={handleClose2}>Clientes</MenuItem>
+              <MenuItem component={Link} className={PropBarra.botonitem} to="/Transporte" onClick={handleClose2}>Transporte</MenuItem>
+              <MenuItem component={Link} className={PropBarra.botonitem} to="/StkMonedas" onClick={handleClose2}>Monedas</MenuItem>
+              <MenuItem component={Link} className={PropBarra.botonitem} to="/StkGrupo" onClick={handleClose2}>Grupos</MenuItem>
+              <MenuItem component={Link} className={PropBarra.botonitem} to="/StkRubro" onClick={handleClose2}>Rubros</MenuItem>
+              <MenuItem component={Link} className={PropBarra.botonitem} to="/StkItems" onClick={handleClose2}>Items</MenuItem>
+              <MenuItem component={Link} className={PropBarra.botonitem} to="/StkUnMed" onClick={handleClose2}>Unidad de Medidas</MenuItem>
+              <MenuItem component={Link} className={PropBarra.botonitem} to="/StkUbFisica" onClick={handleClose2}>Ubicación Física</MenuItem>
+              <MenuItem component={Link} className={PropBarra.botonitem} to="/PresupConfTipo" onClick={handleClose2}>Presupuesto Tipo</MenuItem>
+              <MenuItem component={Link} className={PropBarra.botonitem} to="/PresupDetPie" onClick={handleClose2}>Pie de Presupuesto</MenuItem>
+            </div>
+          </Menu>
+
+          <Typography variant="h6" className={PropBarra.title}  >
+            {valor}
           </Typography>
-          {newMethod(abrir_movimientos, abrir_tablas)}
+          <Typography variant="h6" className={PropBarra.title}  >
+            {diafecha}
+          </Typography>
+
+          <Typography variant="h6" className={PropBarra.title}  >
+            <IconButton
+              size="medium"
+              edge="start"
+              color="primary"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+              onClick={handleClick3}
+            >
+              <tableIcons.MoreVert />
+            </IconButton>
+
+
+          </Typography>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl3}
+            open={open3}
+            onClose={handleClose3}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}
+          >
+            <div >
+              <MenuItem component={Link} className={PropBarra.botonitem} to="/BackupDiario" onClick={handleClose3}>Backup Diario</MenuItem>
+              <MenuItem component={Link} className={PropBarra.botonitem} to="/RecuperaDatos" onClick={handleClose3}>Recupera Datos</MenuItem>
+            </div>
+
+
+          </Menu>
+
         </Toolbar>
       </AppBar>
-    </div>
+    </div >
   );
   // }
 }
 
 export default Header;
+

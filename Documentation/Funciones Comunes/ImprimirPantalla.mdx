@@ -1,0 +1,68 @@
+---
+name: Imprimir Pantalla
+menu: FrontEnd
+---
+
+# Implementar Impresion de Pantalla
+
+para poder agregar la función de impresión de pantalla tengo que agregar en cada componente los siguiente
+
+- Importo el componente de Imprimir
+
+```javascript
+import Imprimir from "../Impresion/Imprimir/Imprimir";
+```
+
+- Agrego la variable para mostrar o no el componente con valor false
+
+```javascript
+
+.
+.
+.
+const [imprimirTF, setImprimirTF] = useState({imprimir:false});
+.
+.
+.
+.
+
+```
+
+- También hay que agregar
+
+```javascript
+<MaterialTable
+        // icons={tableIcons}
+        // localization={localization}
+        // title="Titulo de la Tabla"
+        // columns={columns}
+        // data={data}
+
+        actions={[
+          {
+            icon: () => <tableIcons.Print />,
+            tooltip: "Imprimir",
+            isFreeAction: true,
+            onClick: (event) => setImprimirTF({ imprimir: true }),
+          },
+        ]}
+
+
+        // editable={{
+        //   onRowAdd: onRowAdd(),
+        //   onRowUpdate: onRowUpdate(),
+        //   onRowDelete: onRowDelete(),
+        }}
+      />
+```
+
+### **Agrego el componente de Imprimir al final**
+
+```javascript
+<Imprimir
+  columns={columns}
+  datos={data}
+  open={imprimirTF.imprimir}
+  setOpen={setImprimirTF}
+/>
+```

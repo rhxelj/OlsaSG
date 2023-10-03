@@ -3,7 +3,7 @@ var router = express.Router();
 var path = require("path");
 var conexion = require("../../conexion");
 
-conexion.connect(function(err) {
+conexion.connect(function (err) {
   if (!err) {
     console.log("base de datos conectada en stkrubromodificar");
   } else {
@@ -13,10 +13,9 @@ conexion.connect(function(err) {
 
 var router = express();
 
-router.post("/", async function(req, res, next) {
-  console.log("khkhkh");
-  var idStkRubro = req.query.id;
-  var StkRubroCodGrp = req.query.id2;
+router.post("/", async function (req, res, next) {
+  var idStkRubro = req.query.idStkRubro;
+  var StkRubroCodGrp = req.query.StkRubroCodGrp;
   var StkRubroDesc = req.body.StkRubroDesc.toUpperCase();
   var StkRubroAbr = req.body.StkRubroAbr.toUpperCase();
   var StkRubroProv = req.body.StkRubroProv;
@@ -26,6 +25,9 @@ router.post("/", async function(req, res, next) {
   var StkRubroUM = req.body.StkRubroUM;
   var StkRubroCosto = req.body.StkRubroCosto;
   var StkRubroTM = req.body.StkRubroTM;
+  var StkRubroConf = req.body.StkRubroConf;
+  var d = new Date();
+  finalDate = d.toISOString().split("T")[0];
 
   var q = [
     'UPDATE StkRubro SET StkRubroDesc = "',
@@ -46,13 +48,17 @@ router.post("/", async function(req, res, next) {
     StkRubroCosto,
     ', StkRubroTM = "',
     StkRubroTM,
+    '", StkRubroConf = "',
+    StkRubroConf,
+    '", StkRubroFecha = "',
+    finalDate,
     '" WHERE idStkRubro = ',
     idStkRubro,
     " and  StkRubroCodGrp = ",
     StkRubroCodGrp
   ].join("");
   console.log(q);
-  conexion.query(q, function(err, result) {
+  conexion.query(q, function (err, result) {
     if (err) {
       if (err.errno == 1062) {
         return res.status(460).send({ message: "error clave duplicada" });

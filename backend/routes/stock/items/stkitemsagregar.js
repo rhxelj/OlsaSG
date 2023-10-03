@@ -3,12 +3,12 @@ var router = express.Router();
 var path = require("path");
 var moment = require("moment");
 var conexion = require("../../conexion");
-
-var nroitem = 0;
-
+// var gencodrubro = require("./stkitemscodabr");
+// var nroitem = 0;
+var dateFormat = require('dateformat');
 moment.locale("es");
 
-conexion.connect(function(err) {
+conexion.connect(function (err) {
   if (!err) {
     console.log("base de datos conectada en stkitemsagregar");
   } else {
@@ -16,60 +16,35 @@ conexion.connect(function(err) {
   }
 });
 
-//SELECT max(idStkItems) FROM BasesGenerales.StkItems  where StkItemsRubro = 10 and StkItemsGrupo = 1;
-//select hecho en mysql para buscar el item más grande y agregar 1
 
-router.post("/", async function(req, res) {
-  var StkItemsGrupo = req.query.id2;
-  var StkItemsRubro = req.query.id3;
+router.post("/", async function (req, res) {
+  // var ItemDescripcion = ''
+  var d = new Date();
+  finalDate = d.toISOString().split("T")[0];
 
-  //'Select max(idStkItems) as UltItem from StkItems where StkItemsGrupo  = ' + StkItemsGrupo  + ' and  StkItemsRubro  = ' + StkItemsRubro,
-  var q = [
-    "Select max(idStkItems) as UltItem",
-    "from StkItems where StkItemsGrupo  = ",
-    StkItemsGrupo,
-    " and  StkItemsRubro  = ",
-    StkItemsRubro
-  ].join(" ");
-  conexion.query(q, function(err, result) {
+  var ItemDescripcion = req.body.StkItemsDesc === undefined ? '' : req.body.StkItemsDesc.toUpperCase()
+  var registro = {
+    idStkItems: req.body.idStkItems,
+    StkItemsGrupo: req.body.StkItemsGrupo,
+    StkItemsRubro: req.body.StkItemsRubro,
+    StkItemsRubroAbr: req.body.StkItemsRubroAbr,
+    StkItemsDesc: ItemDescripcion,
+    StkItemsCantidad: 0,
+    StkItemsCantDisp: 0,
+    StkItemsFAct: finalDate,
+    StkItemsMin: req.body.StkItemsMin,
+    StkItemsMax: req.body.StkItemsMax
+  };
+  conexion.query("INSERT INTO StkItems SET ?", registro, function (
+    err,
+    result
+  ) {
     if (err) {
-      if (err.errno === 1054) {
-        nroitem = 1;
-      } else {
-        console.log("error al buscar el último  " + err.errno);
-        console.log(err);
-      }
+      console.log("ERROR ");
+      console.log(err.errno);
     } else {
-      res.json(result);
-      nroitem = result[0].UltItem + 1;
+      res.json(result.rows);
     }
-
-    var d = new Date();
-    finalDate = d.toISOString().split("T")[0];
-    //+' '+d.toTimeString().split(' ')[0];
-
-    var registro = {
-      idStkItems: nroitem,
-      StkItemsGrupo: StkItemsGrupo,
-      StkItemsRubro: StkItemsRubro,
-      StkItemsDesc: req.body.StkItemsDesc.toUpperCase(),
-      StkItemsCantidad: req.body.StkItemsCantidad,
-      StkItemsCantDisp: req.body.StkItemsCantidad,
-      StkItemsFAct: finalDate,
-      StkItemsMin: req.body.StkItemsMin,
-      StkItemsMax: req.body.StkItemsMax
-    };
-    conexion.query("INSERT INTO StkItems SET ?", registro, function(
-      err,
-      result
-    ) {
-      if (err) {
-        console.log("ERROR ");
-        console.log(err.errno);
-      } else {
-        res.json(result.rows);
-      }
-    });
   });
 });
 

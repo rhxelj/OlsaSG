@@ -1,32 +1,42 @@
-// import "./pages/bootstrap"
-import React from "react";
-import { Route } from "react-router-dom";
+import { Route, BrowserRouter as Router, } from "react-router-dom";
 
-// import Posts from './pages/Posts';
-// import Post from './pages/Post';
-// import About from './pages/About';
-// import NewPost from './pages/NewPost';
-// import AgregarMonedas from './pages/AgregarMonedas'
-// import ReadComponent from './pages/ReadComponent'
-// import UpdateComponent from './pages/UpdateComponent'
-//import DeleteComponent from './pages/DeleteComponent'
-
-import StkMonedas from "./pages/Monedas/StkMonedas";
-import Proveedores from "./pages/Stock/Proveedores/Proveedores";
-import StkUnMed from "./pages/Stock/UnidadMedidas/StkUnMed";
+import React from 'react'
+import StkMonedas from "./pages/Monedas/StkMonedas.jsx";
+import Proveedores from "./pages/Stock/Proveedores/Proveedores.jsx";
+import Clientes from "./pages/Clientes/Clientes.jsx";
+import Transporte from "./pages/Transporte/Transporte.jsx";
+import StkUnMed from "./pages/Stock/UnidadMedidas/StkUnMed.jsx";
 import StkRubro from "./pages/Stock/Rubros/StkRubro";
-import StkGrupo from "./pages/Stock/Grupos/StkGrupo";
+import StkGrupo from "./pages/Stock/Grupos/StkGrupo.jsx";
 import StkUbFisica from "./pages/Stock/UbicacionFisica/StkUbFisica";
 import ListaPrecios from "./pages/ListaPrecios/ListaPrecios";
 import ModPrecios from "./pages/ListaPrecios/ModPrecios";
-import StkMovEntrada from "./pages/Movimientos/Entrada/StkMovEntrada";
-import StkMovSalida from "./pages/Movimientos/Salida/StkMovSalida";
-import StkSalidaFinal from "./pages/Movimientos/Salida/StkSalidaFinal";
-// import StkMovimiento from './pages/z_SinClasificarMirar/StkMovimiento'
+
+
+import MovStockPant from "./pages/MovStock/MovStockPant.jsx";
+// import SalidaDisponible from "./pages/MovStock/LayoutMovStock/SalidaDisp/SalidaDisponible.js";
+// import PantallaIngreso from "./pages/MovStock/Ingreso/LayoutIngreso/PantallaIngreso.js";
+
+import StkMovEntrada from "./pages/Stock/Movimientos/Entrada/StkMovEntrada";
+// import StkMovSalida from "./pages/Stock/Movimientos/Salida/StkMovSalida";
+import StkMovSalida from "./pages/Stock/Movimientos/Salida/LayoutMovSalida/StkMovSalida";
+import ImprimeDisponible from "./pages/Stock/Movimientos/Impresion/ImprimeDisponible";
+import StkMovSalidaFinal from "./pages/Stock/Movimientos/Salida/LayoutMovSalidaFinal/StkMovSalidaFinal";
 import StkItems from "./pages/Stock/Items/StkItems";
 
-import PresupPant from "./pages/Presupuesto/PresupPant.js";
+import PresupPant from "./pages/Presupuesto/PresupPant.jsx";
+import PresupMuestra from "./pages/Presupuesto/LayoutPresupuesto/PrespuConMod/PresupMuestra.jsx"
+import OrdenTrabajoPant from "./pages/OrdenTrabajo/OrdenTrabajoPant.jsx";
+import PresupConfTipo from "./pages/Presupuesto/PresupConfTipo/PresupConfTipo";
+import PresupDetPie from "./pages/Presupuesto/PresupDetPie/PresupDetPie";
 import ImprimeQR from "./pages/Impresion/ImprimeQR";
+
+
+
+import BackupDiario from "./pages/ProcInternos/BackupDiario";
+import RecuperaDatos from "./pages/ProcInternos/RecuperaDatos";
+
+
 // TODO 👀📐 nothing changed here, just auto-formatting
 // all this auto-formatting is coming from the Prettier extension
 // https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
@@ -34,7 +44,12 @@ import ImprimeQR from "./pages/Impresion/ImprimeQR";
 // check out my fave extensions for vs code at https://shortcut.school/vs-code#extensions 😎
 
 const Main = () => (
-  <main>
+  /* para agregar un item debo agregar en :
+  /home/sandra/SistOLSA/OlsaSG/src/components/Main/index.js
+  /home/sandra/SistOLSA/OlsaSG/src/components/Header/Header.js
+  /home/sandra/SistOLSA/OlsaSG/src/components/Header/menues.js*/
+  // <Router>
+  < main >
     {/*
             Para poder usar la opción que si no encuentra la ruta especificada tire un error. tengo que usar swicth como wrapper
             de lo contrario el error se va a mostrar en todas las paginas
@@ -43,30 +58,49 @@ const Main = () => (
             uso esta ruta para cuando no coincide ninguna ruta (hay que hacer el componente Error)
         */}
 
-    <div className="container">
+    < div className="container" >
       {/* <Route exact path="/" component={LeerMonedas}/> */}
       <Route path="/StkMonedas" component={StkMonedas} />
+      {/* <Route path="/StkMonedas" component={props => <StkMonedas {...props} />} /> */}
       <Route path="/Proveedores" component={Proveedores} />
+      <Route path="/Clientes" component={Clientes} />
+      <Route path="/Transporte" component={Transporte} />
       <Route path="/StkUnMed" component={StkUnMed} />
-      {/* <Route path="/StkMovimiento"     component={StkMovimiento}/> */}
+
       <Route path="/StkMovSalida" component={StkMovSalida} />
-      <Route path="/StkSalidaFinal" component={StkSalidaFinal} />
+      <Route path="/ImprimeDisponible" component={ImprimeDisponible} />
+      <Route path="/StkMovSalidaFinal" component={StkMovSalidaFinal} />
       <Route path="/ListaPrecios" component={ListaPrecios} />
       <Route path="/PresupPant" component={PresupPant} />
-      <Route path="/ImprimeQR" component={ImprimeQR} />
+      <Route path="/PresupMuestra" component={PresupMuestra} />
+      <Route path="/OrdenTrabajoPant" component={OrdenTrabajoPant} />
+
+      <Route path="/ImprimeQR" component={props => <ImprimeQR {...props} />} />
       <Route path="/StkRubro" component={StkRubro} />
       <Route path="/StkGrupo" component={StkGrupo} />
       <Route path="/StkItems" component={StkItems} />
+
+
+      <Route path="/MovStockPant" component={MovStockPant} />
+
+      {/* <Route path="/PantallaIngreso" component={PantallaIngreso} />
+      <Route path="/SalidaDisponible" component={SalidaDisponible} /> */}
+
+
+
       <Route path="/StkMovEntrada" component={StkMovEntrada} />
       <Route path="/StkUbFisica" component={StkUbFisica} />
+      <Route path="/PresupConfTipo" component={PresupConfTipo} />
+      <Route path="/PresupDetPie" component={PresupDetPie} />
       <Route path="/ModPrecios" component={ModPrecios} />
-      {/* <Route path="/AgregarMonedas" component={AgregarMonedas}/> */}
-      {/* <Route path="/BorrarMonedas" component={BorrarMonedas}/> */}
-      {/* <Route path="/ModificarMonedas" component={ModificarMonedas}/> */}
-      {/* <Route path="/LeerMonedas" component={LeerMonedas}/> */}
-      {/* <Route  component={About}/> para captar las rutas no definidas tengo que importar Switch */}
-    </div>
-  </main>
+
+      <Route path="/BackupDiario" component={BackupDiario} />
+      <Route path="/RecuperaDatos" component={RecuperaDatos} />
+
+
+    </div >
+  </main >
+  // </Router>
 );
 
 export default Main;
